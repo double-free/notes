@@ -1,6 +1,8 @@
+# ESL 3: Linear Methods for Regression
 
 一个线性回归模型假设回归函数 E(Y|X) 对于输入 X 是线性的。
 它的优势在于：
+
 - 简单
 - 能够表示每个输入对输出的影响
 - 输入可以进行变换
@@ -15,42 +17,42 @@ $$f(X) = \beta_0 + \sum_{j=1}^p X_j \beta_j$$
 我们需要估计一组参数 $\beta$，使残差平方和（Residual Sum of Squares）最小：
 
 $$\begin{align}
-\text{RSS}(\boldsymbol{\beta}) &= (\boldsymbol{y} - \boldsymbol{X}\boldsymbol{\beta} )^T(\boldsymbol{y} - \boldsymbol{X}\boldsymbol{\beta} ) \\
-&= \boldsymbol{y}^T\boldsymbol{y} - \boldsymbol{y}^T\boldsymbol{X}\boldsymbol{\beta} - \boldsymbol{\beta}^T\boldsymbol{X}^T\boldsymbol{y} + \boldsymbol{\beta}^T\boldsymbol{X}^T\boldsymbol{X}\boldsymbol{\beta}
+\text{RSS}(\beta) &= (\textbf{y} - \textbf{X}\beta )^T(\textbf{y} - \textbf{X}\beta ) \\
+&= \textbf{y}^T\textbf{y} - \textbf{y}^T\textbf{X}\beta - \beta^T\textbf{X}^T\textbf{y} + \beta^T\textbf{X}^T\textbf{X}\beta
 \end{align}$$
 
-其中，$ \boldsymbol{X} $ 是一个 $N \times (p+1)$ 矩阵，$\boldsymbol{y}$ 是 $N \times 1$ 观测值。
+其中，$\textbf{X}$ 是一个 $N \times (p+1)$ 矩阵，$\textbf{y}$ 是 $N \times 1$ 观测值。
 
 对 $\beta$ 求导可以得到：
 
-$$ \frac{\partial \text{RSS}(\beta)}{\partial \beta} = -2 \boldsymbol{X}^T\boldsymbol{y} + 2\boldsymbol{X}^T\boldsymbol{X} \boldsymbol{\beta}$$
+$$ \frac{\partial \text{RSS}(\beta)}{\partial \beta} = -2 \textbf{X}^T\textbf{y} + 2\textbf{X}^T\textbf{X} \beta$$
 
 由于二阶导数正定，令一阶导数为 0 向量，得出极值点（即估计值）：
 
-$$ \hat{\beta}= (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{y}$$
+$$ \hat{\beta}= (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y}$$
 
-$$\hat{\boldsymbol{y}} = \boldsymbol{X} \hat{\beta} = \boldsymbol{X}(\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{y}$$
+$$\hat{\textbf{y}} = \textbf{X} \hat{\beta} = \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y}$$
 
-我们称 $\boldsymbol{H} = \boldsymbol{X}(\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T$ 为估计矩阵（"hat" matrix），它满足对称性和幂等性：
+我们称 $\textbf{H} = \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T$ 为估计矩阵（"hat" matrix），它满足对称性和幂等性：
 
-$$\boldsymbol{H}^T = \boldsymbol{H}$$
+$$\textbf{H}^T = \textbf{H}$$
 
-$$\boldsymbol{H}^T\boldsymbol{H} = \boldsymbol{H}$$
+$$\textbf{H}^T\textbf{H} = \textbf{H}$$
 
-当 $\boldsymbol{X}$ 中某些列线性相关（即非满秩矩阵）时，$(\boldsymbol{X}^T\boldsymbol{X})$ 是奇异矩阵，它只能求广义逆矩阵，不止一个解。因此，我们需要将冗余的输入剔除掉，大部分求解软件都实现了这个功能。
+当 $\textbf{X}$ 中某些列线性相关（即非满秩矩阵）时，$(\textbf{X}^T\textbf{X})$ 是奇异矩阵，它只能求广义逆矩阵，不止一个解。因此，我们需要将冗余的输入剔除掉，大部分求解软件都实现了这个功能。
 
 #### 估计参数的统计特性
 
-为了确定估计的参数 $\boldsymbol{\hat{\beta}}$ 的统计特性，我们假设：
+为了确定估计的参数 $\hat{\beta}$ 的统计特性，我们假设：
 
 - 每个观测值 $y_i$ 相互独立
 - $y_i$有固定的噪声 $\varepsilon \sim N(0, \sigma^2)$
 
 那么估计值 $\hat{\beta}$ 的方差为：
 
-$$ \text{Var}(\hat{\beta}) = (\boldsymbol{X}^T\boldsymbol{X})^{-1} \sigma^2$$
+$$ \text{Var}(\hat{\beta}) = (\textbf{X}^T\textbf{X})^{-1} \sigma^2$$
 
-where :
+where:
 
 $$\hat{\sigma}^2 =  \frac{\text{RSS}}{N-p-1}= \frac{1}{N-p-1} \sum_{i=1}^{N} (y_i-\hat{y})^2$$
 
@@ -58,47 +60,49 @@ $$\hat{\sigma}^2 =  \frac{\text{RSS}}{N-p-1}= \frac{1}{N-p-1} \sum_{i=1}^{N} (y_
 
 N 个 y 的观测值可以表示为：
 
-$$ \boldsymbol{y} =  \boldsymbol{X}\beta +  \boldsymbol{\varepsilon}$$
+$$ \textbf{y} =  \textbf{X}\beta +  \varepsilon $$
 
-其中 $ \boldsymbol{\varepsilon} $ 是 $N \times 1$ 的噪声。因此有：
+其中 $\varepsilon$ 是 $N \times 1$ 的噪声。因此有：
+
 $$\begin{align}
-\hat{\beta} &= (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{y} \\
-&= \beta + (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{\varepsilon}
+\hat{\beta} &= (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} \\
+&= \beta + (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\varepsilon
 \end{align}$$
 
 
 无偏性（期望值为 $\beta$）：
-$$E(\hat{\beta}) = \beta + (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T E(\boldsymbol{\varepsilon}) = \beta$$
+
+$$E(\hat{\beta}) = \beta + (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T E(\varepsilon) = \beta$$
 
 
 协方差矩阵（注意是$\beta \beta^T$ 而非 $\beta^T \beta$，是一个矩阵）：
 
 $$\begin{align}
 \text{Var}(\hat{\beta}) &= E[(\beta - \hat{\beta})(\beta - \hat{\beta})^T] \\
-&=E[(\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}^T\boldsymbol{X}(\boldsymbol{X}^T\boldsymbol{X})^{-1}] \\
-&= (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T E(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}^T) \boldsymbol{X}(\boldsymbol{X}^T\boldsymbol{X})^{-1} \\
-&= \sigma^2 (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T \boldsymbol{I} \boldsymbol{X}(\boldsymbol{X}^T\boldsymbol{X})^{-1} \\
-&= \sigma^2 (\boldsymbol{X}^T\boldsymbol{X})^{-1}
+&=E[(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\varepsilon\varepsilon^T\textbf{X}(\textbf{X}^T\textbf{X})^{-1}] \\
+&= (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T E(\varepsilon\varepsilon^T) \textbf{X}(\textbf{X}^T\textbf{X})^{-1} \\
+&= \sigma^2 (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T \textbf{I} \textbf{X}(\textbf{X}^T\textbf{X})^{-1} \\
+&= \sigma^2 (\textbf{X}^T\textbf{X})^{-1}
 \end{align}$$
 
 
 可以得到：
 
-$$ \hat{\beta} \sim N(\beta, \sigma^2 (\boldsymbol{X}^T\boldsymbol{X})^{-1})$$
+$$ \hat{\beta} \sim N(\beta, \sigma^2 (\textbf{X}^T\textbf{X})^{-1})$$
 
 下面来确定 $\sigma^2$ 。
 
 我们可以通过观测值 $y$ 和预测值 $\hat{y}$ 的差来得到噪声 $\varepsilon$。
 
 $$\begin{align}
-\boldsymbol{y - \hat{y}} &= \boldsymbol{X}\beta +  \boldsymbol{\varepsilon} -\boldsymbol{X}\hat{\beta} \\
-&=  \boldsymbol{X}\beta +  \boldsymbol{\varepsilon} - \boldsymbol{X}(\beta + (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{\varepsilon}) \\
-&= (\boldsymbol{I -H} )\boldsymbol{\varepsilon}
+y - \hat{y} &= \textbf{X}\beta +  \varepsilon -\textbf{X}\hat{\beta} \\
+&=  \textbf{X}\beta +  \varepsilon - \textbf{X}(\beta + (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\varepsilon) \\
+&= (\textbf{I -H} )\varepsilon
 \end{align}$$
 
 $$\begin{align}
-\sum_{i=1}^N(y_i - \hat{y_i})^2 &= (\boldsymbol{y - \hat{y}})^T (\boldsymbol{y - \hat{y}}) \\
-&= \boldsymbol{\varepsilon}^T(\boldsymbol{I - H}) \boldsymbol{\varepsilon} \\
+\sum_{i=1}^N(y_i - \hat{y_i})^2 &= (y - \hat{y})^T (y - \hat{y}) \\
+&= \varepsilon^T(\textbf{I - H}) \varepsilon \\
 &= \sum_{k =1}^N \varepsilon_k^2- \sum_{i, j = 1}^N \varepsilon_i \varepsilon_j  H_{ij}
 \end{align}$$
 
@@ -110,25 +114,28 @@ E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &= E[\sum_{k =1}^N \varepsilon_k^2- \sum_{i, 
 \end{align}$$
 
 由于 $\varepsilon_i, \varepsilon_j$ 是独立的，当 $i \neq j$ 时：
+
 $$\text{Cov}(\varepsilon_i, \varepsilon_j) = E(\varepsilon_i \varepsilon_j) - E(\varepsilon_i)E(\varepsilon_j) = 0$$
 
 因此：
+
 $$\begin{align}
 E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &= N\sigma^2 - E(\sum_{i, j = 1}^N \varepsilon_i \varepsilon_j  H_{ij}) \\
 &= N\sigma^2 - E(\sum_{i=1}^{N}\varepsilon_i^2H_{ii}) \\
-&= \sigma^2[N - \text{trace}(\boldsymbol{H})]
+&= \sigma^2[N - \text{trace}(\textbf{H})]
 \end{align}$$
 
 这里再利用公式：
-$$\text{trace}(ABC) = \text{trace}(CAB) $$
+
+$$\text{trace}(ABC) = \text{trace}(CAB)$$
 
 得到：
 
 $$\begin{align}
-E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &= \sigma^2[N - \text{trace}(\boldsymbol{H})] \\
-&= \sigma^2[N - \text{trace}(\boldsymbol{X(X^TX)^{-1}X^T})] \\
-&= \sigma^2[N - \text{trace}(\boldsymbol{X^TX(X^TX)^{-1}}_{(p+1) \times (p+1)})] \\
-&= \sigma^2[N - \text{trace}(\boldsymbol{I}_{(p+1) \times (p+1)})] \\
+E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &= \sigma^2[N - \text{trace}(\textbf{H})] \\
+&= \sigma^2[N - \text{trace}(\textbf{X(X^TX)^{-1}X^T})] \\
+&= \sigma^2[N - \text{trace}(\textbf{X^TX(X^TX)^{-1}}_{(p+1) \times (p+1)})] \\
+&= \sigma^2[N - \text{trace}(\textbf{I}_{(p+1) \times (p+1)})] \\
 &= \sigma^2(N - p -1)
 \end{align}$$
 
@@ -138,33 +145,33 @@ $$\hat{\sigma}^2 = \frac{1}{N-p-1} \sum_{i=1}^{N} (y_i-\hat{y})^2$$
 
 #### 模型误差的统计特性
 
-由于我们对第 i 个样本的噪声 $\varepsilon_i $ 无偏估计就是 $\hat{\varepsilon_i} = y_i - \hat{y_i}$，我们计算其方差：
+由于我们对第 i 个样本的噪声 $\varepsilon_i$ 无偏估计就是 $\hat{\varepsilon_i} = y_i - \hat{y_i}$，我们计算其方差：
 
 $$\begin{align}
-\text{Var}(\hat{\boldsymbol{\varepsilon}}) &= \text{Var}(\boldsymbol{y} - \hat{\boldsymbol{y}}) \\
-&= \text{Var}[(\boldsymbol{I} - \boldsymbol{H}){\boldsymbol{\varepsilon}}]
+\text{Var}(\hat{\varepsilon}) &= \text{Var}(\textbf{y} - \hat{\textbf{y}}) \\
+&= \text{Var}[(\textbf{I} - \textbf{H}){\varepsilon}]
 \end{align}$$
 
 由于 $D(AX) = AD(X)A^T$：
 
 $$\begin{align}
-\text{Var}(\hat{\boldsymbol{\varepsilon}}) &= \text{Var}[(\boldsymbol{I} - \boldsymbol{H}){\boldsymbol{\varepsilon}}] \\
-&= (\boldsymbol{I} - \boldsymbol{H}) \text{Var}(\boldsymbol{\varepsilon}) (\boldsymbol{I} - \boldsymbol{H})
+\text{Var}(\hat{\varepsilon}) &= \text{Var}[(\textbf{I} - \textbf{H}){\varepsilon}] \\
+&= (\textbf{I} - \textbf{H}) \text{Var}(\varepsilon) (\textbf{I} - \textbf{H})
 \end{align}$$
 
 由于 $\varepsilon \sim N(0, \sigma^2)$，因此：
 
-$$\text{Var}(\boldsymbol{\varepsilon}) = \sigma^2 \boldsymbol{I}_{N \times N}$$
+$$\text{Var}(\varepsilon) = \sigma^2 \textbf{I}_{N \times N}$$
 
-而 $\boldsymbol{H} = \boldsymbol{X}(\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T$ 满足对称性和幂等性：
+而 $\textbf{H} = \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T$ 满足对称性和幂等性：
 
-$$\boldsymbol{H}^T = \boldsymbol{H}$$
+$$\textbf{H}^T = \textbf{H}$$
 
-$$\boldsymbol{H}^T\boldsymbol{H} = \boldsymbol{H}$$
+$$\textbf{H}^T\textbf{H} = \textbf{H}$$
 
 因此有结论：
 
-$$\text{Var}(\hat{\boldsymbol{\varepsilon}}) = \sigma^2 (\boldsymbol{I} - \boldsymbol{X}(\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T)$$
+$$\text{Var}(\hat{\varepsilon}) = \sigma^2 (\textbf{I} - \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T)$$
 
 
 #### 显著性分析
@@ -185,7 +192,7 @@ where:
 
 $$\hat{\sigma}^2 =\frac{\text{RSS}_1}{N-p-1} =\frac{1}{N-p-1} \sum_{i=1}^{N} (y_i-\hat{y})^2$$
 
-$$v_j = (\boldsymbol{X}^T\boldsymbol{X})^{-1}_{jj}$$
+$$v_j = (\textbf{X}^T\textbf{X})^{-1}_{jj}$$
 
 ##### 证明
 
@@ -221,15 +228,18 @@ $$\begin{align}
 \end{align}$$
 
 等式两边乘以 $e_j^T$，并带入$\beta_j = 0$，有：
+
 $$\begin{align}
 e_j^T\beta_0 = 0 &= e_j^T \hat{\beta} +  \frac{\lambda}{2} e_j^T(\textbf{X}^T \textbf{X})^{-1} e_j \\
 &= \hat{\beta}_j + \frac{\lambda}{2}v_j
 \end{align}$$
 
 因此有：
+
 $$\lambda = - \frac{2\hat{\beta}_j}{v_j}$$
 
 带入可得：
+
 $$\begin{align}
 \text{RSS}_0 &= (\textbf{y} - \textbf{X}\beta_0)^T(\textbf{y}-\textbf{X}\beta_0) \\
 &= (\textbf{y} - \textbf{X}\hat{\beta} + \frac{\lambda}{2}\textbf{X}(\textbf{X}^T \textbf{X})^{-1} e_j)^T(\textbf{y}-\textbf{X}\hat{\beta} + \frac{\lambda}{2}\textbf{X}(\textbf{X}^T \textbf{X})^{-1} e_j) \\
@@ -252,8 +262,10 @@ $$\textbf{X}^T(\textbf{y} - \textbf{X}\hat{\beta}) = \textbf{X}^T[\textbf{y} - \
 > the least squares estimates of the parameters β have the smallest variance among all linear **unbiased** estimates
 
 现在我们来证明这个结论。对于线性估计：
-$$\boldsymbol{y} = \boldsymbol{X}\beta$$
-$\boldsymbol{y}$ 中的每一个元素都可以看作 $\boldsymbol{X}$ 中的一行与向量 $\beta$ 的线性组合。
+
+$$\textbf{y} = \textbf{X}\beta$$
+
+$\textbf{y}$ 中的每一个元素都可以看作 $\textbf{X}$ 中的一行与向量 $\beta$ 的线性组合。
 
 #### 无偏性
 
@@ -264,18 +276,20 @@ $$ E(\alpha^T \hat{\beta}) = \alpha^T\beta$$
 其中 $\alpha$ 是任意向量。
 
 $$\begin{align}
-E(\alpha^T \hat{\beta}) &= E(\alpha^T  (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{y}) \\
-&= E(\alpha^T  (\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{X} \beta) \\
+E(\alpha^T \hat{\beta}) &= E(\alpha^T  (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y}) \\
+&= E(\alpha^T  (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{X} \beta) \\
 &= \alpha^T \beta
 \end{align} $$
 
 #### 均方误差最小
 
-Gauss–Markov theorem 指出，如果还存在其他线性估计 $c^T \boldsymbol{y}$ 满足：
-$$ E(c^T \boldsymbol{y}) = \alpha^T\beta$$
+Gauss–Markov theorem 指出，如果还存在其他线性估计 $c^T \textbf{y}$ 满足：
+
+$$ E(c^T \textbf{y}) = \alpha^T\beta$$
+
 那么必然有：
 
-$$\text{Var}(\alpha^T \hat{\beta}) \leq \text{Var}(c^T \boldsymbol{y})$$
+$$\text{Var}(\alpha^T \hat{\beta}) \leq \text{Var}(c^T \textbf{y})$$
 
 证明：
 
@@ -303,7 +317,7 @@ TBD
 - 运算量小。当维度 $p >= 40$ 时，几乎无法算出最优解。但是依旧可以用 forward stepwise selection （即使维度 p 大于样本数 N）。
 - 方差小。最优子集方差比 forward stepwise selection 大，虽然后者可能会有一定的 bias。
 
-![Subset selection](https://upload-images.jianshu.io/upload_images/4482847-e13f1157e2a1bf8b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![Subset selection](images/subset_selection.png)
 
 那么如何选择“最能提高拟合度“的参数呢？我们在之前“显著性分析”中已经证明了，去掉一个参数对残差的影响为其 z-score 的平方。那么，我们直接**从 z-score 最大的参数开始依次加入**即可。第 $j$ 个参数的 z-score 可以由于下式计算：
 
@@ -313,7 +327,7 @@ where:
 
 $$\hat{\sigma}^2 =\frac{\text{RSS}_1}{N-p-1} =\frac{1}{N-p-1} \sum_{i=1}^{N} (y_i-\hat{y})^2$$
 
-$$v_j = (\boldsymbol{X}^T\boldsymbol{X})^{-1}_{jj}$$
+$$v_j = (\textbf{X}^T\textbf{X})^{-1}_{jj}$$
 
 “后向逐步选择” 与 “前向逐步选择“相反。它从全集开始，依次去掉最无关紧要的变量（z-score 最小的）。它只能用于样本数 N 大于维度 p 的情形。
 
@@ -340,6 +354,7 @@ $\beta_0$ 由于不含 $\lambda$，可以单独优化。我们先对 $\beta_0$ �
 $$\sum_{i=1}^N(y_i - \beta_0 - \sum_{j=1}^p x_{ij}\beta_j) = 0$$
 
 得到：
+
 $$\beta_0 = \frac{1}{N}(\sum_{i=1}^N y_i - \sum_{i=1}^N \sum_{j=1}^{p} x_{ij}\beta_j) $$
 
 令 $\overline{x_j} = \frac{1}{N} \sum_{i=1}^N x_{ij}$，有：

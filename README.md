@@ -1,4 +1,4 @@
-# notes
+# Notes
 
 Notes for my random readings. There's no explicit goal, but I'd love to keep my brain busy.
 
