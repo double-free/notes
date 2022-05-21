@@ -1,0 +1,940 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ye">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>ESL 3: Linear Methods for Regression - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#esl-3-linear-methods-for-regression" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ESL 3: Linear Methods for Regression
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Ye's Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Mathematics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mathematics" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mathematics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          ESL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ESL" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          ESL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ESL 3: Linear Methods for Regression
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        ESL 3: Linear Methods for Regression
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#32-linear-regression-models-and-least-squares" class="md-nav__link">
+    3.2 Linear Regression Models and Least Squares
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Linear Regression Models and Least Squares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    估计参数的统计特性
+  </a>
+  
+    <nav class="md-nav" aria-label="估计参数的统计特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    模型误差的统计特性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    显著性分析
+  </a>
+  
+    <nav class="md-nav" aria-label="显著性分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322-the-gaussmarkov-theorem" class="md-nav__link">
+    3.2.2 The Gauss–Markov Theorem
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2.2 The Gauss–Markov Theorem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    无偏性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    均方误差最小
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-subset-selection" class="md-nav__link">
+    3.3 Subset Selection
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Subset Selection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#331-best-subset-selection" class="md-nav__link">
+    3.3.1 Best-Subset Selection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332-forward-and-backward-stepwise-selection" class="md-nav__link">
+    3.3.2 Forward- and Backward-Stepwise Selection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-shrinkage-methods" class="md-nav__link">
+    3.4 Shrinkage Methods
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Shrinkage Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#341-ridge-regression" class="md-nav__link">
+    3.4.1 Ridge Regression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#32-linear-regression-models-and-least-squares" class="md-nav__link">
+    3.2 Linear Regression Models and Least Squares
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Linear Regression Models and Least Squares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    估计参数的统计特性
+  </a>
+  
+    <nav class="md-nav" aria-label="估计参数的统计特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    模型误差的统计特性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    显著性分析
+  </a>
+  
+    <nav class="md-nav" aria-label="显著性分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322-the-gaussmarkov-theorem" class="md-nav__link">
+    3.2.2 The Gauss–Markov Theorem
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2.2 The Gauss–Markov Theorem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    无偏性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    均方误差最小
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-subset-selection" class="md-nav__link">
+    3.3 Subset Selection
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Subset Selection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#331-best-subset-selection" class="md-nav__link">
+    3.3.1 Best-Subset Selection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332-forward-and-backward-stepwise-selection" class="md-nav__link">
+    3.3.2 Forward- and Backward-Stepwise Selection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-shrinkage-methods" class="md-nav__link">
+    3.4 Shrinkage Methods
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Shrinkage Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#341-ridge-regression" class="md-nav__link">
+    3.4.1 Ridge Regression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="esl-3-linear-methods-for-regression">ESL 3: Linear Methods for Regression</h1>
+<p>一个线性回归模型假设回归函数 E(Y|X) 对于输入 X 是线性的。
+它的优势在于：</p>
+<ul>
+<li>简单</li>
+<li>能够表示每个输入对输出的影响</li>
+<li>输入可以进行变换</li>
+<li>他们有时候比复杂的方法更精准，尤其是在样本数量少、低信噪比或者稀疏矩阵的情形。</li>
+</ul>
+<h2 id="32-linear-regression-models-and-least-squares">3.2 Linear Regression Models and Least Squares</h2>
+<p><span class="arithmatex">\(p\)</span> 维线性回归模型形式如下：</p>
+<div class="arithmatex">\[f(X) = \beta_0 + \sum_{j=1}^p X_j \beta_j\]</div>
+<p>我们需要估计一组参数 <span class="arithmatex">\(\beta\)</span>，使残差平方和（Residual Sum of Squares）最小：</p>
+<div class="arithmatex">\[\begin{align}
+\text{RSS}(\beta) &amp;= (\textbf{y} - \textbf{X}\beta )^T(\textbf{y} - \textbf{X}\beta ) \\
+&amp;= \textbf{y}^T\textbf{y} - \textbf{y}^T\textbf{X}\beta - \beta^T\textbf{X}^T\textbf{y} + \beta^T\textbf{X}^T\textbf{X}\beta
+\end{align}\]</div>
+<p>其中，<span class="arithmatex">\(\textbf{X}\)</span> 是一个 <span class="arithmatex">\(N \times (p+1)\)</span> 矩阵，<span class="arithmatex">\(\textbf{y}\)</span> 是 <span class="arithmatex">\(N \times 1\)</span> 观测值。</p>
+<p>对 <span class="arithmatex">\(\beta\)</span> 求导可以得到：</p>
+<div class="arithmatex">\[ \frac{\partial \text{RSS}(\beta)}{\partial \beta} = -2 \textbf{X}^T\textbf{y} + 2\textbf{X}^T\textbf{X} \beta\]</div>
+<p>由于二阶导数正定，令一阶导数为 0 向量，得出极值点（即估计值）：</p>
+<div class="arithmatex">\[ \hat{\beta}= (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y}\]</div>
+<div class="arithmatex">\[\hat{\textbf{y}} = \textbf{X} \hat{\beta} = \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y}\]</div>
+<p>我们称 <span class="arithmatex">\(\textbf{H} = \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\)</span> 为估计矩阵（"hat" matrix），它满足对称性和幂等性：</p>
+<div class="arithmatex">\[\textbf{H}^T = \textbf{H}\]</div>
+<div class="arithmatex">\[\textbf{H}^T\textbf{H} = \textbf{H}\]</div>
+<p>当 <span class="arithmatex">\(\textbf{X}\)</span> 中某些列线性相关（即非满秩矩阵）时，<span class="arithmatex">\((\textbf{X}^T\textbf{X})\)</span> 是奇异矩阵，它只能求广义逆矩阵，不止一个解。因此，我们需要将冗余的输入剔除掉，大部分求解软件都实现了这个功能。</p>
+<h4 id="_1">估计参数的统计特性</h4>
+<p>为了确定估计的参数 <span class="arithmatex">\(\hat{\beta}\)</span> 的统计特性，我们假设：</p>
+<ul>
+<li>每个观测值 <span class="arithmatex">\(y_i\)</span> 相互独立</li>
+<li><span class="arithmatex">\(y_i\)</span>有固定的噪声 <span class="arithmatex">\(\varepsilon \sim N(0, \sigma^2)\)</span></li>
+</ul>
+<p>那么估计值 <span class="arithmatex">\(\hat{\beta}\)</span> 的方差为：</p>
+<div class="arithmatex">\[ \text{Var}(\hat{\beta}) = (\textbf{X}^T\textbf{X})^{-1} \sigma^2\]</div>
+<p>where:</p>
+<div class="arithmatex">\[\hat{\sigma}^2 =  \frac{\text{RSS}}{N-p-1}= \frac{1}{N-p-1} \sum_{i=1}^{N} (y_i-\hat{y})^2\]</div>
+<h5 id="_2">证明</h5>
+<p>N 个 y 的观测值可以表示为：</p>
+<div class="arithmatex">\[ \textbf{y} =  \textbf{X}\beta +  \varepsilon \]</div>
+<p>其中 <span class="arithmatex">\(\varepsilon\)</span> 是 <span class="arithmatex">\(N \times 1\)</span> 的噪声。因此有：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{\beta} &amp;= (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} \\
+&amp;= \beta + (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\varepsilon
+\end{align}\]</div>
+<p>无偏性（期望值为 <span class="arithmatex">\(\beta\)</span>）：</p>
+<div class="arithmatex">\[E(\hat{\beta}) = \beta + (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T E(\varepsilon) = \beta\]</div>
+<p>协方差矩阵（注意是<span class="arithmatex">\(\beta \beta^T\)</span> 而非 <span class="arithmatex">\(\beta^T \beta\)</span>，是一个矩阵）：</p>
+<div class="arithmatex">\[\begin{align}
+\text{Var}(\hat{\beta}) &amp;= E[(\beta - \hat{\beta})(\beta - \hat{\beta})^T] \\
+&amp;=E[(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\varepsilon\varepsilon^T\textbf{X}(\textbf{X}^T\textbf{X})^{-1}] \\
+&amp;= (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T E(\varepsilon\varepsilon^T) \textbf{X}(\textbf{X}^T\textbf{X})^{-1} \\
+&amp;= \sigma^2 (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T \textbf{I} \textbf{X}(\textbf{X}^T\textbf{X})^{-1} \\
+&amp;= \sigma^2 (\textbf{X}^T\textbf{X})^{-1}
+\end{align}\]</div>
+<p>可以得到：</p>
+<div class="arithmatex">\[ \hat{\beta} \sim N(\beta, \sigma^2 (\textbf{X}^T\textbf{X})^{-1})\]</div>
+<p>下面来确定 <span class="arithmatex">\(\sigma^2\)</span> 。</p>
+<p>我们可以通过观测值 <span class="arithmatex">\(y\)</span> 和预测值 <span class="arithmatex">\(\hat{y}\)</span> 的差来得到噪声 <span class="arithmatex">\(\varepsilon\)</span>。</p>
+<div class="arithmatex">\[\begin{align}
+y - \hat{y} &amp;= \textbf{X}\beta +  \varepsilon -\textbf{X}\hat{\beta} \\
+&amp;=  \textbf{X}\beta +  \varepsilon - \textbf{X}(\beta + (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\varepsilon) \\
+&amp;= (\textbf{I -H} )\varepsilon
+\end{align}\]</div>
+<div class="arithmatex">\[\begin{align}
+\sum_{i=1}^N(y_i - \hat{y_i})^2 &amp;= (y - \hat{y})^T (y - \hat{y}) \\
+&amp;= \varepsilon^T(\textbf{I - H}) \varepsilon \\
+&amp;= \sum_{k =1}^N \varepsilon_k^2- \sum_{i, j = 1}^N \varepsilon_i \varepsilon_j  H_{ij}
+\end{align}\]</div>
+<p>其期望值为：</p>
+<div class="arithmatex">\[\begin{align}
+E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &amp;= E[\sum_{k =1}^N \varepsilon_k^2- \sum_{i, j = 1}^N \varepsilon_i \varepsilon_j  H_{ij} ] \\
+&amp;= N\sigma^2 - E(\sum_{i, j = 1}^N \varepsilon_i \varepsilon_j  H_{ij})
+\end{align}\]</div>
+<p>由于 <span class="arithmatex">\(\varepsilon_i, \varepsilon_j\)</span> 是独立的，当 <span class="arithmatex">\(i \neq j\)</span> 时：</p>
+<div class="arithmatex">\[\text{Cov}(\varepsilon_i, \varepsilon_j) = E(\varepsilon_i \varepsilon_j) - E(\varepsilon_i)E(\varepsilon_j) = 0\]</div>
+<p>因此：</p>
+<div class="arithmatex">\[\begin{align}
+E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &amp;= N\sigma^2 - E(\sum_{i, j = 1}^N \varepsilon_i \varepsilon_j  H_{ij}) \\
+&amp;= N\sigma^2 - E(\sum_{i=1}^{N}\varepsilon_i^2H_{ii}) \\
+&amp;= \sigma^2[N - \text{trace}(\textbf{H})]
+\end{align}\]</div>
+<p>这里再利用公式：</p>
+<div class="arithmatex">\[\text{trace}(ABC) = \text{trace}(CAB)\]</div>
+<p>得到：</p>
+<div class="arithmatex">\[\begin{align}
+E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &amp;= \sigma^2[N - \text{trace}(\textbf{H})] \\
+&amp;= \sigma^2[N - \text{trace}(\textbf{X(X^TX)^{-1}X^T})] \\
+&amp;= \sigma^2[N - \text{trace}(\textbf{X^TX(X^TX)^{-1}}_{(p+1) \times (p+1)})] \\
+&amp;= \sigma^2[N - \text{trace}(\textbf{I}_{(p+1) \times (p+1)})] \\
+&amp;= \sigma^2(N - p -1)
+\end{align}\]</div>
+<p>因此，对 <span class="arithmatex">\(\sigma^2\)</span> 的无偏估计就是：</p>
+<div class="arithmatex">\[\hat{\sigma}^2 = \frac{1}{N-p-1} \sum_{i=1}^{N} (y_i-\hat{y})^2\]</div>
+<h4 id="_3">模型误差的统计特性</h4>
+<p>由于我们对第 i 个样本的噪声 <span class="arithmatex">\(\varepsilon_i\)</span> 无偏估计就是 <span class="arithmatex">\(\hat{\varepsilon_i} = y_i - \hat{y_i}\)</span>，我们计算其方差：</p>
+<div class="arithmatex">\[\begin{align}
+\text{Var}(\hat{\varepsilon}) &amp;= \text{Var}(\textbf{y} - \hat{\textbf{y}}) \\
+&amp;= \text{Var}[(\textbf{I} - \textbf{H}){\varepsilon}]
+\end{align}\]</div>
+<p>由于 <span class="arithmatex">\(D(AX) = AD(X)A^T\)</span>：</p>
+<div class="arithmatex">\[\begin{align}
+\text{Var}(\hat{\varepsilon}) &amp;= \text{Var}[(\textbf{I} - \textbf{H}){\varepsilon}] \\
+&amp;= (\textbf{I} - \textbf{H}) \text{Var}(\varepsilon) (\textbf{I} - \textbf{H})
+\end{align}\]</div>
+<p>由于 <span class="arithmatex">\(\varepsilon \sim N(0, \sigma^2)\)</span>，因此：</p>
+<div class="arithmatex">\[\text{Var}(\varepsilon) = \sigma^2 \textbf{I}_{N \times N}\]</div>
+<p>而 <span class="arithmatex">\(\textbf{H} = \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\)</span> 满足对称性和幂等性：</p>
+<div class="arithmatex">\[\textbf{H}^T = \textbf{H}\]</div>
+<div class="arithmatex">\[\textbf{H}^T\textbf{H} = \textbf{H}\]</div>
+<p>因此有结论：</p>
+<div class="arithmatex">\[\text{Var}(\hat{\varepsilon}) = \sigma^2 (\textbf{I} - \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T)\]</div>
+<h4 id="_4">显著性分析</h4>
+<p>当我们判断哪些参数可以忽略以降低模型复杂度时，我们可以使用 F-statistic 进行显著性分析。假设我们将 <span class="arithmatex">\(\beta\)</span> 维度从 <span class="arithmatex">\(p_1 + 1\)</span> 降低到 <span class="arithmatex">\(p_0 + 1\)</span>：</p>
+<div class="arithmatex">\[ F = \frac{(\text{RSS}_0 - \text{RSS}_1) / (p_1 - p_0)}{\text{RSS}_1 / (N- p_1 -1)} \]</div>
+<p>F-statistic 描述了每个被忽略的参数对 RSS 的平均贡献，用 <span class="arithmatex">\(\hat{\sigma}^2\)</span> 进行了 normalize。</p>
+<p>当 <span class="arithmatex">\(p_1 - p_0 =1\)</span> 即仅去掉一个参数时（假设 <span class="arithmatex">\(\beta_j = 0\)</span>），该公式可以简化为对应的 z-score 的平方，其中 z-score 为：</p>
+<div class="arithmatex">\[ z_j = \frac{\hat{\beta}_j}{\hat{\sigma} \sqrt{v_j} }\]</div>
+<p>where:</p>
+<div class="arithmatex">\[\hat{\sigma}^2 =\frac{\text{RSS}_1}{N-p-1} =\frac{1}{N-p-1} \sum_{i=1}^{N} (y_i-\hat{y})^2\]</div>
+<div class="arithmatex">\[v_j = (\textbf{X}^T\textbf{X})^{-1}_{jj}\]</div>
+<h5 id="_5">证明</h5>
+<p>这个证明同时也是习题 3.1</p>
+<blockquote>
+<p>Ex. 3.1 Show that the F statistic (3.13) for dropping a single coefficient from a model is equal to the square of the corresponding z-score (3.12).</p>
+</blockquote>
+<p>实际上我们需要证明，在去掉模型的第 j 个参数后：</p>
+<div class="arithmatex">\[  \text{RSS}_0 - \text{RSS}_1 =  \frac{\hat{\beta}_j^2}{v_j} \]</div>
+<p>上式中唯一未知的就是 <span class="arithmatex">\(\text{RSS}_0\)</span>，它实质上是求一个带约束的优化问题：</p>
+<div class="arithmatex">\[\begin{align}
+\min_{\beta \in \mathbb{R}^{(p+1) \times 1}} (\textbf{y} - \textbf{X}\beta)^T(\textbf{y}-\textbf{X}\beta) \\
+\text{s.t.}  ~\beta_j = 0
+\end{align}\]</div>
+<p>我们可以用拉格朗日乘子法来解决。</p>
+<div class="arithmatex">\[L(\beta, \lambda) = (\textbf{y} - \textbf{X}\beta)^T(\textbf{y}-\textbf{X}\beta) + \lambda e_j^T \beta \]</div>
+<p>对 <span class="arithmatex">\(\beta\)</span> 求导，并令导数为 0，有：</p>
+<div class="arithmatex">\[\frac{\partial L(\beta, \lambda)}{\partial \beta} = - 2\textbf{X}^T(\textbf{y} - \textbf{X}\beta) + \lambda e_j = 0\]</div>
+<p>解出：</p>
+<div class="arithmatex">\[\begin{align}
+\beta_0 &amp;= (\textbf{X}^T\textbf{X})^{-1} \textbf{X}^T\textbf{y}  - \frac{\lambda}{2}(\textbf{X}^T \textbf{X})^{-1} e_j \\
+&amp;= \hat{\beta}- \frac{\lambda}{2}(\textbf{X}^T \textbf{X})^{-1} e_j
+\end{align}\]</div>
+<p>等式两边乘以 <span class="arithmatex">\(e_j^T\)</span>，并带入<span class="arithmatex">\(\beta_j = 0\)</span>，有：</p>
+<div class="arithmatex">\[\begin{align}
+e_j^T\beta_0 = 0 &amp;= e_j^T \hat{\beta} +  \frac{\lambda}{2} e_j^T(\textbf{X}^T \textbf{X})^{-1} e_j \\
+&amp;= \hat{\beta}_j + \frac{\lambda}{2}v_j
+\end{align}\]</div>
+<p>因此有：</p>
+<div class="arithmatex">\[\lambda = - \frac{2\hat{\beta}_j}{v_j}\]</div>
+<p>带入可得：</p>
+<div class="arithmatex">\[\begin{align}
+\text{RSS}_0 &amp;= (\textbf{y} - \textbf{X}\beta_0)^T(\textbf{y}-\textbf{X}\beta_0) \\
+&amp;= (\textbf{y} - \textbf{X}\hat{\beta} + \frac{\lambda}{2}\textbf{X}(\textbf{X}^T \textbf{X})^{-1} e_j)^T(\textbf{y}-\textbf{X}\hat{\beta} + \frac{\lambda}{2}\textbf{X}(\textbf{X}^T \textbf{X})^{-1} e_j) \\
+&amp;= \text{RSS}_1 + \frac{\lambda}{2} [e_j^T(\textbf{X}^T \textbf{X})^{-1}\textbf{X}^T(\textbf{y} - \textbf{X}\hat{\beta}) + (\textbf{y} - \textbf{X}\hat{\beta})^T \textbf{X}(\textbf{X}^T \textbf{X})^{-1} e_j)] \\
+&amp;~~~~ + \frac{\lambda^2}{4}e_j^T (\textbf{X}^T \textbf{X})^{-1} e_j \\
+&amp;= \text{RSS}_1 + \frac{\lambda^2}{4}e_j^T (\textbf{X}^T \textbf{X})^{-1} e_j \\
+&amp;= \text{RSS}_1 + \frac{\hat{\beta}_j^2}{v_j}
+\end{align}\]</div>
+<p>其中，中间项可以消去的原因是：</p>
+<div class="arithmatex">\[\textbf{X}^T(\textbf{y} - \textbf{X}\hat{\beta}) = \textbf{X}^T[\textbf{y} - \textbf{X}(\textbf{X}^T \textbf{X})^{-1}\textbf{X}^T\textbf{y}] = 0 \]</div>
+<p>直观理解，<span class="arithmatex">\(\textbf{X}\)</span> 和 <span class="arithmatex">\(\textbf{y} - \textbf{X}\hat{\beta}\)</span> 是正交的，因为 <span class="arithmatex">\(\textbf{X}\hat{\beta}\)</span> 正是 <span class="arithmatex">\(\textbf{y}\)</span> 在 <span class="arithmatex">\(\textbf{X}\)</span> 所在平面上的投影。</p>
+<h3 id="322-the-gaussmarkov-theorem">3.2.2 The Gauss–Markov Theorem</h3>
+<p>最小二乘法得出的 <span class="arithmatex">\(\beta\)</span> 在所有线性<strong>无偏</strong>估计中均方误差最小。当然，如果我们愿意为了进一步减小误差引入一点 bias，完全可能找到一个更小均方误差的<strong>有偏</strong>估计。</p>
+<blockquote>
+<p>the least squares estimates of the parameters β have the smallest variance among all linear <strong>unbiased</strong> estimates</p>
+</blockquote>
+<p>现在我们来证明这个结论。对于线性估计：</p>
+<div class="arithmatex">\[\textbf{y} = \textbf{X}\beta\]</div>
+<p><span class="arithmatex">\(\textbf{y}\)</span> 中的每一个元素都可以看作 <span class="arithmatex">\(\textbf{X}\)</span> 中的一行与向量 <span class="arithmatex">\(\beta\)</span> 的线性组合。</p>
+<h4 id="_6">无偏性</h4>
+<p>那么，针对无偏性，我们需要证明最小二乘法估计出的 <span class="arithmatex">\(\hat{\beta}\)</span> 满足：</p>
+<div class="arithmatex">\[ E(\alpha^T \hat{\beta}) = \alpha^T\beta\]</div>
+<p>其中 <span class="arithmatex">\(\alpha\)</span> 是任意向量。</p>
+<div class="arithmatex">\[\begin{align}
+E(\alpha^T \hat{\beta}) &amp;= E(\alpha^T  (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y}) \\
+&amp;= E(\alpha^T  (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{X} \beta) \\
+&amp;= \alpha^T \beta
+\end{align} \]</div>
+<h4 id="_7">均方误差最小</h4>
+<p>Gauss–Markov theorem 指出，如果还存在其他线性估计 <span class="arithmatex">\(c^T \textbf{y}\)</span> 满足：</p>
+<div class="arithmatex">\[ E(c^T \textbf{y}) = \alpha^T\beta\]</div>
+<p>那么必然有：</p>
+<div class="arithmatex">\[\text{Var}(\alpha^T \hat{\beta}) \leq \text{Var}(c^T \textbf{y})\]</div>
+<p>证明：</p>
+<p>TBD</p>
+<h2 id="33-subset-selection">3.3 Subset Selection</h2>
+<p>最小二乘法的两个主要问题：</p>
+<ul>
+<li>预测精度。虽然它是无偏的，但是方差很大。如果我们忽略一部分模型参数，虽然会变成有偏估计，但是可能会极大提高精度。</li>
+<li>可解释性（即模型复杂度）。当模型参数很多时，我们想去确定一小部分具有最大影响的模型参数，为此我们愿意牺牲一部分无关紧要的参数。</li>
+</ul>
+<p>因此，我们需要选取变量子集，即“model selection”。</p>
+<h3 id="331-best-subset-selection">3.3.1 Best-Subset Selection</h3>
+<p>最佳子集是指从所有具有 <span class="arithmatex">\(k (k &lt;= p)\)</span> 个变量的子集中，RSS 最小的那个。</p>
+<p>当然，最简单的方式就是从遍历所有的组合。这样做的复杂度是 <span class="arithmatex">\(2^p\)</span>，只适用于小规模的问题。</p>
+<h3 id="332-forward-and-backward-stepwise-selection">3.3.2 Forward- and Backward-Stepwise Selection</h3>
+<p>“前向逐步选择”是一种贪心算法。它按顺序加入最能提高拟合度的参数。它虽然不一定找到最优解，但是它优势在于：</p>
+<ul>
+<li>运算量小。当维度 <span class="arithmatex">\(p &gt;= 40\)</span> 时，几乎无法算出最优解。但是依旧可以用 forward stepwise selection （即使维度 p 大于样本数 N）。</li>
+<li>方差小。最优子集方差比 forward stepwise selection 大，虽然后者可能会有一定的 bias。</li>
+</ul>
+<p><img alt="Subset selection" src="../images/subset_selection.png" /></p>
+<p>那么如何选择“最能提高拟合度“的参数呢？我们在之前“显著性分析”中已经证明了，去掉一个参数对残差的影响为其 z-score 的平方。那么，我们直接<strong>从 z-score 最大的参数开始依次加入</strong>即可。第 <span class="arithmatex">\(j\)</span> 个参数的 z-score 可以由于下式计算：</p>
+<div class="arithmatex">\[ z_j = \frac{\hat{\beta}_j}{\hat{\sigma} \sqrt{v_j} }\]</div>
+<p>where:</p>
+<div class="arithmatex">\[\hat{\sigma}^2 =\frac{\text{RSS}_1}{N-p-1} =\frac{1}{N-p-1} \sum_{i=1}^{N} (y_i-\hat{y})^2\]</div>
+<div class="arithmatex">\[v_j = (\textbf{X}^T\textbf{X})^{-1}_{jj}\]</div>
+<p>“后向逐步选择” 与 “前向逐步选择“相反。它从全集开始，依次去掉最无关紧要的变量（z-score 最小的）。它只能用于样本数 N 大于维度 p 的情形。</p>
+<h2 id="34-shrinkage-methods">3.4 Shrinkage Methods</h2>
+<p>Subset selection 确实可以帮我们简化模型，并且还可能降低误差。但是，因为它是一个离散的过程（参数要么被丢弃要么被保留，没有中间状态），它通常具有较大的方差。Shrinkage methods 更加连续，因此具有更好的性能。</p>
+<h3 id="341-ridge-regression">3.4.1 Ridge Regression</h3>
+<p>Ridge Regression 通过给参数数量增加一个惩罚项来降低模型复杂度。它的优化目标：</p>
+<div class="arithmatex">\[\hat{\beta} = \mathop{\arg \min}_{\beta}  \sum_{i=1}^N(y_i - \beta_0 - \sum_{j=1}^p x_{ij}\beta_j)^2 + \lambda \sum_{j=1}^p \beta_j^2\]</div>
+<p>这里的 <span class="arithmatex">\(\lambda\)</span> 控制模型“缩小”的程度，<span class="arithmatex">\(\lambda\)</span> 越大，得到的模型复杂度越低。</p>
+<p>值得注意的是，<strong>惩罚项中不包含常数项</strong> <span class="arithmatex">\(\beta_0\)</span>，否则模型不稳定。当选取 <span class="arithmatex">\(y_i = y_i + c\)</span> 时，预测值 <span class="arithmatex">\(\hat{y}_i\)</span> 的变化量不是 <span class="arithmatex">\(c\)</span>。</p>
+<p>与经典的 Linear Regression 不同，Ridge Regression 要求输入 <span class="arithmatex">\(\textbf{X}, \textbf{y}\)</span> 是经过了<strong>中心化</strong> (centering) 的。并且，这里的模型参数 <span class="arithmatex">\(\beta\)</span> 是 <span class="arithmatex">\(p\)</span> 维而不是 <span class="arithmatex">\(p+1\)</span> 维的。</p>
+<p>下面我们来证明这一点。</p>
+<p><span class="arithmatex">\(\beta_0\)</span> 由于不含 <span class="arithmatex">\(\lambda\)</span>，可以单独优化。我们先对 <span class="arithmatex">\(\beta_0\)</span> 求导，并令导数为0:</p>
+<div class="arithmatex">\[\sum_{i=1}^N(y_i - \beta_0 - \sum_{j=1}^p x_{ij}\beta_j) = 0\]</div>
+<p>得到：</p>
+<div class="arithmatex">\[\beta_0 = \frac{1}{N}(\sum_{i=1}^N y_i - \sum_{i=1}^N \sum_{j=1}^{p} x_{ij}\beta_j) \]</div>
+<p>令 <span class="arithmatex">\(\overline{x_j} = \frac{1}{N} \sum_{i=1}^N x_{ij}\)</span>，有：</p>
+<div class="arithmatex">\[\beta_0 = \frac{1}{N}\sum_{i=1}^N y_i - \sum_{j=1}^{p} \overline{x_{j}} \beta_j \]</div>
+<p>我们以下的变形主要是为了将优化目标函数写成矩阵乘法形式，以进行运算。</p>
+<div class="arithmatex">\[\begin{align}
+\hat{\beta} &amp;= \mathop{\arg \min}_{\beta}  \sum_{i=1}^N(y_i - \beta_0 - \sum_{j=1}^p x_{ij}\beta_j)^2 + \lambda \sum_{j=1}^p \beta_j^2 \\
+&amp;= \mathop{\arg \min}_{\beta}  \sum_{i=1}^N(y_i - \beta_0 - \sum_{j=1}^p \overline{x_j}\beta_j - \sum_{j=1}^p (x_{ij} - \overline{x_j}) \beta_j)^2 + \lambda \sum_{j=1}^p \beta_j^2
+\end{align}\]</div>
+<p>现在我们令：</p>
+<div class="arithmatex">\[\begin{align}
+\beta_0^c &amp;= \beta_0 + \sum_{j=1}^p \overline{x_j}\beta_j =\frac{1}{N} \sum_{i=1}^N y_{i} \\
+\beta_j^c&amp;= \beta_j &amp; (j&gt;=1)
+\end{align}\]</div>
+<p>可以得出：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{\beta} &amp;= \mathop{\arg \min}_{\beta^c}  \sum_{i=1}^N(y_i - \beta_0^c - \sum_{j=1}^p (x_{ij} - \overline{x_j}) \beta_j^c)^2 + \lambda \sum_{j=1}^p {\beta_j^c}^2
+\end{align}\]</div>
+<p>我们再令：</p>
+<div class="arithmatex">\[\begin{align}
+y_i^c &amp;= y_i - \beta_0^c = y_i - \frac{1}{N} \sum_{i=1}^N y_i \\
+x_{ij}^c&amp;= x_{ij} - \overline{x_j} &amp; (j &gt;=1)
+\end{align}\]</div>
+<p>有：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{\beta} &amp;= \mathop{\arg \min}_{\beta^c}  \sum_{i=1}^N(y_i^c - \sum_{j=1}^p (x_{ij}^c \beta_j^c)^2) + \lambda \sum_{j=1}^p {\beta_j^c}^2 \\
+&amp;=\mathop{\arg \min}_{\beta} (\textbf{y} - \textbf{X}\beta)^T(\textbf{y} - \textbf{X}\beta) + \lambda(\beta^T\beta)
+\end{align}\]</div>
+<p>其中，<span class="arithmatex">\(\textbf{X}, \textbf{y}, \beta\)</span> 都经过了中心化，并且是 <span class="arithmatex">\(p\)</span> 维的。</p>
+<p>该式对 <span class="arithmatex">\(\beta\)</span> 求导并令导数为 0，有：</p>
+<div class="arithmatex">\[ -\textbf{X}^T(\textbf{y} - \textbf{X}\beta)  + \lambda \beta = 0\]</div>
+<p>解得：</p>
+<div class="arithmatex">\[ \beta = (\textbf{X}^T\textbf{X} + \lambda \textbf{I})^{-1} \textbf{X}^T \textbf{y}\]</div>
+<p>我们看到，即使 <span class="arithmatex">\(\textbf{X}^T\textbf{X}\)</span> 是非满秩的，由于多加了一个 <span class="arithmatex">\(\lambda \textbf{I}\)</span>，它仍是一个可逆矩阵。这也是 ridge regression 的另一个优势。</p>
+<h1 id="reference">Reference</h1>
+<ol>
+<li><a href="https://yuhangzhou88.github.io/ESL_Solution/">ESL solution</a></li>
+<li><a href="https://github.com/szcf-weiya/ESL-CN">ESL Chinese</a></li>
+<li><a href="https://webspace.maths.qmul.ac.uk/b.bogacka/SM_I_2013_LecturesWeek_6.pdf">Simple Linear Regression</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Proofs_involving_ordinary_least_squares#Unbiasedness_of_.CE.B2.CC.82">Proofs involving ordinary least squares</a></li>
+</ol>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Ye&#39;s Notes" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Ye's Notes
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
