@@ -411,6 +411,19 @@
     3.4.1 Ridge Regression
   </a>
   
+    <nav class="md-nav" aria-label="3.4.1 Ridge Regression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ridge-regression-and-svd" class="md-nav__link">
+    Ridge Regression and SVD
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -593,6 +606,19 @@
     3.4.1 Ridge Regression
   </a>
   
+    <nav class="md-nav" aria-label="3.4.1 Ridge Regression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ridge-regression-and-svd" class="md-nav__link">
+    Ridge Regression and SVD
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -701,8 +727,8 @@ E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &amp;= N\sigma^2 - E(\sum_{i, j = 1}^N \varep
 <p>得到：</p>
 <div class="arithmatex">\[\begin{align}
 E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &amp;= \sigma^2[N - \text{trace}(\textbf{H})] \\
-&amp;= \sigma^2[N - \text{trace}(\textbf{X(X^TX)^{-1}X^T})] \\
-&amp;= \sigma^2[N - \text{trace}(\textbf{X^TX(X^TX)^{-1}}_{(p+1) \times (p+1)})] \\
+&amp;= \sigma^2[N - \text{trace}(\textbf{X}(\textbf{X}^T \textbf{X})^{-1} \textbf{X}^T)] \\
+&amp;= \sigma^2[N - \text{trace}(\textbf{X}^T \textbf{X}(\textbf{X}^T \textbf{X})^{-1}_{(p+1) \times (p+1)})] \\
 &amp;= \sigma^2[N - \text{trace}(\textbf{I}_{(p+1) \times (p+1)})] \\
 &amp;= \sigma^2(N - p -1)
 \end{align}\]</div>
@@ -867,6 +893,38 @@ x_{ij}^c&amp;= x_{ij} - \overline{x_j} &amp; (j &gt;=1)
 <p>解得：</p>
 <div class="arithmatex">\[ \beta = (\textbf{X}^T\textbf{X} + \lambda \textbf{I})^{-1} \textbf{X}^T \textbf{y}\]</div>
 <p>我们看到，即使 <span class="arithmatex">\(\textbf{X}^T\textbf{X}\)</span> 是非满秩的，由于多加了一个 <span class="arithmatex">\(\lambda \textbf{I}\)</span>，它仍是一个可逆矩阵。这也是 ridge regression 的另一个优势。</p>
+<h4 id="ridge-regression-and-svd">Ridge Regression and SVD</h4>
+<p>奇异值分解 (singular value decomposition, SVD) 将一个矩阵分解为三个矩阵的乘积：</p>
+<div class="arithmatex">\[ \textbf{X}_{N \times p} = \textbf{U}_{N \times N} \mathbf{\Sigma}_{N \times p} \textbf{V}^T_{p \times p} \]</div>
+<p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(\textbf{U}_{N \times N}\)</span> 是一个单位正交矩阵，在 <span class="arithmatex">\(\mathbb{R}^{N \times N}\)</span> 空间。它代表了旋转(rotation)</li>
+<li><span class="arithmatex">\(\mathbf{\Sigma}_{N \times p}\)</span> 是一个对角矩阵，但是不一定是方阵。它代表拉伸(scaling)</li>
+<li><span class="arithmatex">\(\textbf{V}^T_{p \times p}\)</span> 是一个单位正交矩阵，在 <span class="arithmatex">\(\mathbb{R}^{p \times p}\)</span> 空间。它代表旋转(rotation)</li>
+</ul>
+<p>对于普通的线性回归，有：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{y} = \textbf{H}y &amp;= \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^Ty \\
+&amp;= \textbf{U}\mathbf{\Sigma}\textbf{V}^T(\textbf{V}\mathbf{\Sigma}^T\mathbf{\Sigma}\textbf{V}^T)^{-1} \textbf{V}\mathbf{\Sigma}^T\textbf{U}^T y \\
+&amp;= \textbf{U}\mathbf{\Sigma} (\mathbf{\Sigma}^T\mathbf{\Sigma})^{-1} \mathbf{\Sigma}^T\textbf{U}^T y \\
+&amp;= \textbf{U}\textbf{U}^T y
+\end{align}\]</div>
+<p>而对于 ridge regression，有：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{y} &amp;= \textbf{X}(\textbf{X}^T\textbf{X} + \lambda \textbf{I})^{-1} \textbf{X}^T \textbf{y} \\
+&amp;= \textbf{U}\mathbf{\Sigma}(\mathbf{\Sigma}^T\mathbf{\Sigma} + \lambda \textbf{I})^{-1} \mathbf{\Sigma}^T\textbf{U}^T y
+\end{align}\]</div>
+<p>假设 SVD 分解的奇异值为 <span class="arithmatex">\(\sigma_1, \sigma_2, ... , \sigma_p\)</span>，我们有：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{y} &amp;= \textbf{U}\mathbf{\Sigma}(\mathbf{\Sigma}^T\mathbf{\Sigma} + \lambda \textbf{I})^{-1} \mathbf{\Sigma}^T\textbf{U}^T y \\
+&amp;= \sum_{j=1}^p \textbf{u}_j \frac{\sigma_j^2}{\sigma_j^2 + \lambda} \textbf{u}_j^T \textbf{y}
+\end{align}\]</div>
+<p>其中 <span class="arithmatex">\(\textbf{u}_j\)</span> 表示矩阵 <span class="arithmatex">\(\textbf{U}\)</span> 的第 <span class="arithmatex">\(j\)</span> 列。</p>
+<p>因此，从直观意义上理解，ridge regression 相比普通的 regression 就是对 <span class="arithmatex">\(\textbf{U}\)</span> 的每一列附加了一个系数 <span class="arithmatex">\(\frac{\sigma_j^2}{\sigma_j^2 + \lambda} \leq 1\)</span>。这个系数与该列对应的奇异值相关。而我们在 SVD 定义中知道 <span class="arithmatex">\(\sigma_j\)</span> 代表了在 <span class="arithmatex">\(\textbf{u}_j\)</span> 方向的缩放系数。显然，<span class="arithmatex">\(\frac{\sigma_j^2}{\sigma_j^2 + \lambda}\)</span> 在 <span class="arithmatex">\(\sigma_j\)</span> 越小时，shrinkage 越大。因此，直观理解，ridge regression 会倾向于忽略输入 <span class="arithmatex">\(\textbf{X}\)</span> 方差较小的方向。</p>
+<blockquote>
+<p>the small singular values correspond to directions in the column space of X having small variance, and ridge regression shrinks these directions the most.</p>
+</blockquote>
+<p>这是个比较合理的假设，一般情况下，我们对于样本中几乎一样的输入参数并不是很关心.</p>
 <h1 id="reference">Reference</h1>
 <ol>
 <li><a href="https://yuhangzhou88.github.io/ESL_Solution/">ESL solution</a></li>
