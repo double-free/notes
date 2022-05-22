@@ -133,8 +133,8 @@ $$\text{trace}(ABC) = \text{trace}(CAB)$$
 
 $$\begin{align}
 E[\sum_{i=1}^N(y_i - \hat{y_i})^2] &= \sigma^2[N - \text{trace}(\textbf{H})] \\
-&= \sigma^2[N - \text{trace}(\textbf{X(X^TX)^{-1}X^T})] \\
-&= \sigma^2[N - \text{trace}(\textbf{X^TX(X^TX)^{-1}}_{(p+1) \times (p+1)})] \\
+&= \sigma^2[N - \text{trace}(\textbf{X}(\textbf{X}^T \textbf{X})^{-1} \textbf{X}^T)] \\
+&= \sigma^2[N - \text{trace}(\textbf{X}^T \textbf{X}(\textbf{X}^T \textbf{X})^{-1}_{(p+1) \times (p+1)})] \\
 &= \sigma^2[N - \text{trace}(\textbf{I}_{(p+1) \times (p+1)})] \\
 &= \sigma^2(N - p -1)
 \end{align}$$
@@ -406,6 +406,49 @@ $$ -\textbf{X}^T(\textbf{y} - \textbf{X}\beta)  + \lambda \beta = 0$$
 $$ \beta = (\textbf{X}^T\textbf{X} + \lambda \textbf{I})^{-1} \textbf{X}^T \textbf{y}$$
 
 我们看到，即使 $\textbf{X}^T\textbf{X}$ 是非满秩的，由于多加了一个 $\lambda \textbf{I}$，它仍是一个可逆矩阵。这也是 ridge regression 的另一个优势。
+
+#### Ridge Regression and SVD
+
+奇异值分解 (singular value decomposition, SVD) 将一个矩阵分解为三个矩阵的乘积：
+
+$$ \textbf{X}_{N \times p} = \textbf{U}_{N \times N} \mathbf{\Sigma}_{N \times p} \textbf{V}^T_{p \times p} $$
+
+其中：
+
+- $\textbf{U}_{N \times N}$ 是一个单位正交矩阵，在 $\mathbb{R}^{N \times N}$ 空间。它代表了旋转(rotation)
+- $\mathbf{\Sigma}_{N \times p}$ 是一个对角矩阵，但是不一定是方阵。它代表拉伸(scaling)
+- $\textbf{V}^T_{p \times p}$ 是一个单位正交矩阵，在 $\mathbb{R}^{p \times p}$ 空间。它代表旋转(rotation)
+
+对于普通的线性回归，有：
+
+$$\begin{align}
+\hat{y} = \textbf{H}y &= \textbf{X}(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^Ty \\
+&= \textbf{U}\mathbf{\Sigma}\textbf{V}^T(\textbf{V}\mathbf{\Sigma}^T\mathbf{\Sigma}\textbf{V}^T)^{-1} \textbf{V}\mathbf{\Sigma}^T\textbf{U}^T y \\
+&= \textbf{U}\mathbf{\Sigma} (\mathbf{\Sigma}^T\mathbf{\Sigma})^{-1} \mathbf{\Sigma}^T\textbf{U}^T y \\
+&= \textbf{U}\textbf{U}^T y
+\end{align}$$
+
+而对于 ridge regression，有：
+
+$$\begin{align}
+\hat{y} &= \textbf{X}(\textbf{X}^T\textbf{X} + \lambda \textbf{I})^{-1} \textbf{X}^T \textbf{y} \\
+&= \textbf{U}\mathbf{\Sigma}(\mathbf{\Sigma}^T\mathbf{\Sigma} + \lambda \textbf{I})^{-1} \mathbf{\Sigma}^T\textbf{U}^T y
+\end{align}$$
+
+假设 SVD 分解的奇异值为 $\sigma_1, \sigma_2, ... , \sigma_p$，我们有：
+
+$$\begin{align}
+\hat{y} &= \textbf{U}\mathbf{\Sigma}(\mathbf{\Sigma}^T\mathbf{\Sigma} + \lambda \textbf{I})^{-1} \mathbf{\Sigma}^T\textbf{U}^T y \\
+&= \sum_{j=1}^p \textbf{u}_j \frac{\sigma_j^2}{\sigma_j^2 + \lambda} \textbf{u}_j^T \textbf{y}
+\end{align}$$
+
+其中 $\textbf{u}_j$ 表示矩阵 $\textbf{U}$ 的第 $j$ 列。
+
+因此，从直观意义上理解，ridge regression 相比普通的 regression 就是对 $\textbf{U}$ 的每一列附加了一个系数 $\frac{\sigma_j^2}{\sigma_j^2 + \lambda} \leq 1$。这个系数与该列对应的奇异值相关。而我们在 SVD 定义中知道 $\sigma_j$ 代表了在 $\textbf{u}_j$ 方向的缩放系数。显然，$\frac{\sigma_j^2}{\sigma_j^2 + \lambda}$ 在 $\sigma_j$ 越小时，shrinkage 越大。因此，直观理解，ridge regression 会倾向于忽略输入 $\textbf{X}$ 方差较小的方向。
+
+> the small singular values correspond to directions in the column space of X having small variance, and ridge regression shrinks these directions the most.
+
+这是个比较合理的假设，一般情况下，我们对于样本中几乎一样的输入参数并不是很关心.
 
 # Reference
 1. [ESL solution](https://yuhangzhou88.github.io/ESL_Solution/)
