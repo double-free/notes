@@ -10,19 +10,19 @@
         <meta name="author" content="Ye">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
     
     
       
-        <title>My Notes</title>
+        <title>向量和矩阵求导 - My Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.c382b1dc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.cc9b2e1e.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -37,7 +37,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -61,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#yes-notes" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -75,7 +75,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ye's Notes
+              向量和矩阵求导
             
           </span>
         </div>
@@ -161,7 +161,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -178,66 +178,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Ye's Notes
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
         Ye's Notes
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#trading" class="md-nav__link">
-    Trading
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#computer-science" class="md-nav__link">
-    Computer Science
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mathematics" class="md-nav__link">
-    Mathematics
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -248,12 +193,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       
       
@@ -302,7 +249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/CFR/CfrAndKuhnPoker/" class="md-nav__link">
+      <a href="../../CFR/CfrAndKuhnPoker/" class="md-nav__link">
         Counterfactual Regret Minimization and Kuhn Poker
       </a>
     </li>
@@ -316,7 +263,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/CFR/MonteCarloCfr/" class="md-nav__link">
+      <a href="../../CFR/MonteCarloCfr/" class="md-nav__link">
         Monte Carlo CFR
       </a>
     </li>
@@ -330,7 +277,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
+      <a href="../../CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
         Regret Matching and Blotto Game
       </a>
     </li>
@@ -377,7 +324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
+      <a href="../../ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
         ESL 3: Linear Methods for Regression
       </a>
     </li>
@@ -396,12 +343,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" checked>
       
       
       
@@ -422,11 +371,79 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="mathematics/matrix/MatrixCalculus/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          向量和矩阵求导
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         向量和矩阵求导
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    求导布局
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    向量对向量求导
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    标量对向量求导
+  </a>
+  
+    <nav class="md-nav" aria-label="标量对向量求导">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    例：最小二乘法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -471,7 +488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/probability/RigidBalls/" class="md-nav__link">
+      <a href="../../probability/RigidBalls/" class="md-nav__link">
         小球碰撞问题中的统计学
       </a>
     </li>
@@ -485,7 +502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/probability/martingale/" class="md-nav__link">
+      <a href="../../probability/martingale/" class="md-nav__link">
         Martingale
       </a>
     </li>
@@ -533,23 +550,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#trading" class="md-nav__link">
-    Trading
+  <a href="#_2" class="md-nav__link">
+    求导布局
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#computer-science" class="md-nav__link">
-    Computer Science
+  <a href="#_3" class="md-nav__link">
+    向量对向量求导
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#mathematics" class="md-nav__link">
-    Mathematics
+  <a href="#_4" class="md-nav__link">
+    标量对向量求导
   </a>
+  
+    <nav class="md-nav" aria-label="标量对向量求导">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    例：最小二乘法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -567,27 +597,101 @@
                 
 
 
-<h1 id="yes-notes">Ye's Notes</h1>
-<p>Notes for my random readings. There's no explicit goal, but I'd love to keep my brain busy.</p>
-<p>The notes can be roughly split to 3 topics, they are related to my work to varying degrees:</p>
+<h1 id="_1">向量和矩阵求导</h1>
+<p>向量、矩阵求导其实就两个内容</p>
+<ol>
+<li>分子每个元素对分母每个元素求导</li>
+<li>将结果以一定方式布局</li>
+</ol>
+<p>对于 1，没什么特别的，就是标量之间的求导。</p>
+<p>对于 2，我们需要分情况讨论。</p>
+<h2 id="_2">求导布局</h2>
+<p>求导结果的布局根据定义不同有所不同，没有统一。所以经常在不同的书上看到不一样的公式，使人产生困惑。</p>
+<p>常见的求导类型如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">分母 \ 分子</th>
+<th align="center">标量</th>
+<th align="center">向量</th>
+<th align="center">矩阵</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">标量</td>
+<td align="center"><span class="arithmatex">\(\frac{\partial y}{ \partial x}\)</span></td>
+<td align="center"><span class="arithmatex">\(\frac{ \partial \textbf{y} }{ \partial x }\)</span></td>
+<td align="center"><span class="arithmatex">\(\frac{\partial \textbf{Y}}{\partial x}\)</span></td>
+</tr>
+<tr>
+<td align="center">向量</td>
+<td align="center"><span class="arithmatex">\(\frac{\partial y}{ \partial \textbf{x}}\)</span></td>
+<td align="center"><span class="arithmatex">\(\frac{\partial  \textbf{y} }{ \partial \textbf{x}}\)</span></td>
+<td align="center">/</td>
+</tr>
+<tr>
+<td align="center">矩阵</td>
+<td align="center"><span class="arithmatex">\(\frac{ \partial y }{ \partial \textbf{X} }\)</span></td>
+<td align="center">/</td>
+<td align="center">/</td>
+</tr>
+</tbody>
+</table>
+<p>我们划掉的类型是因为其结果无法在二维矩阵中很好地表示，在优化问题中也不常见。</p>
+<p>未划掉的类型中，唯一布局有歧义的就是向量对向量的求导：<span class="arithmatex">\(\frac{ \partial  \textbf{y} }{ \partial \textbf{x} }\)</span></p>
+<h2 id="_3">向量对向量求导</h2>
+<p>歧义在于，假设 <span class="arithmatex">\(\textbf{y}\)</span> 是一个 <span class="arithmatex">\(m\)</span> 维向量，<span class="arithmatex">\(\textbf{x}\)</span> 是一个 <span class="arithmatex">\(n\)</span> 维向量，那求导结果是一个 <span class="arithmatex">\(m \times n\)</span> 矩阵还是 <span class="arithmatex">\(n \times m\)</span> 矩阵呢？</p>
 <ul>
-<li>
-<p>Trading</p>
-</li>
-<li>
-<p>Computer science</p>
-</li>
-<li>
-<p>Mathematics</p>
-</li>
+<li>分子布局，即以分子 <span class="arithmatex">\(\textbf{y}\)</span> 的元素数作为行数。结果是一个 <span class="arithmatex">\(m \times n\)</span> 矩阵，也称为雅可比（Jacobian）矩阵。</li>
 </ul>
-<p>Again, I'm not an expert in any of these areas, sorry for any error or incompleteness, and appreciate if you can point them out.</p>
-<h2 id="trading">Trading</h2>
-<p>WIP</p>
-<h2 id="computer-science">Computer Science</h2>
-<p>WIP</p>
-<h2 id="mathematics">Mathematics</h2>
-<p>WIP</p>
+<div class="arithmatex">\[ \frac{ \partial \textbf{ y } }{ \partial \textbf{ x } } = \begin{bmatrix}
+ \frac{ \partial {y_1} }{ \partial  {x_1} } &amp; \frac{\partial {y_1} }{\partial  {x_2} } &amp; \cdots &amp;\frac{\partial {y_1} }{\partial  {x_n} }  \\
+ \frac{\partial {y_2} }{\partial  {x_1} } &amp; \frac{\partial {y_2} }{\partial  {x_2} } &amp; \cdots &amp;\frac{\partial {y_2} }{\partial  {x_n} }  \\
+ \vdots &amp; \vdots &amp; &amp; \vdots \\
+  \frac{\partial {y_m} }{\partial  {x_1} } &amp; \frac{\partial {y_m} }{\partial  {x_2} } &amp; \cdots &amp;\frac{\partial {y_m} }{\partial  {x_n} }  \\
+\end{bmatrix}_{m \times n} \]</div>
+<ul>
+<li>分母布局，即以分母 <span class="arithmatex">\(\textbf{x}\)</span> 的元素数作为行数。结果是一个 <span class="arithmatex">\(n \times m\)</span> 矩阵，也称为梯度(Gradient)矩阵。</li>
+</ul>
+<div class="arithmatex">\[ \frac{\partial \textbf{ y }}{\partial \textbf{ x } } = \begin{bmatrix}
+ \frac{\partial {y_1} }{\partial  {x_1} } &amp; \frac{\partial {y_2} }{\partial  {x_1} } &amp; \cdots &amp;\frac{\partial {y_m} }{\partial  {x_1} }  \\
+ \frac{\partial {y_1} }{\partial  {x_2} } &amp; \frac{\partial {y_2} }{\partial  {x_2} } &amp; \cdots &amp;\frac{\partial {y_m } }{\partial  {x_2} }  \\
+ \vdots &amp; \vdots &amp; &amp; \vdots \\
+  \frac{\partial {y_1} }{\partial  {x_n} } &amp; \frac{\partial {y_2} }{\partial  {x_n} } &amp; \cdots &amp;\frac{\partial {y_m} }{\partial  {x_n} }  \\
+\end{bmatrix}_{n \times m} \]</div>
+<p>两种布局均可，在一本书中一般是一致的。</p>
+<h2 id="_4">标量对向量求导</h2>
+<p>标量常见的有以下几种形式：</p>
+<ol>
+<li><span class="arithmatex">\(a^T x\)</span></li>
+<li><span class="arithmatex">\(x^T a\)</span></li>
+<li><span class="arithmatex">\(x^T A x\)</span></li>
+</ol>
+<p>从定义上看，1 和 2 类似：</p>
+<p>首先定义：</p>
+<div class="arithmatex">\[S = a^T x = x^T a  = \sum_{i=1}^n a_ix_i\]</div>
+<p>得出：</p>
+<div class="arithmatex">\[ \frac{\partial S}{\partial x_i} = a_i\]</div>
+<p>因此：</p>
+<div class="arithmatex">\[\frac{\partial a^Tx}{\partial x} = \frac{\partial x^Ta}{\partial x} = [ \frac{\partial S}{\partial x_1}, \frac{\partial S}{\partial x_2}, \cdots, \frac{\partial S}{\partial x_n}]^T = a\]</div>
+<p>3 稍微复杂：</p>
+<div class="arithmatex">\[ S = \sum_{i=1}^n \sum_{j=1}^n x_iA_{i,j}x_j\]</div>
+<div class="arithmatex">\[ \frac{\partial S}{\partial x_k} = \sum_{j=1}^n A_{k,j}x_j + \sum_{i=1}^n x_iA_{i,k} = (A_{k,i} + A_{i,k})x_i\]</div>
+<p>即求导后向量的第 k 个元素是 A 的第 k 行与 x 的内积 + 第 k 列与 x 的内积。这其实就是矩阵与向量乘法的定义。</p>
+<div class="arithmatex">\[\frac{\partial x^TAx}{\partial x} = [ \frac{\partial S}{\partial x_1}, \frac{\partial S}{\partial x_2}, \cdots, \frac{\partial S}{\partial x_n}]^T = Ax + A^Tx \]</div>
+<h3 id="_5">例：最小二乘法</h3>
+<p>最小二乘法是最流行的线性模型拟合方法。它的目的是找出系数 <span class="arithmatex">\(\mathbf{\beta}\)</span> 使 <span class="arithmatex">\(||Y-\hat Y||_2\)</span> （residual sum of squares, RSS）最小：</p>
+<div class="arithmatex">\[\text{RSS}(\mathbf{\beta} ) = \sum_{j=1}^N (y_j - X_j^T\mathbf{\beta} )^2 \]</div>
+<p>其中 <span class="arithmatex">\(j\)</span> 代表训练数据的序号。一共有 <span class="arithmatex">\(N\)</span> 组训练数据。
+用矩阵形式表示为：</p>
+<div class="arithmatex">\[\text{RSS}(\mathbf{\beta}) = (\textbf{y} - \textbf{X}\mathbf{\beta} )^T(\textbf{y} - \textbf{X}\mathbf{\beta} )\]</div>
+<p>这里需要用 <span class="arithmatex">\(\text{RSS}(\mathbf{\beta})\)</span> 对 <span class="arithmatex">\(\mathbf{\beta}\)</span> 求导，得出二次函数最值点。</p>
+<div class="arithmatex">\[\text{RSS}(\mathbf{\beta}) = \textbf{y}^T\textbf{y} -\textbf{y}^T \textbf{X} \mathbf{\beta} - \mathbf{\beta}^T \textbf{X}^T \textbf{y} + \mathbf{\beta}^T \textbf{X}^T \textbf{X}\mathbf{\beta}\]</div>
+<p>套用上面的结论，可以得到：</p>
+<div class="arithmatex">\[ \frac{ \partial \text{RSS}(\mathbf{\beta})}{\partial \mathbf{\beta}} = - 2\textbf{X}^T\textbf{y} + 2\textbf{X}^T\textbf{X}\mathbf{\beta}\]</div>
+<p>令其为 0 可以解出：</p>
+<div class="arithmatex">\[\hat{\mathbf{\beta}} = (\textbf{X}^T \textbf{X})^{-1} \textbf{X}^T \textbf{y}\]</div>
 
               
             </article>
@@ -600,15 +704,30 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
+        
+        <a href="../../ESL/ESL3_LinearMethodsForRegression/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ESL 3: Linear Methods for Regression" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              ESL 3: Linear Methods for Regression
+            </div>
+          </div>
+        </a>
+      
       
         
-        <a href="mathematics/CFR/CfrAndKuhnPoker/" class="md-footer__link md-footer__link--next" aria-label="Next: Counterfactual Regret Minimization and Kuhn Poker" rel="next">
+        <a href="../../probability/RigidBalls/" class="md-footer__link md-footer__link--next" aria-label="Next: 小球碰撞问题中的统计学" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Counterfactual Regret Minimization and Kuhn Poker
+              小球碰撞问题中的统计学
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -638,12 +757,12 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.a6c66575.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
       
-        <script src="javascripts/mathjax.js"></script>
+        <script src="../../../javascripts/mathjax.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       

@@ -1,0 +1,930 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ye">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Monte Carlo CFR - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#monte-carlo-cfr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Monte Carlo CFR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Ye's Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Mathematics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mathematics" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mathematics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          CFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CFR" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          CFR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CfrAndKuhnPoker/" class="md-nav__link">
+        Counterfactual Regret Minimization and Kuhn Poker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Monte Carlo CFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Monte Carlo CFR
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#definition" class="md-nav__link">
+    Definition
+  </a>
+  
+    <nav class="md-nav" aria-label="Definition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#outcome-sampling-mccfr" class="md-nav__link">
+    Outcome-Sampling MCCFR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    实现细节
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    结果
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RegretMatchingAndBlottoGame/" class="md-nav__link">
+        Regret Matching and Blotto Game
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          ESL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ESL" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          ESL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
+        ESL 3: Linear Methods for Regression
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Matrix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Matrix" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Matrix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../matrix/MatrixCalculus/" class="md-nav__link">
+        向量和矩阵求导
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Probability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Probability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Probability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/RigidBalls/" class="md-nav__link">
+        小球碰撞问题中的统计学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/martingale/" class="md-nav__link">
+        Martingale
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#definition" class="md-nav__link">
+    Definition
+  </a>
+  
+    <nav class="md-nav" aria-label="Definition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#outcome-sampling-mccfr" class="md-nav__link">
+    Outcome-Sampling MCCFR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    实现细节
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    结果
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="monte-carlo-cfr">Monte Carlo CFR</h1>
+<p>在上一篇文章中，我们讲了经典的 CFR 算法的原理及实现。但是，它也有两个致命的缺陷，导致无法应用到实际的复杂博弈中：</p>
+<ul>
+<li>
+<p>它需要遍历整个游戏树</p>
+</li>
+<li>
+<p>它需要知道对手的策略，这在实际情况下很难满足</p>
+</li>
+</ul>
+<p>本文将介绍基于 Monte Carlo 的改进算法。全部代码可以参考我的 github 项目：<a href="https://github.com/double-free/CfrKuhnPoker">cfr-kuhn</a>.</p>
+<h2 id="definition">Definition</h2>
+<p>核心思想是，在避免遍历整个游戏树的前提下，每个 information set 的每个 action 的 counterfactual regret 期望值保持不变。</p>
+<p>令 <span class="arithmatex">\(\mathcal{Q}  =  \{Q_1, Q_2, ..., Q_r \}\)</span> 是所有 terminal node <span class="arithmatex">\(Z\)</span> 的子集，其中的每一个元素 <span class="arithmatex">\(Q_j\)</span> 我们称为 <strong>block</strong>，每个 block 可能包含多个 terminal node 。令 <span class="arithmatex">\(q_j &gt; 0\)</span> 是选择 <span class="arithmatex">\(Q_j\)</span> 的概率，满足 <span class="arithmatex">\(\sum_{j=1}^r q_j = 1\)</span>。每次迭代，我们都会从这些 blocks 中采样一个并且只考虑在该 block 中的 terminal node 。</p>
+<p>回忆 CFR 经典版的 counterfactual value 计算公式：</p>
+<div class="arithmatex">\[ v_i(\sigma, I) = \sum_{z \in Z_I } \pi_{-i}^{\sigma} (z[I]) \pi ^{\sigma} (z[I], z) u_i (z) \]</div>
+<p>在 MCCFR 中，对于 block <span class="arithmatex">\(Q_j\)</span> 的 sampled counterfactual value 可以表示为：</p>
+<div class="arithmatex">\[v_i(\sigma, I | j) = \sum_{z \in Q_j \cap Z_I} \frac{1}{q(z)} \pi_{-i}^\sigma (z[I]) \pi^\sigma (z[I], z) u_i(z)\]</div>
+<p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(z\)</span> 是 terminal node</li>
+<li><span class="arithmatex">\(z_I\)</span> 表示 information set <span class="arithmatex">\(I\)</span> 可以到达的 <span class="arithmatex">\(z\)</span> 的全集</li>
+<li><span class="arithmatex">\(z[I]\)</span> 表示某个可以到达 <span class="arithmatex">\(z\)</span> 的 information set</li>
+<li><span class="arithmatex">\(i\)</span> 表示玩家 id</li>
+<li><span class="arithmatex">\(j\)</span> 表示 block id</li>
+<li><span class="arithmatex">\(q(z)\)</span> 表示 <span class="arithmatex">\(z\)</span> 所在 block 被选中的概率之和（一个 terminal node 可以被分到多个 block 中）</li>
+</ul>
+<p>我们可以证明 counterfactual value 和 sampled counterfactual value 期望是相等的。</p>
+<p>这就是 MCCFR 的基本思想了。事实上，CFR 可以看作 MCCFR 在 <span class="arithmatex">\(\mathcal{Q} = \{Z\}\)</span> 且 <span class="arithmatex">\(q_1 = 1.0\)</span> 的特例。</p>
+<p>此外，我们可以__将每一个 block 选为 chance node 的一个分支__。以 Kuhn Poker 为例，我们对于手牌 1，2，3 可以建立 3 个 block： <span class="arithmatex">\(\{ Q_1, Q_2, Q_3 \}\)</span>，分别包含手牌为 1，2，3 的所有 terminal nodes。从而，每个 block 的概率也自然为 <span class="arithmatex">\(\frac{1}{3}, \frac{1}{3}, \frac{1}{3}\)</span>。这就是 chance-sampled CFR。</p>
+<h3 id="outcome-sampling-mccfr">Outcome-Sampling MCCFR</h3>
+<p>在 outcome-sampling MCCFR 中，我们__把每个 terminal node 作为一个 block__。每次迭代，我们抽取一个 terminal node 并更新它的前缀 information set。一个 terminal node 出现概率越高，我们采样概率也越高。因此我们必须得到每个 terminal node j 出现的概率作为 <span class="arithmatex">\(q_j\)</span>。如何得到呢？</p>
+<p>在 CFR 中，我们在计算 regret 的时候，会计算到达每个 history 的概率。对于 terminal node j，这个概率其实就是采样概率 <span class="arithmatex">\(q_j\)</span>。</p>
+<p>CFR 算法包含了两个方向的遍历：</p>
+<ul>
+<li>前向遍历。用于计算每个玩家从原点到达当前 history 的概率 <span class="arithmatex">\(\pi_i^{\sigma}(h)\)</span></li>
+<li>后向遍历。用于计算每个玩家从当前 history 进行到 terminal node 的概率 <span class="arithmatex">\(\pi_i^{\sigma}(h,z)\)</span>，在此过程中，还会计算 sampled counterfactual regrets。</li>
+</ul>
+<p>后向遍历中计算 sampled counterfactual regrets 会分为两种情况。</p>
+<p>其一是选择了能通向当前 terminal node <span class="arithmatex">\(z\)</span> 的 action。即，在information set <span class="arithmatex">\(I\)</span> 采取了行动 <span class="arithmatex">\(a\)</span>，此时计算方式为：</p>
+<div class="arithmatex">\[ \begin{align}
+r(I, a) &amp;= v_i(\sigma_{I \rightarrow a}, I) - v_i(\sigma, I) \\
+          &amp;= \frac{\pi_{-i}^\sigma (z[I]) \pi^\sigma (z[I]a, z) u_i(z)}{q(z)} - \frac{\pi_{-i}^\sigma (z[I]) \pi^\sigma (z[I], z) u_i(z)}{q(z)} \\
+          &amp;= \frac{\pi_{-i}^\sigma (z[I]) \pi^\sigma (z[I] a, z) u_i(z)}{q(z)} ( 1 - \sigma(a|z[I]))
+\end{align} \]</div>
+<p>上式比较难以理解的是：</p>
+<div class="arithmatex">\[\pi^\sigma (z[I] a, z) \cdot \sigma(a|z[I]) = \pi^\sigma (z[I], z) \]</div>
+<p>结合定义，<span class="arithmatex">\(\pi^\sigma (z[I] a, z)\)</span> 是从 <span class="arithmatex">\(I + a\)</span> 到达 <span class="arithmatex">\(z\)</span> 的概率，相比 <span class="arithmatex">\(\pi^\sigma (z[I], z)\)</span> 多前进了一步（选择行动 <span class="arithmatex">\(a\)</span>），在 <span class="arithmatex">\(I\)</span> 选择 <span class="arithmatex">\(a\)</span> 的概率是 <span class="arithmatex">\(\sigma(a|z[I])\)</span>，因此，如果从 <span class="arithmatex">\(I\)</span> 到 <span class="arithmatex">\(z\)</span> 的概率为 <span class="arithmatex">\(p\)</span>，由于 <span class="arithmatex">\(I + a\)</span> 将选择  <span class="arithmatex">\(a\)</span> 的概率由原本的 <span class="arithmatex">\(\sigma(a|z[I])\)</span> 变成了 1.0，它到 <span class="arithmatex">\(z\)</span> 的概率就变成了 <span class="arithmatex">\(p / \sigma(a|z[I])\)</span>。</p>
+<p>另一种情况是选择了其他行动，此时 <span class="arithmatex">\(I + a\)</span> 不是 <span class="arithmatex">\(z\)</span> 的前缀。此时的 sampled counterfactual value 是：</p>
+<div class="arithmatex">\[ \begin{align}
+r(I, a) &amp;= 0 - v_i(\sigma, I) \\
+          &amp;= - \frac{\pi_{-i}^\sigma (z[I]) \pi^\sigma (z[I] a, z) u_i(z)}{q(z)} \sigma(a|z[I])
+\end{align} \]</div>
+<p>选取 0 是因为该动作的后悔值更新不归 <span class="arithmatex">\(z\)</span> 管。必然有别的 terminal node 的前缀是 <span class="arithmatex">\(I + a\)</span>，当采样到这些 terminal node 的时候自然会更新。</p>
+<p>我们令：</p>
+<div class="arithmatex">\[ w_I =  \frac{\pi_{-i}^\sigma (z[I]) \pi^\sigma (z[I] a, z) u_i(z)}{q(z)} \]</div>
+<p>由于在 outcome sampling 中，每个 terminal node <span class="arithmatex">\(z\)</span> 都对应一个 block <span class="arithmatex">\(Q\)</span>，因此 <span class="arithmatex">\(q(z)\)</span> 就是选中 <span class="arithmatex">\(Q\)</span> 的概率。理论上，为了保证采样的真实性，这个概率应该与所有玩家遵循策略 <span class="arithmatex">\(\sigma\)</span> 进行游戏到达 <span class="arithmatex">\(z\)</span> 的概率相同，即</p>
+<div class="arithmatex">\[q(z) = \pi^\sigma(z)\]</div>
+<p>根据定义，<span class="arithmatex">\(\pi_{-i}^\sigma (z)\)</span> 是对手到达 <span class="arithmatex">\(z\)</span> 的概率，在计算时，假设玩家 <span class="arithmatex">\(i\)</span> 以 1.0 的概率选择动作，而 <span class="arithmatex">\(\pi_i^\sigma (z)\)</span> 相反。两者的乘积就是从局外旁观者看来到达 <span class="arithmatex">\(z\)</span> 的概率。因此有：</p>
+<div class="arithmatex">\[ \begin{align}
+q(z) &amp;= \pi^\sigma(z) \\
+ &amp;= \pi^\sigma(z[I]) \cdot \pi^\sigma(z[I], z) \\
+ &amp;= \pi_i^\sigma (z[I]) \cdot \pi_{-i}^\sigma (z[I]) \cdot \pi^\sigma(z[I], z)
+\end{align} \]</div>
+<p>带入得到：</p>
+<div class="arithmatex">\[\begin{align}
+w_I &amp;= \frac{\pi_{-i}^\sigma (z[I]) \pi^\sigma (z[I] a, z) u_i(z)}{q(z)} \\
+       &amp;= \frac{\pi^\sigma (z[I] a, z) u_i(z)}{ \pi_i^\sigma (z[I]) \cdot \pi^\sigma(z[I], z)} \\
+       &amp;= \frac{\pi_i^\sigma(z[I]a, z) u_i(z)}{\pi_i^\sigma(z)} \\
+       &amp;=  \frac{u_i(z)}{ \pi_i^\sigma (z[I]) \cdot \sigma(a|z[I])}
+\end{align}\]</div>
+<p>注意在这个表达式中，我们不再需要对手的信息 （只有带下标 <span class="arithmatex">\(i\)</span> 的部分了）。我们在化简中刻意消去了对手 <span class="arithmatex">\(-i\)</span> 相关的信息。</p>
+<p>每次迭代累计后悔值会增加：</p>
+<div class="arithmatex">\[ r(I,a) = \begin{cases}
+w_I \cdot (1 - \sigma(a|z[I]) &amp; \text{if} ~ z(z[I]a) \sqsubset z \\
+-w_I \cdot \sigma(a|z[I]) &amp; \text{otherwise}
+\end{cases}\]</div>
+<p>这样计算可以保证累计后悔值的期望是与传统 cfr 相同的。</p>
+<p>每次迭代，每个动作的累计 strategy 增加：</p>
+<div class="arithmatex">\[s(I, a) = \pi_i^\sigma(z[I]) \cdot \sigma(a|z[I]) \]</div>
+<blockquote>
+<p>注：论文中还增加了 <span class="arithmatex">\(t - c_I\)</span> 权重，即本次 iteration 和上次访问 <span class="arithmatex">\(I\)</span> 的 iteration 之差，但是我加上权重后无法得到正确结果，尚需进一步研究。</p>
+</blockquote>
+<h3 id="_1">实现细节</h3>
+<p>相比 cfr，mccfr 的不同主要有：
+1. 无需对手（-i）的信息
+2. 无需遍历所有行动
+3. 计算后悔值的方法不同，需要增加一个基于采样概率的权重。
+4. 需要引入 epsilon 保证探索所有 action</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">    </span><span class="k">fn</span> <span class="nf">mccfr</span><span class="p">(</span><span class="w"></span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">        </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="n">history</span>: <span class="nc">kuhn</span>::<span class="n">ActionHistory</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="n">cards</span>: <span class="kp">&amp;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="n">reach_probs</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="kt">f64</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">f64</span> <span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="c1">// current active player</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">player_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">history</span><span class="p">.</span><span class="mf">0.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">opponent_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">player_id</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">maybe_payoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kuhn</span>::<span class="n">get_payoff</span><span class="p">(</span><span class="o">&amp;</span><span class="n">history</span><span class="p">,</span><span class="w"> </span><span class="n">cards</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">maybe_payoff</span><span class="p">.</span><span class="n">is_some</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">payoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">player_id</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">                </span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">maybe_payoff</span><span class="p">.</span><span class="n">unwrap</span><span class="p">(),</span><span class="w"></span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">                </span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">-</span><span class="n">maybe_payoff</span><span class="p">.</span><span class="n">unwrap</span><span class="p">(),</span><span class="w"></span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">                </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">panic!</span><span class="p">(</span><span class="s">&quot;unexpected player id {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">player_id</span><span class="p">),</span><span class="w"></span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">            </span><span class="p">};</span><span class="w"></span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">payoff</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">f64</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="c1">// not the terminal node</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">info_set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InformationSet</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">            </span><span class="n">action_history</span>: <span class="nc">history</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w"></span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">            </span><span class="n">hand_card</span>: <span class="nc">cards</span><span class="p">[</span><span class="n">player_id</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">usize</span><span class="p">],</span><span class="w"></span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">        </span><span class="p">};</span><span class="w"></span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">cfr_info</span><span class="p">.</span><span class="n">contains_key</span><span class="p">(</span><span class="o">&amp;</span><span class="n">info_set</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">cfr_info</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">info_set</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w"> </span><span class="n">CfrNode</span>::<span class="n">new</span><span class="p">(</span><span class="mf">0.06</span><span class="p">));</span><span class="w"></span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">action_probs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="w"></span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">            </span><span class="p">.</span><span class="n">cfr_info</span><span class="w"></span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">            </span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">info_set</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">            </span><span class="p">.</span><span class="n">unwrap</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">            </span><span class="p">.</span><span class="n">get_action_probability</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">chosen_action_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="o">&amp;</span><span class="n">action_probs</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">chosen_action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kuhn</span>::<span class="n">Action</span>::<span class="n">from_int</span><span class="p">(</span><span class="n">chosen_action_id</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">chosen_action_prob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">action_probs</span><span class="p">[</span><span class="n">chosen_action_id</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">usize</span><span class="p">];</span><span class="w"></span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">next_history</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">history</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">        </span><span class="n">next_history</span><span class="p">.</span><span class="mf">0.</span><span class="n">push</span><span class="p">(</span><span class="n">chosen_action</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">        </span><span class="c1">// modify reach prob for SELF (not opponent)</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w">        </span><span class="c1">// update history probability</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">next_reach_probs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reach_probs</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w">        </span><span class="o">*</span><span class="n">next_reach_probs</span><span class="p">.</span><span class="n">get_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="n">player_id</span><span class="p">).</span><span class="n">unwrap</span><span class="p">()</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="n">chosen_action_prob</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w">        </span><span class="c1">// recursive call</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="w">        </span><span class="c1">// final payoff of the terminal node</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">final_payoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="bp">self</span><span class="p">.</span><span class="n">mccfr</span><span class="p">(</span><span class="n">next_history</span><span class="p">,</span><span class="w"> </span><span class="n">cards</span><span class="p">,</span><span class="w"> </span><span class="n">next_reach_probs</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">        </span><span class="c1">// update regret value</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">cfr_info</span><span class="p">.</span><span class="n">get_mut</span><span class="p">(</span><span class="o">&amp;</span><span class="n">info_set</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">action_id</span><span class="p">,</span><span class="w"> </span><span class="n">action_prob</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">action_probs</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">enumerate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kuhn</span>::<span class="n">Action</span>::<span class="n">from_int</span><span class="p">(</span><span class="n">action_id</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="w">            </span><span class="c1">// reach probability of SELF (not opponent)</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">final_payoff</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">reach_probs</span><span class="p">[</span><span class="o">&amp;</span><span class="n">player_id</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">action_prob</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">chosen_action</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="w">                </span><span class="n">node</span><span class="p">.</span><span class="n">cum_regrets</span><span class="p">[</span><span class="n">action_id</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mf">1.0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">action_prob</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="w">                </span><span class="n">node</span><span class="p">.</span><span class="n">cum_regrets</span><span class="p">[</span><span class="n">action_id</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">-</span><span class="n">weight</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">action_prob</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="w">            </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="w">        </span><span class="c1">// update strategy</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">action_id</span><span class="p">,</span><span class="w"> </span><span class="n">action_prob</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">action_probs</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">enumerate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="w">            </span><span class="n">node</span><span class="p">.</span><span class="n">cum_strategy</span><span class="p">[</span><span class="n">action_id</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">action_prob</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reach_probs</span><span class="p">[</span><span class="o">&amp;</span><span class="n">player_id</span><span class="p">];</span><span class="w"></span>
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">final_payoff</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<h3 id="_2">结果</h3>
+<p>Explore with <code>epsilon=0.06</code>. Average payoff = -0.05138</p>
+<table>
+<thead>
+<tr>
+<th align="center">History</th>
+<th align="center">Check Probability</th>
+<th align="center">Bet Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="center">0.805</td>
+<td align="center">0.195</td>
+</tr>
+<tr>
+<td align="center">1C</td>
+<td align="center">0.68</td>
+<td align="center">0.32</td>
+</tr>
+<tr>
+<td align="center">1B</td>
+<td align="center">0.97</td>
+<td align="center">0.03</td>
+</tr>
+<tr>
+<td align="center">1CB</td>
+<td align="center">0.97</td>
+<td align="center">0.03</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">0.97</td>
+<td align="center">0.03</td>
+</tr>
+<tr>
+<td align="center">2C</td>
+<td align="center">0.94</td>
+<td align="center">0.05</td>
+</tr>
+<tr>
+<td align="center">2B</td>
+<td align="center">0.56</td>
+<td align="center">0.44</td>
+</tr>
+<tr>
+<td align="center">2CB</td>
+<td align="center">0.47</td>
+<td align="center">0.53</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">0.422</td>
+<td align="center">0.578</td>
+</tr>
+<tr>
+<td align="center">3C</td>
+<td align="center">0.03</td>
+<td align="center">0.97</td>
+</tr>
+<tr>
+<td align="center">3B</td>
+<td align="center">0.03</td>
+<td align="center">0.97</td>
+</tr>
+<tr>
+<td align="center">3CB</td>
+<td align="center">0.03</td>
+<td align="center">0.97</td>
+</tr>
+</tbody>
+</table>
+<p>We get 0.03 here because we choose <code>epsilon = 0.06</code> and we have 2 actions to choose from.</p>
+<h2 id="reference">Reference</h2>
+<ol>
+<li><a href="https://blog.csdn.net/qq_36691985/article/details/116793223">Monte Carlo Counterfactual Regret Minimization</a></li>
+<li><a href="https://era.library.ualberta.ca/items/944add23-5c61-4b7a-afa5-8059479a0443/view/b8226187-17cd-42bb-a299-09cae015d415/TR09-15.pdf">MCCFR technical report</a></li>
+</ol>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../CfrAndKuhnPoker/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Counterfactual Regret Minimization and Kuhn Poker" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Counterfactual Regret Minimization and Kuhn Poker
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../RegretMatchingAndBlottoGame/" class="md-footer__link md-footer__link--next" aria-label="Next: Regret Matching and Blotto Game" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Regret Matching and Blotto Game
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
