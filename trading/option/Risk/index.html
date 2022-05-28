@@ -1,0 +1,1276 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ye">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Option Volatility and Pricing - Risks - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#option-volatility-and-pricing-risks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Option Volatility and Pricing - Risks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Ye's Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Mathematics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mathematics" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mathematics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          CFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CFR" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          CFR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/CfrAndKuhnPoker/" class="md-nav__link">
+        Counterfactual Regret Minimization and Kuhn Poker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/MonteCarloCfr/" class="md-nav__link">
+        Monte Carlo CFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
+        Regret Matching and Blotto Game
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          ESL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ESL" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          ESL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
+        ESL 3: Linear Methods for Regression
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Matrix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Matrix" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Matrix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/matrix/MatrixCalculus/" class="md-nav__link">
+        向量和矩阵求导
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Probability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Probability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Probability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/RigidBalls/" class="md-nav__link">
+        小球碰撞问题中的统计学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/martingale/" class="md-nav__link">
+        Martingale
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Trading
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Trading" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Trading
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          Option
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Option" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Option
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BSM/" class="md-nav__link">
+        The Black-Scholes-Merton model
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BinomialTree/" class="md-nav__link">
+        Binomial Trees
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Greeks/" class="md-nav__link">
+        The Greek letters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ito/" class="md-nav__link">
+        Wiener processes and Ito’s lemma
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Option Volatility and Pricing - Risks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Option Volatility and Pricing - Risks
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-7-risk-measurement-i" class="md-nav__link">
+    Chapter 7: Risk Measurement I
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 7: Risk Measurement I">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-difference-between-gamma-and-vega" class="md-nav__link">
+    7.1 Difference between Gamma and Vega
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-9-risk-measurement-ii" class="md-nav__link">
+    Chapter 9: Risk Measurement II
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 9: Risk Measurement II">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-implied-delta" class="md-nav__link">
+    9.1 Implied delta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-theta" class="md-nav__link">
+    9.2 Theta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-vega" class="md-nav__link">
+    9.3 Vega
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-gamma" class="md-nav__link">
+    9.4 Gamma
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-10-introduction-to-spreading" class="md-nav__link">
+    Chapter 10: Introduction to Spreading
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 10: Introduction to Spreading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-option-spreads" class="md-nav__link">
+    10.1 Option Spreads
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-13-risk-considerations" class="md-nav__link">
+    Chapter 13: Risk Considerations
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 13: Risk Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-volatility-risk" class="md-nav__link">
+    13.1 Volatility risk
+  </a>
+  
+    <nav class="md-nav" aria-label="13.1 Volatility risk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1311-example" class="md-nav__link">
+    13.1.1 Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-dividends-and-interest-risk" class="md-nav__link">
+    13.2 Dividends and Interest Risk
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 Dividends and Interest Risk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#133-efficiency" class="md-nav__link">
+    13.3 Efficiency
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-delta-adjustments" class="md-nav__link">
+    13.4 Delta Adjustments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VolatilitySmile/" class="md-nav__link">
+        Volatility Smile
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-7-risk-measurement-i" class="md-nav__link">
+    Chapter 7: Risk Measurement I
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 7: Risk Measurement I">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-difference-between-gamma-and-vega" class="md-nav__link">
+    7.1 Difference between Gamma and Vega
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-9-risk-measurement-ii" class="md-nav__link">
+    Chapter 9: Risk Measurement II
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 9: Risk Measurement II">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-implied-delta" class="md-nav__link">
+    9.1 Implied delta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-theta" class="md-nav__link">
+    9.2 Theta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-vega" class="md-nav__link">
+    9.3 Vega
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-gamma" class="md-nav__link">
+    9.4 Gamma
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-10-introduction-to-spreading" class="md-nav__link">
+    Chapter 10: Introduction to Spreading
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 10: Introduction to Spreading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-option-spreads" class="md-nav__link">
+    10.1 Option Spreads
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-13-risk-considerations" class="md-nav__link">
+    Chapter 13: Risk Considerations
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 13: Risk Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-volatility-risk" class="md-nav__link">
+    13.1 Volatility risk
+  </a>
+  
+    <nav class="md-nav" aria-label="13.1 Volatility risk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1311-example" class="md-nav__link">
+    13.1.1 Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-dividends-and-interest-risk" class="md-nav__link">
+    13.2 Dividends and Interest Risk
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 Dividends and Interest Risk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#133-efficiency" class="md-nav__link">
+    13.3 Efficiency
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-delta-adjustments" class="md-nav__link">
+    13.4 Delta Adjustments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="option-volatility-and-pricing-risks">Option Volatility and Pricing - Risks</h1>
+<p>"Option Volatility and Pricing", Sheldon Natenberg.</p>
+<p>This book helps readers to understand option from a trader's perspective. Other relevant reading materials:</p>
+<ul>
+<li>Option, Future and other Derivatives (John Hull)</li>
+<li>Best book to start with</li>
+<li>Stochastic Volatility Modeling (Lorenzo Bergomi)</li>
+<li>Advanced book if you are a developer or quant.</li>
+</ul>
+<p>Risk related Chapters:</p>
+<ul>
+<li>Chapter 7: Risk Measurement I</li>
+<li>Chapter 9: Risk Measurement II</li>
+<li>Chapter 10: Introduction to Spreading</li>
+<li>Chapter 13: Risk Consideration</li>
+</ul>
+<h2 id="chapter-7-risk-measurement-i">Chapter 7: Risk Measurement I</h2>
+<h3 id="71-difference-between-gamma-and-vega">7.1 Difference between Gamma and Vega</h3>
+<p>Gamma is a measurement of <em>magnitude risk</em>. Options have positive gamma.</p>
+<blockquote>
+<p>A negative gamma position is a good indication that a trader either wants the underlying market to sit still or move only very slowly. A positive gamma position indicates a desire for very large and swift moves in the underlying market.</p>
+</blockquote>
+<p>This seems to correspond to volatility. If we have a negative gamma, we want the market to remain relatively quiet. Isn't this the same as saying we want lower volatility?</p>
+<blockquote>
+<p>The gamma is a measure of whether we want higher or lower <strong>realized volatility</strong> (whether we want the underlying contract to be more volatile or less volatile). The vega is a measure of whether we want higher or lower <strong>implied volatility</strong>.</p>
+</blockquote>
+<p>Although the volatility of the underlying contract and changes in implied volatility are often correlated, this is not always the case.</p>
+<blockquote>
+<p>As the volatility of the underlying contract (realized volatility) changes, option demand rises and falls, and this demand is reflected in a corresponding rise or fall in the implied volatility.</p>
+</blockquote>
+<h2 id="chapter-9-risk-measurement-ii">Chapter 9: Risk Measurement II</h2>
+<h3 id="91-implied-delta">9.1 Implied delta</h3>
+<blockquote>
+<p>many traders use the implied delta, the delta that results from using the implied volatility.</p>
+</blockquote>
+<p>Because the delta depends on the volatility, but volatility is an unknown factor, calculation of the delta can pose a major problem for a trader, especially for a large option position.</p>
+<h3 id="92-theta">9.2 Theta</h3>
+<blockquote>
+<p>the rate of decay slows for in-the-money and out-of-the-money options, whereas it accelerates for an at-the-money option</p>
+</blockquote>
+<p><img alt="Theta" src="https://upload-images.jianshu.io/upload_images/4482847-04a759c482100230.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>This is because both OTM and ITM options have very little time value.</p>
+<h3 id="93-vega">9.3 Vega</h3>
+<blockquote>
+<p>Because vega is not a Greek letter, a common alternative in academic literature, where Greek letters are preferred, is kappa (<span class="arithmatex">\(\kappa\)</span>).</p>
+</blockquote>
+<p>The option price as volatility change is quite similar to theta one.</p>
+<blockquote>
+<p>In many situations, time and volatility will have a similar effect on options. More time, like higher volatility, increases the likelihood of large price changes. Less time, like lower volatility, reduces the likelihood of large price changes.</p>
+</blockquote>
+<p><img alt="vega" src="https://upload-images.jianshu.io/upload_images/4482847-60517e85dc868ab6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<blockquote>
+<p>vega of an at-the-money option is relatively constant with respect to changes in volatility. (the vega of an at-the-money option declines very slightly as we raise volatility. )</p>
+</blockquote>
+<div class="arithmatex">\[\nu = \frac{ \partial c}{ \partial \sigma} = \frac{ \partial p}{ \partial \sigma}  = S_0 \sqrt{T} \Phi'(d_1)\]</div>
+<p>where:</p>
+<div class="arithmatex">\[d_1 = \frac{\ln(S/K) + (r + 0.5\sigma^2)T}{\sigma \sqrt{T}}\]</div>
+<p>If the option is ATM, we have <span class="arithmatex">\(S = K\)</span>, and if the interest rate is negligible (r = 0), we have:</p>
+<div class="arithmatex">\[d_1 = 0.5 \sigma \sqrt{T}\]</div>
+<p>The sensitivity of vega to a change in volatility (volga):</p>
+<div class="arithmatex">\[\begin{align} \frac{ \partial^2 c}{ \partial \sigma^2} = \frac{ \partial^2 p}{ \partial \sigma^2} &amp;= S_0 \sqrt{T} \Phi''(d_1) \frac{\partial d_1}{\partial \sigma} \\
+&amp;= -\frac{1}{4\sqrt{2 \pi}} e^{- \frac{\sigma^2 T}{8}} S_0 \sigma T^{\frac{3}{2}}
+\end{align}\]</div>
+<p>So it is negative, which means it is true that "the vega of an at-the-money option declines as we raise volatility".</p>
+<p>As for the magnitude of change, the book says it is "very slight", let's verify it with formula (if ATM):</p>
+<div class="arithmatex">\[\frac{\text{volga}}{\text{vega}} = \frac{d_1 d_2}{\sigma} =  - \frac{1}{4} \sigma T\]</div>
+<p>It seems negligible if the time to expire is small enough. let's verify with an ATM option with:</p>
+<ol>
+<li>stock price <span class="arithmatex">\(S=100\)</span></li>
+<li>expire in one month <span class="arithmatex">\(T=1/12\)</span></li>
+<li>anual volatility <span class="arithmatex">\(\sigma = 25\%\)</span></li>
+</ol>
+<p>Its vega is 11.51, usually we use 1% change in volatility so it becomes 0.1151, which means +1% volatility change will +0.1151 to ATM option price.</p>
+<p>Its volga is 0.06, compared to 11.51 this is negligible.</p>
+<h3 id="94-gamma">9.4 Gamma</h3>
+<div class="arithmatex">\[\Gamma = \frac{ \partial \Delta }{ \partial S } = \Phi'(d_1) \frac{\partial d_1}{\partial S} = \frac{\Phi'(d_1)}{\sigma S_0 \sqrt{T}}\]</div>
+<blockquote>
+<p>Gamma, Theta and Vega are greatest when an option is at the money.</p>
+</blockquote>
+<p><img alt="Gamma" src="https://upload-images.jianshu.io/upload_images/4482847-60173ae60c2f82b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>With less time to expiration or lower volatility, OTM and ITM options' time value will be lower because they will be less likely that a large price change will happen. Gamma will also be lower, the graph becomes "thin".</p>
+<p>More time to expiration, like higher volatility, will make OTM and ITM options behave like ATM ones. The graph becomes "fat".</p>
+<h2 id="chapter-10-introduction-to-spreading">Chapter 10: Introduction to Spreading</h2>
+<p>Scalping tries to make a market and make profit from liquidity.</p>
+<blockquote>
+<p>By observing the activity in a particular market, a scalper would try to determine an equilibrium price that reflected a balance between buyers and sellers. The scalper would then quote a bid-ask spread around this equilibrium price, attempting to buy at the bid price and sell at the offer price as often as possible without taking either a long or short position for any extended period of time.</p>
+</blockquote>
+<p>However, option markets are rarely sufficient liquid to support this type of trading.</p>
+<blockquote>
+<p>Most successful option traders are spread traders. A <strong>spread</strong> is a strategy that involves taking opposing positions in different but related instruments.</p>
+</blockquote>
+<p>When market condition changes, two legs of spread will gain and lose value respectively. Many common spreading strategies are based on <strong>arbitrage</strong> relationships.</p>
+<ul>
+<li>cash-and-carry strategy
+  Given the current cash price, interest rate, and storage and insurance costs, a commodity trader can calculate the value of a forward contract. If the actual market price of the forward contract is higher than the calculated value, the trader will create a spread by purchasing the commodity, selling the overpriced forward contract, and carrying the position to maturity.</li>
+</ul>
+<p>Another type of spreading strategy involves buying and selling futures contracts of different maturities on the same underlying commodity. It is similar to the cash-and-carry strategy. Besides, we can also do this in different markets (intramarket spread v.s. intermarket spread).</p>
+<p>cash-and-carry strategy cancels the the directional risk, the trader does not need to tell which contract is mispriced, he only need to know if the spread is profitable.</p>
+<p>Note that the spread is not NECESSARILY a contract. We can't guarantee the entire spread will be executed at one time. Trade has to choose the best time to execute each leg. In this procedure, the portfolio is at risk. <strong>Most traders learn that it is usually best to execute the more difficult leg first</strong>.</p>
+<h3 id="101-option-spreads">10.1 Option Spreads</h3>
+<p>Spreading strategies are widely employed in option markets, because:</p>
+<ol>
+<li><strong>A trader might perceive a relative mispricing between contracts</strong>. Though it may not be possible to determine the exact value of either contract, the trade might be able to estimate the relative value of contracts.</li>
+</ol>
+<blockquote>
+<p>In option markets, the mispricing is often expressed in terms of volatility instead of price value</p>
+</blockquote>
+<ol>
+<li>
+<p><strong>A trader may want to construct a position that reflects a particular view of market conditions</strong>. e.g., long gamma but not not expose to directional risk.</p>
+</li>
+<li>
+<p><strong>Spreading strategies help to control risk</strong>.</p>
+</li>
+</ol>
+<blockquote>
+<p>spreading maintains profit potential but reduces short-term risk</p>
+</blockquote>
+<h2 id="chapter-13-risk-considerations">Chapter 13: Risk Considerations</h2>
+<p>In option trading, assuming the theoretical price is correct, the immediate reward of a trade is the captured edge. Because there is no guarantee that our theoretical price will be right, the risk associated with the trade is also introduced. The risk is from multiple dimension:</p>
+<ul>
+<li>Delta risk (usually hedged)</li>
+<li>Gamma risk</li>
+<li>Theta risk (opposite side of Gamma risk)</li>
+<li>Vega risk</li>
+<li>Rho risk (usually ignored)</li>
+</ul>
+<p>So basically, in option trading, we only need to worry about two things:
+- <strong>realized volatility (underlying price) change: gamma risk</strong>
+- <strong>implied volatility change: vega risk</strong></p>
+<p>In fact, they are both <strong>volatility risk</strong>.</p>
+<h3 id="131-volatility-risk">13.1 Volatility risk</h3>
+<blockquote>
+<p>For an option trader, volatility risk comes in two forms—the risk that he has incorrectly estimated the <strong>realized volatility</strong> of the underlying contract over the life of a strategy and the risk that <strong>implied volatility</strong> in the option market will change.</p>
+</blockquote>
+<p>As we mentioned before, Gamma is related to realized volatility, and Vega is related to implied volatility.</p>
+<blockquote>
+<p>Any spread that has a nonzero gamma or vega has volatility risk.</p>
+</blockquote>
+<p>Steps to analysis risk for multiple kinds of spreads:</p>
+<ol>
+<li>calculate theoretical edge</li>
+<li>align theoretical edge (size up for spread with smaller edge)</li>
+<li>compare risks when underlying price move</li>
+</ol>
+<h4 id="1311-example">13.1.1 Example</h4>
+<p>Suppose that we find the implied volatility is higher than our theoretical value (18%). If we believe in our model, we conclude that they options are <strong>overpriced</strong>. To make a profit, trade chooses to <strong>short vega</strong>. There are multiple spreads to consider (excluding calendar spreads):</p>
+<ul>
+<li>Short straddles and strangles (<code>\/</code> or <code>\_/</code>)</li>
+<li>Call or put ratio spreads, sell more than buy (<code>__/--</code> or <code>--\__</code>)</li>
+<li>Long butterflies (<code>--\/--</code>)</li>
+</ul>
+<p>Below is the greeks for each spread:</p>
+<p><img alt="Greeks" src="https://upload-images.jianshu.io/upload_images/4482847-063403a282b29984.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>Theoretical PnL of each spread when underlying price moves:</p>
+<p><img alt="Theoretical PnL v.s. Underlying Price" src="https://upload-images.jianshu.io/upload_images/4482847-7252dccd840da9e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>Because <strong>we are shorting Gamma, large underlying price move will hurt our position</strong>. But different spreads have different exposure to the risk.</p>
+<p>Theoretical PnL of each spread when implied volatility moves:</p>
+<p><img alt="Theoretical PnL v.s. Volatility" src="https://upload-images.jianshu.io/upload_images/4482847-4eac7e37ce9e1485.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>Because <strong>we are shorting Vega, increasing of volatility will also hurt the position</strong>.</p>
+<p>When deciding which spread to trade, we can analysis from 2 aspects.</p>
+<ul>
+<li>
+<p><strong>Risk</strong>. Considering only the gamma and vega risk, Spread 3 probably has the best risk characteristics. It has <strong>limited risk</strong> if there is a <strong>large move</strong> in either direction and performs better than either Spread 1 or Spread 2 if there is a dramatic change in volatility. But if there's only <strong>small move</strong>, Spread 2 outperforms Spread 1 and 3.</p>
+</li>
+<li>
+<p><strong>Liquidity</strong>. Spread 3 requires a lot of quantity on the 3 options. It might be not possible to execute. If we can only choose from Spread 1 and 2, Spread 2 is the clear winner.</p>
+</li>
+</ul>
+<blockquote>
+<p>straddles and strangles are the riskiest of all spreads</p>
+</blockquote>
+<p>This can be easily seen from their payoff graphs.</p>
+<h3 id="132-dividends-and-interest-risk">13.2 Dividends and Interest Risk</h3>
+<blockquote>
+<p>For stock options, there are two additional risks: the risk of changing interest rates and the risk of changing dividends</p>
+</blockquote>
+<p>The interest-rate and dividend risk associated with volatility spreads is usually small compared with the volatility (gamma and vega) risk. Nonetheless, a trader ought to be aware of these risks, especially when a position is large and there is significant risk of a change in either interest rates or dividends.</p>
+<blockquote>
+<p>A good spread is not necessarily the one that shows the greatest profit when things go well; it may be the one that shows the least loss when things go badly.</p>
+</blockquote>
+<h4 id="133-efficiency">13.3 Efficiency</h4>
+<blockquote>
+<p>One method that traders sometimes use to compare the relative riskiness of potential strategies focuses on the risk-reward ratio, or <strong>efficiency</strong>, of the strategies</p>
+</blockquote>
+<p>For example, a trader is considering two possible spreads, both with a positive gamma and negative theta. The reward coms from the Gamma and the risk is mainly from Theta. Of course the trader want the reward (Gamma) to be as large as possible compared to the risk (Theta).</p>
+<p>The efficiency is a ratio of the absolute value:</p>
+<div class="arithmatex">\[\text{efficiency} = |\frac{\text{Gamma}}{\text{Theta}}|\]</div>
+<p>We can calculate the efficiency for above 3 spreads:</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">Gamma</th>
+<th align="center">Theta</th>
+<th align="center">Efficiency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Spread 1</td>
+<td align="center">-406.0</td>
+<td align="center">+0.4235</td>
+<td align="center">958.68</td>
+</tr>
+<tr>
+<td align="center">Spread 2</td>
+<td align="center">-165.5</td>
+<td align="center">+0.1365</td>
+<td align="center">1208.79</td>
+</tr>
+<tr>
+<td align="center">Spread 3</td>
+<td align="center">-370.0</td>
+<td align="center">+0.4000</td>
+<td align="center">925.00</td>
+</tr>
+</tbody>
+</table>
+<p>Because we are shorting Gamma, the reward is from Theta. So the smaller efficient is, the better. As a result, from a fast comparison, we find Spread3 is the best in risk term, which is consistent with our previous analysis of each spread. (Why the spread 2 is the worst? The book does not explain...)</p>
+<p>In cases that the <strong>Gamma and Theta are the primary risks to the position</strong>, Assuming that all strategies have approximately the <strong>same theoretical edge</strong>, the efficiency can be a reasonable method of quickly comparing strategies where all options <strong>expire at the same time</strong>.</p>
+<h4 id="134-delta-adjustments">13.4 Delta Adjustments</h4>
+<p>Trader needs to adjust the position to remain delta-neutral.</p>
+<blockquote>
+<p>An adjustment to a trader’s delta position may reduce his directional risk, but if he simultaneously increases his gamma, theta, or vega risk, he may inadvertently be exchanging one type of risk for another.</p>
+</blockquote>
+<p>Again, use above case as example.
+- underlying price goes down
+- since we are shorting Gamma, we will get <strong>positive delta</strong>
+- to hedge the delta position, we can:
+  - sell underlying contracts. It does not affect other Greek Risks.
+  - sell calls. This will help capturing <strong>more theoretical edge</strong>, but also accumulate <strong>more Greek Risks</strong>. And the trader will have to adjust position more frequently. Besides, If the market now makes a violent move in either direction, the adverse consequences will be greatly magnified.
+  - buy puts. Trader can also <strong>reduce the Greek Risks</strong>. But, because we think the implied volatility is overpriced, when buying puts, the trader is actually doing trade with <strong>negative theoretical edge</strong>.</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../Ito/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Wiener processes and Ito’s lemma" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Wiener processes and Ito’s lemma
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../VolatilitySmile/" class="md-footer__link md-footer__link--next" aria-label="Next: Volatility Smile" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Volatility Smile
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

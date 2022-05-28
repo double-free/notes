@@ -1,0 +1,1339 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ye">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>The Black-Scholes-Merton model - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-black-scholes-merton-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Black-Scholes-Merton model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Ye's Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Mathematics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mathematics" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mathematics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          CFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CFR" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          CFR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/CfrAndKuhnPoker/" class="md-nav__link">
+        Counterfactual Regret Minimization and Kuhn Poker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/MonteCarloCfr/" class="md-nav__link">
+        Monte Carlo CFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
+        Regret Matching and Blotto Game
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          ESL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ESL" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          ESL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
+        ESL 3: Linear Methods for Regression
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Matrix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Matrix" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Matrix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/matrix/MatrixCalculus/" class="md-nav__link">
+        向量和矩阵求导
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Probability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Probability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Probability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/RigidBalls/" class="md-nav__link">
+        小球碰撞问题中的统计学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/martingale/" class="md-nav__link">
+        Martingale
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Trading
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Trading" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Trading
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          Option
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Option" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Option
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          The Black-Scholes-Merton model
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        The Black-Scholes-Merton model
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#146-black-scholes-merton" class="md-nav__link">
+    14.6 Black-Scholes-Merton 微分方程
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#147" class="md-nav__link">
+    14.7 风险中性定价
+  </a>
+  
+    <nav class="md-nav" aria-label="14.7 风险中性定价">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#148-black-scholes-merton" class="md-nav__link">
+    14.8 Black-Scholes-Merton 定价公式
+  </a>
+  
+    <nav class="md-nav" aria-label="14.8 Black-Scholes-Merton 定价公式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1481-payoff" class="md-nav__link">
+    14.8.1 计算 payoff 期望
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1482" class="md-nav__link">
+    14.8.2 应用风险中性假设
+  </a>
+  
+    <nav class="md-nav" aria-label="14.8.2 应用风险中性假设">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    例 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    例 4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    例 5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    例 6
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#144-sigma" class="md-nav__link">
+    14.4 计算历史波动率 \(\sigma\)
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 计算历史波动率 \(\sigma\)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BinomialTree/" class="md-nav__link">
+        Binomial Trees
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Greeks/" class="md-nav__link">
+        The Greek letters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ito/" class="md-nav__link">
+        Wiener processes and Ito’s lemma
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Risk/" class="md-nav__link">
+        Option Volatility and Pricing - Risks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VolatilitySmile/" class="md-nav__link">
+        Volatility Smile
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#146-black-scholes-merton" class="md-nav__link">
+    14.6 Black-Scholes-Merton 微分方程
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#147" class="md-nav__link">
+    14.7 风险中性定价
+  </a>
+  
+    <nav class="md-nav" aria-label="14.7 风险中性定价">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#148-black-scholes-merton" class="md-nav__link">
+    14.8 Black-Scholes-Merton 定价公式
+  </a>
+  
+    <nav class="md-nav" aria-label="14.8 Black-Scholes-Merton 定价公式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1481-payoff" class="md-nav__link">
+    14.8.1 计算 payoff 期望
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1482" class="md-nav__link">
+    14.8.2 应用风险中性假设
+  </a>
+  
+    <nav class="md-nav" aria-label="14.8.2 应用风险中性假设">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    例 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    例 4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    例 5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    例 6
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#144-sigma" class="md-nav__link">
+    14.4 计算历史波动率 \(\sigma\)
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 计算历史波动率 \(\sigma\)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="the-black-scholes-merton-model">The Black-Scholes-Merton model</h1>
+<p>在 1970 年代，Fischer Black, Myron Scholes, Robert Merton 提出了一个重要的欧式期权定价模型。这个模型基于以下 7 条假设：</p>
+<ol>
+<li>股票价格符合伊藤过程 <span class="arithmatex">\(\frac{ dS }{ S } = \mu ~dt + \sigma ~dz\)</span></li>
+<li>允许卖空证券并充分利用收益</li>
+<li>没有交易费用和税，所有证券完全可分割</li>
+<li>在期权期限内，股票不支付股息</li>
+<li>不存在无风险套利机会</li>
+<li>证券交易连续进行</li>
+<li>无风险利率 <span class="arithmatex">\(r\)</span> 是常数并且对所有期限相同</li>
+</ol>
+<p>注意，这其中并不包含风险中性假设。从根本上讲，风险中性假设只是一个数学上的求解技巧，即使不使用这个技巧，一样可以通过暴力求解 PDE 得到同样的结果（Feynman-Kac Theorem）。这一点非常重要，因为真实世界明显不是风险中性的，BSM 公式也不可能基于这么一个不靠谱的假设。</p>
+<h2 id="146-black-scholes-merton">14.6 Black-Scholes-Merton 微分方程</h2>
+<p>根据假设，股票的价格服从以下伊藤过程：</p>
+<div class="arithmatex">\[\frac{ dS }{ S } = \mu ~dt + \sigma ~dz\]</div>
+<p>我们的目标，也就是以该股票为标的物的看涨期权的价格 <span class="arithmatex">\(C\)</span> 肯定是 <span class="arithmatex">\(S\)</span> 和 <span class="arithmatex">\(t\)</span> 的函数。根据伊藤引理，得到：</p>
+<div class="arithmatex">\[dC = (\frac{ \partial C}{ \partial S} \mu S + \frac{ \partial C}{ \partial t} + \frac{1}{2} \frac{ \partial^2 C}{ \partial S^2} \sigma^2 S^2)~dt + \frac{ \partial C}{ \partial S}\sigma S~dz\]</div>
+<p>这是一个随机微分方程，我们很难直接求解。于是我们希望利用 <span class="arithmatex">\(S\)</span> 和 <span class="arithmatex">\(C\)</span> 的线性组合消去其随机项。</p>
+<p>构造一个 portfolio <span class="arithmatex">\(V = Q_S S + Q_C C\)</span>，其中 <span class="arithmatex">\(Q_S\)</span> 和 <span class="arithmatex">\(Q_C\)</span> 分别是股票和看涨期权的数量。为了消除随机项 <span class="arithmatex">\(dz\)</span>，我们需要：</p>
+<div class="arithmatex">\[Q_S \sigma S + Q_C \frac{\partial C}{\partial S}\sigma S = 0\]</div>
+<p>我们可以令 <span class="arithmatex">\(Q_S = \frac{\partial C}{\partial S}\)</span>，<span class="arithmatex">\(Q_C = -1\)</span>。</p>
+<p>值得注意的是，<strong>我们通过这样实际构造了一个无风险的 portfolio，同时，股票的数量也是 Greeks 里面的 delta。</strong> 由于这是一个无风险的 portfolio，其波动率为 0，期望收益等于无风险利率 <span class="arithmatex">\(r\)</span>。因此：</p>
+<div class="arithmatex">\[dV = rVdt\]</div>
+<p>并且</p>
+<div class="arithmatex">\[dV = Q_S~dS +Q_C~dC\]</div>
+<p>带入得：</p>
+<div class="arithmatex">\[\frac{\partial C}{\partial S} rS + \frac{\partial C}{\partial t} + \frac{1}{2}\frac{\partial^2 C}{\partial S^2} \sigma^2 S^2 = rC\]</div>
+<p>这就是 <strong>Black-Scholes-Merton 微分方程</strong>。这个方程的精妙之处在于我们消掉了随机项和期望收益率 <span class="arithmatex">\(\mu\)</span> 这两个非常复杂的部分。</p>
+<p>这个方程有很多解，对应于各种衍生品。假设一个衍生品不满足这个微分方程，例如<span class="arithmatex">\(e^S\)</span>，则该衍生品不可能存在，因为一定存在套利机会。</p>
+<h2 id="147">14.7 风险中性定价</h2>
+<p>我们注意到，推导出的 Black-Scholes-Merton 微分方程不含期望收益 <span class="arithmatex">\(\mu\)</span>，这也从证明了我们在用二叉树进行定价时的风险中性假设的正确性。因为它与投资人的风险偏好无关。我们就可以放心使用风险中性假设简化计算。</p>
+<ol>
+<li>假设从标的物获得的期望收益就是无风险利率<span class="arithmatex">\(r\)</span></li>
+<li>计算衍生品的期望的 payoff</li>
+<li>将期望的 payoff 折现，折现率也等于无风险利率 <span class="arithmatex">\(r\)</span></li>
+</ol>
+<h4 id="_1">例</h4>
+<blockquote>
+<p>假设一个远期合约多头到期日为<span class="arithmatex">\(T\)</span>，执行价格为<span class="arithmatex">\(K\)</span>，目前现货价格是 <span class="arithmatex">\(S_0\)</span>，无风险利率为 <span class="arithmatex">\(r\)</span>，则远期合约价格为？</p>
+</blockquote>
+<p>假设到期日标的物价格为 <span class="arithmatex">\(S_T\)</span>，则利用以上三个步骤，可以得到：</p>
+<div class="arithmatex">\[f = e^{-rT}~E(S_T- K) = e^{-rT}E(S_T) - Ke^{-rT}\]</div>
+<p>由于我们的期望收益率为无风险利率 <span class="arithmatex">\(r\)</span>，则有 <span class="arithmatex">\(E(S_T) = S_0 e^{rT}\)</span>，带入可以得到：</p>
+<div class="arithmatex">\[f = S_0 - Ke^{-rT}\]</div>
+<p>这符合我们利用无套利假设得出的结论。</p>
+<h2 id="148-black-scholes-merton">14.8 Black-Scholes-Merton 定价公式</h2>
+<p>在这里，我们将利用风险中性定价原理来推导 BSM 定价公式。这样可以避免解偏微分方程的复杂度。</p>
+<h3 id="1481-payoff">14.8.1 计算 payoff 期望</h3>
+<p>以欧式看涨期权为例，其在到期日 <span class="arithmatex">\(T\)</span> 的 payoff 为 <span class="arithmatex">\(f =\max(S-K, 0)\)</span>。它的价格应该为 payoff 的期望折现后的值。因此问题转化为求：</p>
+<div class="arithmatex">\[E(\max(S-K, 0)) = \int_{K}^{\infty}(S-K)g(S)~dS\]</div>
+<p>其中 <span class="arithmatex">\(g(S)\)</span> 代表股票价格为 <span class="arithmatex">\(S\)</span> 的概率。那么如何得到 <span class="arithmatex">\(g(S)\)</span> 呢？</p>
+<p>我们已经假设 <span class="arithmatex">\(S\)</span> 服从伊藤过程：</p>
+<div class="arithmatex">\[\frac{ dS }{ S } = \mu ~dt + \sigma ~dz\]</div>
+<p>令 <span class="arithmatex">\(G = \ln(S)\)</span>，由伊藤引理，可以得到：</p>
+<div class="arithmatex">\[dG = (\mu - \frac{ 1 }{ 2 } \sigma^2)~dt + \sigma~dz\]</div>
+<p>因此股票价格 <strong>取对数后</strong> 的变化量 <span class="arithmatex">\(\ln(S_T) - \ln(S_0)\)</span> 服从正态分布 <span class="arithmatex">\(N((\mu-\frac{1}{2} \sigma^2)T, \sigma^2 T)\)</span>。</p>
+<p>为了表示方便，我们记作 <span class="arithmatex">\(\ln(S_T)\)</span> 服从 <span class="arithmatex">\(N(m, w^2)\)</span>。</p>
+<p>令 <span class="arithmatex">\(Q = \frac{ \ln(S) - m}{ w}\)</span>，则 <span class="arithmatex">\(Q\)</span> 服从标准正态分布 <span class="arithmatex">\(N(0,1)\)</span>。并有 <span class="arithmatex">\(S = e^{Qw + m}\)</span>。</p>
+<p>我们可以将 payoff 期望改写为：</p>
+<div class="arithmatex">\[E( \max(S-K, 0)) = \int_{(\ln(K)-m)/w}^{\infty}(e^{Qw + m}-K)h(Q)~dQ\]</div>
+<p>分为两部分：</p>
+<div class="arithmatex">\[E(\max(S-K, 0)) = \int_{(\ln(K)-m)/w}^{\infty}e^{Qw + m}h(Q)~dQ - K\int_{(\ln(K)-m)/w}^{\infty}h(Q)~dQ\]</div>
+<p>其中<span class="arithmatex">\(h(Q)\)</span> 为标准正态分布密度函数：</p>
+<div class="arithmatex">\[h(Q) = \frac{ 1 }{ \sqrt{ 2\pi} } e^{ -\frac{ Q^2 }{ 2 } }\]</div>
+<p>我们将该式代入第一部分，得到：</p>
+<div class="arithmatex">\[\int_{(\ln(K)-m)/w}^{\infty}e^{Qw + m}h(Q)~dQ = e^{m+\frac{ w^2 }{ 2 }} \int_{(\ln(K)-m)/w}^{\infty} h(Q-w)~dQ\]</div>
+<p>假设<span class="arithmatex">\(\Phi(x)\)</span>表示标准正态分布变量小于 <span class="arithmatex">\(x\)</span> 的概率，则：</p>
+<div class="arithmatex">\[\int_{(\ln(K)-m)/w}^{\infty} h(Q-w)~dQ = 1-\Phi(\frac{ \ln(K) - m}{w} - w) = \Phi(w - \frac{\ln(K) - m}{w} )\]</div>
+<p>同理，对于第二部分，有：</p>
+<div class="arithmatex">\[\int_{ (\ln(K)-m)/w}^{ \infty}h(Q)~dQ = \Phi(-\frac{ \ln(K) - m}{ w})\]</div>
+<p>其中：</p>
+<div class="arithmatex">\[m = \ln(S_0) + (\mu - \frac{1}{2} \sigma^2)T\]</div>
+<div class="arithmatex">\[w = \sigma \sqrt{T}\]</div>
+<p>因此得出结论：</p>
+<div class="arithmatex">\[E(\max(S-K, 0)) = S_0 e^{\mu T}\Phi(d_1) - K\Phi(d_2)\]</div>
+<p>其中：</p>
+<div class="arithmatex">\[d_1 = \frac{\ln(\frac{S_0}{K}) + (\mu + \frac{1}{2} \sigma^2)T}{\sigma \sqrt{T}}\]</div>
+<div class="arithmatex">\[d_2 = d_1 - \sigma \sqrt{T}\]</div>
+<h3 id="1482">14.8.2 应用风险中性假设</h3>
+<p>我们在 14.7 中已经证明了可以使用风险中性定价。那么期望收益 <span class="arithmatex">\(\mu\)</span> 和贴现率都等于无风险利率 <span class="arithmatex">\(r\)</span>。代入 14.8.1 得出的 payoff，贴现后得出该欧式看涨期权价格：</p>
+<div class="arithmatex">\[c = S_0 \Phi(d_1) - Ke^{-rT}\Phi(d_2)\]</div>
+<p>其中：</p>
+<div class="arithmatex">\[ d_1 = \frac{ \ln(\frac{S_0}{K} ) + (r + \frac{1}{2}\sigma^2)T}{\sigma \sqrt{T}} \]</div>
+<div class="arithmatex">\[d_2 = d_1 - \sigma \sqrt{T} = \frac{\ln(\frac{S_0}{K})+(r - \frac{1}{2}\sigma^2)T}{\sigma \sqrt{T}}\]</div>
+<p>利用 put-call-parity：</p>
+<div class="arithmatex">\[c + Ke^{-rT} = p + S_0\]</div>
+<p>可以算出对应的欧式看跌期权的价格：</p>
+<div class="arithmatex">\[p =  Ke^{-rT}\Phi(-d_2) - S_0 \Phi(-d_1)\]</div>
+<h4 id="1">例 1</h4>
+<blockquote>
+<p>某欧式看跌期权执行价格为 50$，期限为 3 个月。标的股票当前价格为 50$，波动率为 30%每年。无风险利率为 10% 每年。计算该欧式看跌期权的价格。
+如果在 2 个月后将派发 1.5$ 的股息，结果会如何变化？</p>
+</blockquote>
+<p>将 <span class="arithmatex">\(K = 50\)</span>，<span class="arithmatex">\(S_0 = 50\)</span>， <span class="arithmatex">\(r = 0.1\)</span>， <span class="arithmatex">\(\sigma = 0.3\)</span>， <span class="arithmatex">\(T=0.25\)</span>代入 BSM 公式。可以得到：</p>
+<div class="arithmatex">\[ p = 50 \times e^{- 0.1 \times 0.25}\Phi(-d_2) - 50\Phi(-d_1)\]</div>
+<p>其中：</p>
+<div class="arithmatex">\[d_1 = \frac{ \ln(\frac{50}{50}) + (0.1 + \frac{ 1 }{ 2 } \times 0.3^2)\times0.25 }{ 0.3 \times \sqrt{0.25} } = \frac{ 29 }{120}\]</div>
+<div class="arithmatex">\[d_2 = d_1 - \sigma \sqrt{T} = \frac{11} {120}\]</div>
+<p>有 <span class="arithmatex">\(\Phi(-d_1) = 0.4052\)</span>， <span class="arithmatex">\(\Phi(-d_2) = 0.4641\)</span>。</p>
+<p>因此 <span class="arithmatex">\(p = 2.372\)</span>。</p>
+<p>如果两个月后会派发股息，说明现在的股票价格中包含了股息贴现后的价值。在应用 BSM 公式之前，我们需要先将其去掉。因此：</p>
+<div class="arithmatex">\[S = 50 - 1.5e^{-2/12 \times 0.1} = 48.5248\]</div>
+<p>再按照以上的方法计算，得到 <span class="arithmatex">\(d_1 = 0.042\)</span> <span class="arithmatex">\(d_2 = -0.108\)</span>。</p>
+<div class="arithmatex">\[p = 50 \times e^{- 0.1 \times 0.25}\Phi(-d_2) - 48.5248\Phi(-d_1) = 3.033\]</div>
+<p>这符合我们 <a href="https://www.jianshu.com/p/1a753c2272db">之前的结论</a>，对于派发股息的股票，看跌期权价值会升高</p>
+<h4 id="2">例 2</h4>
+<blockquote>
+<p>股票价格为 $40，期望回报率为 15%，波动率为 25%。则 2 年收益率的概率分布是什么？</p>
+</blockquote>
+<p>股票价格变化满足对数正态分布，即：</p>
+<div class="arithmatex">\[\ln( \frac{S_T}{S_0} )  \sim N(( \mu - \frac{\sigma^2}{2} )T, ~\sigma^2 T)\]</div>
+<p>假设要求的收益率为 <span class="arithmatex">\(r\)</span>，满足：</p>
+<div class="arithmatex">\[S_T = S_0e^{rT}\]</div>
+<p>则显然</p>
+<div class="arithmatex">\[r = \frac{1}{T} \ln(\frac{S_T}{S_0}) \sim N(\mu - \frac{\sigma^2} {2}, \frac{\sigma^2}{T})\]</div>
+<p>因此收益率的分布为<span class="arithmatex">\(N(0.11875, 0.03125)\)</span>。</p>
+<h4 id="3">例 3</h4>
+<blockquote>
+<p>某股票价格服从几何布朗运动，期望回报率为 16%，波动率为 35%，当前价格为 $38。
+(a). 某欧式看涨期权执行价格为 $40，到期日为 6 个月后，求它行权的概率。
+(b). 与(a)中对应的欧式看跌期权的行权概率是多少</p>
+</blockquote>
+<p>已知股票价格符合几何布朗运动，即满足：</p>
+<div class="arithmatex">\[\ln(\frac{S_T}{S_0})  \sim N((\mu - \frac{\sigma^2}{2} )T, ~\sigma^2 T)\]</div>
+<p>那么有：</p>
+<div class="arithmatex">\[\frac{ \ln(\frac{S_T}{S_0}) - (\mu - \frac{ \sigma^2}{2})T}{\sigma \sqrt{T}}  \sim N(0, 1)\]</div>
+<p>求行权概率实质上是求 <span class="arithmatex">\(S_T &gt; K\)</span> 的概率。因此：</p>
+<div class="arithmatex">\[ P(S_T &gt; K) = 1-\Phi(\frac{\ln(\frac{K}{S_0}) - (\mu - \frac{\sigma^2}{2})T}{\sigma \sqrt{T}}) = \Phi(-\frac{\ln(\frac{K}{S_0}) - (\mu - \frac{\sigma^2}{2})T}{\sigma \sqrt{T}})\]</div>
+<p>代入 <span class="arithmatex">\(K = 40\)</span> <span class="arithmatex">\(S_0 = 38\)</span> <span class="arithmatex">\(\mu = 0.16\)</span> <span class="arithmatex">\(\sigma = 0.35\)</span> <span class="arithmatex">\(T = 0.5\)</span>，得到该欧式看涨期权行权概率为 <span class="arithmatex">\(\Phi(- 0.007751) = 0.496\)</span>。</p>
+<p>看跌期权行权概率即 <span class="arithmatex">\(S_T &lt; K\)</span> 的概率，即 <span class="arithmatex">\(1 - 0.496 = 0.504\)</span>。</p>
+<h4 id="4">例 4</h4>
+<blockquote>
+<p>考虑一个衍生品，其在<span class="arithmatex">\(T\)</span> 时刻 payoff 为 <span class="arithmatex">\(S_T ^n\)</span>，其中 <span class="arithmatex">\(S_T\)</span> 是标的股票在 <span class="arithmatex">\(T\)</span> 时刻价格，服从几何布朗运动。它在 <span class="arithmatex">\(t\)</span> 时刻的价格可以表示为 <span class="arithmatex">\(h(t,T)S^n\)</span>，其中 <span class="arithmatex">\(S\)</span> 表示 <span class="arithmatex">\(t\)</span> 时刻股票价格，<span class="arithmatex">\(h\)</span> 是关于 <span class="arithmatex">\(t\)</span> 和 <span class="arithmatex">\(T\)</span> 的函数。<br/>
+(a) 利用 BSM 偏微分方程推导 <span class="arithmatex">\(h(t, T)\)</span> 的微分方程 <br/>
+(b) <span class="arithmatex">\(h(t, T)\)</span>的边界条件是什么 <br/>
+(c) 求出 <span class="arithmatex">\(h(t, T)\)</span></p>
+</blockquote>
+<p>(a)
+将价格表示为 <span class="arithmatex">\(f = h(t,T)S^n\)</span>。则该价格满足微分方程：</p>
+<div class="arithmatex">\[\frac{ \partial f}{ \partial t} + \frac{ \partial f}{ \partial S}rS  + \frac{1}{2}\frac{ \partial^2 f}{\partial S^2} \sigma^2 S^2 = rf\]</div>
+<p>我们可以算出</p>
+<div class="arithmatex">\[\frac{\partial f}{\partial t} = \frac{\partial h}{\partial t}S^n\]</div>
+<div class="arithmatex">\[\frac{\partial f}{\partial S} = nhS^{n-1}\]</div>
+<div class="arithmatex">\[\frac{\partial^2 f}{\partial S^2} = n(n-1)hS^{n-2}\]</div>
+<p>代入有：</p>
+<div class="arithmatex">\[\frac{ \partial h}{ \partial t} + (n-1)rh + \frac{1}{2}n(n-1)\sigma^2h = 0\]</div>
+<p>(b)</p>
+<p><span class="arithmatex">\(h(t, T)\)</span> 满足边界条件 <span class="arithmatex">\(h(t, T) |_{t=T} = 1\)</span></p>
+<p>(c)</p>
+<p>上式满足</p>
+<div class="arithmatex">\[\frac{h'}{h} = - (n-1)r - \frac{1}{2}n(n-1)\sigma^2\]</div>
+<p>令 <span class="arithmatex">\(x = \ln(h)\)</span>，则有：</p>
+<div class="arithmatex">\[x' =  - (n-1)r - \frac{ 1}{2}n(n-1)\sigma^2 \]</div>
+<p>得出</p>
+<div class="arithmatex">\[x = [- (n-1)r - \frac{1}{2} n(n-1) \sigma^2]t + C\]</div>
+<p>其中 <span class="arithmatex">\(C\)</span> 为常数。再根据边界条件 <span class="arithmatex">\(x|_{t=T} = \ln(1) = 0\)</span>，得出：</p>
+<div class="arithmatex">\[x = [(n-1)r + \frac{ 1}{2}n(n-1)\sigma^2](T-t)\]</div>
+<p>因此：</p>
+<div class="arithmatex">\[h(t, T) = e^{[(n-1)r + \frac{1}{2}n(n-1)\sigma^2](T-t)}\]</div>
+<h4 id="5">例 5</h4>
+<blockquote>
+<p>(a) 证明：在风险中性世界中，一个欧式看涨期权被行权的概率等于<span class="arithmatex">\(\Phi(d_2)\)</span>。<br/>
+(b) 假设一个衍生品 payoff 为 $100 如果股票价格 <span class="arithmatex">\(S\)</span> 大于 <span class="arithmatex">\(K\)</span>，求该衍生品的价格。</p>
+</blockquote>
+<p>(a)</p>
+<p>欧式看涨期权被行权的概率是 <span class="arithmatex">\(P(S_T &gt; K)\)</span>。而 <span class="arithmatex">\(S_T\)</span> 满足：</p>
+<div class="arithmatex">\[\ln(S_T) \sim N(\ln(S_0) + (\mu-\frac{1}{2}\sigma^2)T, \sigma^2 T)\]</div>
+<p>由于对数函数的单调性，<span class="arithmatex">\(P(S_T &gt; K) = P(\ln(S_T) &gt; \ln(K))\)</span>，且在风险中性世界中，有 <span class="arithmatex">\(\mu = r\)</span>，则：</p>
+<div class="arithmatex">\[P(S_T &gt; K) = 1 - \Phi(\frac{\ln(K) - \ln(S_0) -  (r-\frac{1}{2}\sigma^2)T}{\sigma \sqrt{T}}) = 1 - \Phi(-d_2) = \Phi(d_2)\]</div>
+<p>(b)</p>
+<p>利用上面的结论，可以得到该衍生品收益期望为 <span class="arithmatex">\(100 \Phi(d_2)\)</span>，贴现后的即为当前价格：</p>
+<div class="arithmatex">\[100e^{-rT}\Phi(d_2)\]</div>
+<h4 id="6">例 6</h4>
+<blockquote>
+<p>某银行的某款理财产品保证投资者在 6 个月后得到：<br/>
+a. 0，如果股指下跌 <br/>
+b. 40% 股指收益 <br/>
+用股指期权来描述该产品的收益。<br/>
+假设无风险利率是 8%，股息是 3%，波动率是 25%，这个理财产品值得买吗？</p>
+</blockquote>
+<p>假设目前股指是 <span class="arithmatex">\(S_0\)</span>，6 个月后股指为 <span class="arithmatex">\(S_t\)</span>。我们可以知道其收益为：</p>
+<div class="arithmatex">\[\max(0, 0.4(S_t - S_0))\]</div>
+<p>因此其实际上是相当于 0.4 倍的执行价格为 <span class="arithmatex">\(S_0\)</span> 的欧式看涨期权的收益。</p>
+<p>我们可以计算执行价格为 <span class="arithmatex">\(S_0\)</span>，到期日为 6 个月的欧式期权的价值：</p>
+<div class="arithmatex">\[c = S_0e^{-qT}\Phi(d_1) - Ke^{-rT}\Phi(d_2)\]</div>
+<p>其中</p>
+<div class="arithmatex">\[d_1 = \frac{\ln(\frac{S_0}{K})+(r - q + \frac{1}{2}\sigma^2)T}{\sigma \sqrt{T}}\]</div>
+<div class="arithmatex">\[d_2 = d_1 - \sigma \sqrt{T}\]</div>
+<p>将<span class="arithmatex">\(K = S_0\)</span>，<span class="arithmatex">\(T = 0.5\)</span>，<span class="arithmatex">\(q = 0.03\)</span>，<span class="arithmatex">\(r = 0.08\)</span>，<span class="arithmatex">\(\sigma = 0.25\)</span>代入：</p>
+<div class="arithmatex">\[c = 0.0814S_0\]</div>
+<p>假设投资金额为 <span class="arithmatex">\(M\)</span>，该理财产品的现金流相当于在 0 时刻，免费获得了 <span class="arithmatex">\(0.4 \frac{M}{S_0}\)</span> 份看涨期权，其代价是剩余的资金无法赚取无风险利率。我们需要比较期权的价格以及无风险利率的收益。</p>
+<p>现在我们假设有两个 portfolio A 和 B。
+- A：全额购买该理财产品
+- B：购买了 <span class="arithmatex">\(0.4 \frac{M}{ S_0}\)</span> 份看涨期权，剩余资金用于赚取无风险利率</p>
+<p>显然 B 购买的期权具有和 A 完全一致的 payoff。我们只需要比较其余资金。</p>
+<p>对于 A，六个月后会获得 <span class="arithmatex">\(M\)</span> 外加 payoff。</p>
+<p>对于 B，除了与 A 一致的 payoff，还有：</p>
+<div class="arithmatex">\[(M - 0.4 \frac{ M }{ S_0 } c)e^{rT} = 1.007 M &gt; M\]</div>
+<p>因此显然该理财产品不划算。</p>
+<h2 id="144-sigma">14.4 计算历史波动率 <span class="arithmatex">\(\sigma\)</span></h2>
+<p>在 B-S-M 模型中，唯一难以确定的参数就是波动率 <span class="arithmatex">\(\sigma\)</span>。在实际中，不能直接使用历史波动率，但是可以作为重要参考。以下提到的波动率都指历史波动率，而非实际（隐含）波动率。</p>
+<p><span class="arithmatex">\(\sigma\)</span> 用于衡量股票回报率的不确定性。我们将波动率 <span class="arithmatex">\(\sigma\)</span> 定义为 <strong>连续复利下股票 1 年中回报率的标准差</strong>。它一般在 15% 到 60% 之间。</p>
+<p>连续复利下的股票回报率可以表示为：</p>
+<div class="arithmatex">\[x = \frac{1}{T} \ln( \frac{S_T}{S_0} )\]</div>
+<p>我们已经假设：</p>
+<div class="arithmatex">\[\ln(S_T)-\ln(S_0) \sim N( (\mu-\frac{1}{2}\sigma^2)T, \sigma^2 T)\]</div>
+<p>因此回报率满足：</p>
+<div class="arithmatex">\[x \sim N(\mu-\frac{1}{2}\sigma^2, \frac{\sigma^2}{T})\]</div>
+<p>假设我们已经知道以某个较小采样间隔（例如每周） <span class="arithmatex">\(\Delta t\)</span> 的股票回报率历史数据，我们可以估计其方差 <span class="arithmatex">\(D\)</span>。</p>
+<p>假设第 <span class="arithmatex">\(i\)</span> 个 <span class="arithmatex">\(\Delta t\)</span> 内的回报率为 <span class="arithmatex">\(u_i\)</span>，其平均值为 <span class="arithmatex">\(\bar{u}\)</span>。对于方差 <span class="arithmatex">\(D\)</span> 的无偏估计可以表示为：</p>
+<div class="arithmatex">\[\hat{D} = \frac{1}{n-1}\sum_{i=1}^n (u_i - \bar{u})^2\]</div>
+<p>也可以写为：</p>
+<div class="arithmatex">\[ \hat{D} = \frac{ 1}{n-1} [ \sum_{i = 1}^n u_i^2 - n \bar{u}^2] \]</div>
+<p>然后根据下式求波动率的估计：</p>
+<div class="arithmatex">\[\hat{\sigma} = \sqrt{\hat{D}~T}\]</div>
+<p>这个 <span class="arithmatex">\(T\)</span> 表示一年时间，假设 <span class="arithmatex">\(\Delta t\)</span> 是周，那么 <span class="arithmatex">\(T = 365/7 = 52\)</span>。</p>
+<h4 id="1_1">例 1</h4>
+<blockquote>
+<p>假设我们观察到某个股票在连续 15 个周五的价格为：30.2; 32.0; 31.1; 30.1; 30.2; 30.3; 30.6; 33.0; 32.9; 33.0; 33.5; 33.5; 33.7; 33.5; 33.2。
+(a) 估算该股票的波动率
+(b) 这个波动率的估计的标准差是多少？</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">#</th>
+<th align="center">股票价格(<span class="arithmatex">\(S\)</span>)</th>
+<th align="center">相对价格(<span class="arithmatex">\(S_{i+1}/S_i\)</span>)</th>
+<th align="center">周回报率(<span class="arithmatex">\(u = \ln(S_{i+1}/S_i)\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="center">30.2</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">32.0</td>
+<td align="center">1.05960</td>
+<td align="center">0.05789</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">31.1</td>
+<td align="center">0.97188</td>
+<td align="center">-0.02853</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">30.1</td>
+<td align="center">0.96785</td>
+<td align="center">-0.03268</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">30.2</td>
+<td align="center">1.00332</td>
+<td align="center">0.00332</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">30.3</td>
+<td align="center">1.00331</td>
+<td align="center">0.00331</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">30.6</td>
+<td align="center">1.00990</td>
+<td align="center">0.00985</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">33.0</td>
+<td align="center">1.07843</td>
+<td align="center">0.07551</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="center">32.9</td>
+<td align="center">0.99697</td>
+<td align="center">-0.00303</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="center">33.0</td>
+<td align="center">1.00304</td>
+<td align="center">0.00303</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="center">33.5</td>
+<td align="center">1.01515</td>
+<td align="center">0.01504</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td align="center">33.5</td>
+<td align="center">1.00000</td>
+<td align="center">0.00000</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td align="center">33.7</td>
+<td align="center">1.00597</td>
+<td align="center">0.00595</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td align="center">33.5</td>
+<td align="center">0.99407</td>
+<td align="center">-0.00595</td>
+</tr>
+<tr>
+<td align="center">15</td>
+<td align="center">33.2</td>
+<td align="center">0.99104</td>
+<td align="center">-0.00900</td>
+</tr>
+</tbody>
+</table>
+<p>(a)</p>
+<p>首先计算得到：</p>
+<div class="arithmatex">\[\sum_{i=1}^n u_i = 0.09471\]</div>
+<div class="arithmatex">\[\sum_{i=1}^n u_i^2 = 0.01145\]</div>
+<p>计算得</p>
+<div class="arithmatex">\[\hat{D} = \frac{1}{13}(0.01145 - \frac{0.09471^2}{14}) = 0.0008315\]</div>
+<div class="arithmatex">\[\sigma = \sqrt{0.0008315 \times 52} = 0.208\]</div>
+<p>(b)</p>
+<p>这个估计本身的标准差为</p>
+<div class="arithmatex">\[ \frac{ \sigma}{ \sqrt{2n} } = \frac{0.208}{\sqrt{2 \times 14} } = 0.0393\]</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../../mathematics/probability/martingale/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Martingale" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Martingale
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../BinomialTree/" class="md-footer__link md-footer__link--next" aria-label="Next: Binomial Trees" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Binomial Trees
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

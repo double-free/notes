@@ -1,0 +1,1053 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ye">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Volatility Smile - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#volatility-smile" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Volatility Smile
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Ye's Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Mathematics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mathematics" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mathematics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          CFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CFR" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          CFR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/CfrAndKuhnPoker/" class="md-nav__link">
+        Counterfactual Regret Minimization and Kuhn Poker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/MonteCarloCfr/" class="md-nav__link">
+        Monte Carlo CFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
+        Regret Matching and Blotto Game
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          ESL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ESL" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          ESL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
+        ESL 3: Linear Methods for Regression
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Matrix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Matrix" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Matrix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/matrix/MatrixCalculus/" class="md-nav__link">
+        向量和矩阵求导
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Probability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Probability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Probability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/RigidBalls/" class="md-nav__link">
+        小球碰撞问题中的统计学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/martingale/" class="md-nav__link">
+        Martingale
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Trading
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Trading" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Trading
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          Option
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Option" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Option
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BSM/" class="md-nav__link">
+        The Black-Scholes-Merton model
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BinomialTree/" class="md-nav__link">
+        Binomial Trees
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Greeks/" class="md-nav__link">
+        The Greek letters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ito/" class="md-nav__link">
+        Wiener processes and Ito’s lemma
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Risk/" class="md-nav__link">
+        Option Volatility and Pricing - Risks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Volatility Smile
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Volatility Smile
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#191-call-put" class="md-nav__link">
+    19.1 call 和 put 有同样的波动率微笑
+  </a>
+  
+    <nav class="md-nav" aria-label="19.1 call 和 put 有同样的波动率微笑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#192" class="md-nav__link">
+    19.2 外汇期权
+  </a>
+  
+    <nav class="md-nav" aria-label="19.2 外汇期权">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    业界案例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1921" class="md-nav__link">
+    19.2.1 外汇期权波动率微笑的原因
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#193" class="md-nav__link">
+    19.3 股票期权
+  </a>
+  
+    <nav class="md-nav" aria-label="19.3 股票期权">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1931" class="md-nav__link">
+    19.3.1 股票期权波动率倾斜的原因
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#194" class="md-nav__link">
+    19.4 波动率微笑的其他表示方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#196-greeks" class="md-nav__link">
+    19.6 波动率微笑对 Greeks 的影响
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#187" class="md-nav__link">
+    18.7 当预期股价有大的跳变时
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#191-call-put" class="md-nav__link">
+    19.1 call 和 put 有同样的波动率微笑
+  </a>
+  
+    <nav class="md-nav" aria-label="19.1 call 和 put 有同样的波动率微笑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#192" class="md-nav__link">
+    19.2 外汇期权
+  </a>
+  
+    <nav class="md-nav" aria-label="19.2 外汇期权">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    业界案例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1921" class="md-nav__link">
+    19.2.1 外汇期权波动率微笑的原因
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#193" class="md-nav__link">
+    19.3 股票期权
+  </a>
+  
+    <nav class="md-nav" aria-label="19.3 股票期权">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1931" class="md-nav__link">
+    19.3.1 股票期权波动率倾斜的原因
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#194" class="md-nav__link">
+    19.4 波动率微笑的其他表示方法
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#196-greeks" class="md-nav__link">
+    19.6 波动率微笑对 Greeks 的影响
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#187" class="md-nav__link">
+    18.7 当预期股价有大的跳变时
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="volatility-smile">Volatility Smile</h1>
+<p>隐含波动率与期权执行价格的函数被称为波动率微笑(volatility smile)。所谓隐含波动率，是指隐含在期权 <strong>市场价格</strong> 中的波动率，而非我们通过统计方法得出的“波动率”。</p>
+<p>在 B-S-M 模型中，我们假设波动率是一个常数，并通过统计方法利用标的物资产的历史价格计算。理想情况下，我们通过市场价格得出的隐含波动率是和我们最初用统计方法算出的相似。但是实际上，我们发现这两者并不一致。</p>
+<p>真实的期权波动率并不是一个常数，而是一个关于__到期时间__和__执行价格__的函数（忽略随机因素）。</p>
+<h2 id="191-call-put">19.1 call 和 put 有同样的波动率微笑</h2>
+<p>当执行价格和到期日相同时，欧式看涨期权和欧式看跌期权具有相同的隐含波动率。</p>
+<p>回忆一下我们以前学习的 put-call parity 公式：</p>
+<div class="arithmatex">\[p + S_0 e^{-qT} = c + K e^{-rT}\]</div>
+<p>其中，<span class="arithmatex">\(c\)</span> 和 <span class="arithmatex">\(p\)</span> 分别为欧式看涨和看跌期权的价格。他们具有同样的执行价格 <span class="arithmatex">\(K\)</span>，距离到期日时间 <span class="arithmatex">\(T\)</span>。<span class="arithmatex">\(r\)</span> 是无风险利率，<span class="arithmatex">\(q\)</span> 是标的物资产的收益（例如股息）。<span class="arithmatex">\(S_0\)</span> 是标的物资产的即期价格。</p>
+<p>put-call parity 仅仅基于无套利机会假设。因此无论标的物价格是否服从对数正态分布，这个结论都成立。因此，我们使用 B-S-M 计算出来的理论价格满足：</p>
+<div class="arithmatex">\[p_{\mathrm{BS}} + S_0 e^{-qT} = c_{\mathrm{BS}} +  K e^{-rT}\]</div>
+<p>同时，即使不符合对数正态分布，期权的市场价格也应该满足：</p>
+<div class="arithmatex">\[p_{\mathrm{mkt}} + S_0 e^{-qT} = c_{\mathrm{mkt}} +  K e^{-rT}\]</div>
+<p>假设这里的看涨期权市场价格 <span class="arithmatex">\(c_{\mathrm{mkt}}\)</span> 价格已知，且已经通过 <span class="arithmatex">\(c_{\mathrm{mkt}}\)</span> 得到了其隐含波动率 <span class="arithmatex">\(\sigma_{\mathrm{mkt}}\)</span>。那么，将 <span class="arithmatex">\(c_{\mathrm{mkt}}\)</span> 代入 put-call parity 可以计算得出看跌期权价格：</p>
+<div class="arithmatex">\[p_{\mathrm{mkt}} =  K e^{-rT}\Phi(-d_2) - S_0 e^{-qT}\Phi(-d_1) \]</div>
+<p>这与利用 B-S-M 模型推导的看跌期权计算公式是一致的。因此，如果我们利用看跌期权价格 <span class="arithmatex">\(p_{\mathrm{mkt}}\)</span> 来再次计算隐含波动率，结果也是 <span class="arithmatex">\(\sigma_{\mathrm{mkt}}\)</span>。</p>
+<p>另外，通过 B-S-M 计算的看跌和看涨期权价格 <span class="arithmatex">\(c_{\mathrm{BS}}\)</span>，<span class="arithmatex">\(p_{\mathrm{BS}}\)</span> 在计算中都是使用同一个波动率，因此必然相等。即无论是理论价格还是市场价格，该结论都成立。</p>
+<p>我们还可以得到：</p>
+<div class="arithmatex">\[p_{\mathrm{BS}} - p_{\mathrm{mkt}} = c_{\mathrm{BS}} - c_{\mathrm{mkt}}\]</div>
+<p>该式说明，B-S-M 模型定价与实际市场价格的__误差__对于 call 和put 应该是一致的。</p>
+<h4 id="_1">例</h4>
+<blockquote>
+<p>一个欧式看涨期权与一个欧式看跌期权具有同样的执行价格与期限。看涨期权的隐含波动率为 30%，看跌期权的隐含波动率为 25%。其中存在什么样的套利机会？</p>
+</blockquote>
+<p>这说明看跌期权的价值被市场低估了（或者看涨期权的价值被高估）。根据 put-call parity，可以买入看跌期权，买入股票，并卖出看涨期权。</p>
+<h2 id="192">19.2 外汇期权</h2>
+<p>一个典型的货币期权的波动率微笑如下图：
+<img alt="Volatility smile for foreign currency options" src="https://upload-images.jianshu.io/upload_images/4482847-3d6fbd3a2cc1553f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>可以看出，在 ATM 的时候，波动率最低。随着执行价格不同，无论朝着 ITM 和 OTM 变化，波动率都渐渐增大。</p>
+<p>我们可以根据波动率微笑推导出风险中性假设下标的物价格的概率分布。</p>
+<p>首先看涨期权的价格可以由 payoff 的期望贴现得出：</p>
+<div class="arithmatex">\[c = e^{-rT}\int_{S_T = K}^{\infty} (S_T - K)g(S_T)~dS_T\]</div>
+<p>其中 <span class="arithmatex">\(g(S_T)\)</span> 表示 <span class="arithmatex">\(T\)</span> 时刻价格为 <span class="arithmatex">\(S_T\)</span> 的概率。对 <span class="arithmatex">\(K\)</span> 求导可得：</p>
+<div class="arithmatex">\[\frac{\partial c}{\partial K} = -e^{-rT}\int_{S_T = K}^{\infty} g(S_T)~dS_T\]</div>
+<p>再对 <span class="arithmatex">\(K\)</span> 求导可以得出：</p>
+<div class="arithmatex">\[\frac{\partial^2 c}{\partial K^2} = e^{-rT} g(K)\]</div>
+<p>于是可以得出：</p>
+<div class="arithmatex">\[g(K) = e^{rT} \frac{ \partial^2 c}{ \partial K^2}\]</div>
+<p>假设我们有三个期权，执行价格分别为 <span class="arithmatex">\(K- \delta\)</span>，<span class="arithmatex">\(K\)</span>，<span class="arithmatex">\(K+ \delta\)</span>，<span class="arithmatex">\(\delta\)</span> 是一个非常小的正数。我们可以用差分近似微分，得到：</p>
+<div class="arithmatex">\[g(K) = e^{rT} \frac{c_1 + c_3 - 2c_2} {\delta^2}\]</div>
+<p>因此，我们可以利用隐含波动率首先计算出期权价格，再计算风险中性假设下标的物价格的概率 <span class="arithmatex">\(g(K)\)</span>。其图像如下所示：</p>
+<p><img alt="Implied and lognormal distribution for foreign currency option" src="https://upload-images.jianshu.io/upload_images/4482847-65198e4597409e50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>我们可以看出，实际的曲线比我们假设的对数正态分布更“尖”，因此对于 deep OTM（例如执行价格大于 <span class="arithmatex">\(K_2\)</span> 的call，以及执行价格低于 <span class="arithmatex">\(K_1\)</span> 的put），实际上 B-S-M 模型低估了他们的价格。也就是低估了他们的隐含波动率。</p>
+<p>以上分析表明，波动率微笑曲线和到期日价格的概率分布曲线是一致的。</p>
+<h4 id="_2">业界案例</h4>
+<blockquote>
+<p>想象一下，当大部分市场参与者都认为汇率服从对数正态分布，而使用同一个波动率对某一个汇率期权定价。然而你通过历史数据发现对于 deep OTM 并不是这样。那应该怎么利用这个信息盈利呢？
+答案是买入 deep OTM 的期权，然后等待。到期时会有比对数正态分布预测的更大的几率成为 ITM。这样获取的收益期望远大于成本。
+在 1980 年代，有一些交易员已经认识到这一点并利用这个简单的策略获取了巨大的收益。</p>
+</blockquote>
+<h4 id="1">例 1</h4>
+<blockquote>
+<p>下列情况下，可能观测到什么样的波动率微笑？
+a. 股票价格分布两端的尾部都没有对数正态分布肥大
+b. 股票价格分布的右尾比对数正态分布肥大，左尾不如对数正态分布肥大。</p>
+</blockquote>
+<p>(a)
+该情况下，<span class="arithmatex">\(S_T &lt; K1\)</span> 以及 <span class="arithmatex">\(S_T &gt; K_2\)</span> 的概率都比对数正态分布下的概率低。因此 B-S-M 模型高估了执行价格极低和极高的期权的价格。也就是说 B-S-M 模型高估了他们的隐含波动率。因此波动率微笑应该是类似于“皱眉” 的情况。即类似图 19.7 中的形状</p>
+<p>(b)
+该情况下，<span class="arithmatex">\(S_T &lt; K1\)</span> 的概率比 B-S-M 模型估计的低，而 <span class="arithmatex">\(S_T &gt; K_2\)</span> 则更高。这说明B-S-M 模型高估了低执行价格的隐含波动率，低估了高执行价格的隐含波动率。因此其图形应该是一个单调递增的波动率微笑。</p>
+<h4 id="2">例 2</h4>
+<blockquote>
+<p>假定央行的政策允许汇率在 0.97 至 1.03 之间变化。则该外汇期权的波动率微笑最可能是什么样的？</p>
+</blockquote>
+<p>由于政策影响，汇率的概率分布会出现“瘦尾“的特征（相对于对数正态分布）。也就是说当执行价格非常小或非常大时， B-S-M 模型会高估其价值，也就是高估其波动率。因此它的波动率微笑最可能是一个”皱眉“(frown)。</p>
+<h3 id="1921">19.2.1 外汇期权波动率微笑的原因</h3>
+<p>某个资产价格服从对数正态分布有两个条件：
+1. 该资产的波动率是常数
+2. 该资产价格变化没有跳变（可导）</p>
+<p>实际上，对于外汇期权这两个条件都不成立。波动率不是常数，而且由于国家的货币政策调整经常出现跳变。结果就是让价格的极端情况更容易发生。</p>
+<p>跳变和非常数的波动率对期权价格的影响与期权的期限有关。</p>
+<p>当期权的期限变长，非常数的波动率对价格概率的影响更为显著，而对隐含波动率的影响程度却变小。同时跳变对这两者的影响都越来越小。综合作用的结果就是，期权的期限越长，波动率微笑的现象越不显著。</p>
+<h2 id="193">19.3 股票期权</h2>
+<p>与外汇期权不同，在 1987 年股灾之前，股票期权并没有波动率微笑的现象。自 1987 年以来，交易员在期权定价中采用的波动率如下图所示：</p>
+<p><img alt="Volatility smile for equities" src="https://upload-images.jianshu.io/upload_images/4482847-6741afd1525ca884.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>这种形式的波动率微笑也被称为波动率倾斜（volatility skew）。随着执行价格变高，隐含波动率变小。即，deep OTM 的看跌期权和 deep ITM 的看涨期权的隐含波动率明显高于高执行价格的期权。</p>
+<p>下图的实线展示了股票价格的概率分布，虚线表示一个具有相同的期望和标准差的对数正态分布。我们可以看出 <span class="arithmatex">\(S_T &lt; K_1\)</span> 的概率要大于对数正态分布的估算，这也导致了我们低估了执行价格偏小时的波动率。同时，<span class="arithmatex">\(S_T &gt; K_2\)</span> 的概率要小于对数正态分布的估计。</p>
+<p><img alt="Implied distribution and lognormal distribution for equity options" src="https://upload-images.jianshu.io/upload_images/4482847-2f0352fbfa205a6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<h3 id="1931">19.3.1 股票期权波动率倾斜的原因</h3>
+<p>这种现象的原因有两种解释：</p>
+<ol>
+<li>下跌的股价暗示着公司的财务杠杆提高。这导致股票风险增大，波动率增加。而公司股票上涨时则相反。</li>
+<li>由于股票期权的波动率倾斜在 1987 年股票大跌后才出现，因此有的人认为这是暴跌恐惧症（crashophobia）的体现。交易员害怕市场会出现大跌因此对于深度虚值的看跌期权赋予了较大的价值。</li>
+</ol>
+<h2 id="194">19.4 波动率微笑的其他表示方法</h2>
+<p>目前为止我们把波动率微笑定义为隐含波动率与执行价格的关系。他们的关系依赖于标的物资产的即期价格<span class="arithmatex">\(S_0\)</span>。因此，若即期价格变化，波动率微笑也会相应变化。为了让曲线更加稳定，我们有时候将波动率微笑定义为隐含波动率与 <span class="arithmatex">\(\frac{ K}{ S_0}\)</span> 的关系。当标的资产价格变化时，隐含波动率反应的是期权的 moneyness，即 ITM 或 OTM 的程度。</p>
+<p>有一种改进方法是将波动率定义为隐含波动率与<span class="arithmatex">\(\frac{K}{F_0}\)</span>的关系，其中 <span class="arithmatex">\(F_0\)</span> 是期限与期权相同的远期价格。交易员也经常把 ATM 的期权定义为 <span class="arithmatex">\(K=F_0\)</span> 的期权，这样做的原因是 <span class="arithmatex">\(F_0\)</span>（而非 <span class="arithmatex">\(S_0\)</span>）是到期日时标的资产的期望价格。</p>
+<p>另一种是将其定义为隐含波动率与期权 Delta 之间的关系。这种定义可以把波动率微笑扩展到除了欧式和美式期权以外的广泛的产品类型上。此时 ATM 的期权被定义为 Delta = 0.5 或 Delta = -0.5 的期权。</p>
+<h2 id="196-greeks">19.6 波动率微笑对 Greeks 的影响</h2>
+<p>在之前研究 Greeks 时候我们一直假设隐含波动率是常数。由于存在波动率微笑的现象，实际上当标的物价格变化时，隐含波动率会随之变化。</p>
+<p>例如，一个股票期权的 Delta 会变为：</p>
+<div class="arithmatex">\[\Delta = \frac{\partial c_{\mathrm{BS}}}{\partial S} + \frac{\partial c_{\mathrm{BS}}}{\partial \sigma_{\mathrm{imp}}}\frac{\partial \sigma_{\mathrm{imp}}}{\partial S}\]</div>
+<p>我们已经知道对于股票期权，波动率越高，价格越高。</p>
+<div class="arithmatex">\[ \frac{\partial c_{\mathrm{BS}}}{\partial \sigma_{\mathrm{imp}}} &gt; 0\]</div>
+<p>同时，隐含波动率是 <span class="arithmatex">\(K/S\)</span> 的单调减函数。这说明当标的物资产价格升高时，波动率增加。因此：</p>
+<div class="arithmatex">\[\frac{\partial \sigma_{\mathrm{imp}}}{\partial S} &gt; 0\]</div>
+<p>因此 <span class="arithmatex">\(\Delta\)</span> 会比 B-S-M 模型下的结果更高。</p>
+<h2 id="187">18.7 当预期股价有大的跳变时</h2>
+<p>假设某个股票现在价值是 $50，预期未来有个重要的消息会使股价上升或者下跌 $8。则未来的股价可能由两个对数正态分布叠加形成，分别对应于好消息和坏消息。如下图所示。虚线是具有相同均值和标准差的对数正态分布。</p>
+<p><img alt="Effect of a single large jump" src="https://upload-images.jianshu.io/upload_images/4482847-1e74327706c97230.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>这种情况下的隐含波动率与执行价格的关系为：
+<img alt="Volatility smile when a single large jump is anticipated" src="https://upload-images.jianshu.io/upload_images/4482847-94abd20872621931.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>可以看出，ATM 的隐含波动率最高，越是 ITM/OTM，隐含波动率越低。如果我们用 ATM 的隐含波动率计算 ITM/OTM 期权，会高估其价格。这个图形也被称为波动率“皱眉”。</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../Risk/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Option Volatility and Pricing - Risks" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Option Volatility and Pricing - Risks
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

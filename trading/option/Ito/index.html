@@ -1,0 +1,1142 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ye">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Wiener processes and Ito’s lemma - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wiener-processes-and-itos-lemma" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Wiener processes and Ito’s lemma
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Ye's Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Mathematics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mathematics" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mathematics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          CFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CFR" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          CFR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/CfrAndKuhnPoker/" class="md-nav__link">
+        Counterfactual Regret Minimization and Kuhn Poker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/MonteCarloCfr/" class="md-nav__link">
+        Monte Carlo CFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
+        Regret Matching and Blotto Game
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          ESL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ESL" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          ESL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
+        ESL 3: Linear Methods for Regression
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Matrix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Matrix" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Matrix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/matrix/MatrixCalculus/" class="md-nav__link">
+        向量和矩阵求导
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Probability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Probability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Probability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/RigidBalls/" class="md-nav__link">
+        小球碰撞问题中的统计学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/martingale/" class="md-nav__link">
+        Martingale
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Trading
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Trading" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Trading
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          Option
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Option" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Option
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BSM/" class="md-nav__link">
+        The Black-Scholes-Merton model
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BinomialTree/" class="md-nav__link">
+        Binomial Trees
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Greeks/" class="md-nav__link">
+        The Greek letters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Wiener processes and Ito’s lemma
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Wiener processes and Ito’s lemma
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#131" class="md-nav__link">
+    13.1 马尔科夫性质
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132" class="md-nav__link">
+    13.2 连续时间随机过程
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 连续时间随机过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1221" class="md-nav__link">
+    12.2.1 维纳过程
+  </a>
+  
+    <nav class="md-nav" aria-label="12.2.1 维纳过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    广义维纳过程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1222" class="md-nav__link">
+    12.2.2 伊藤过程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#123" class="md-nav__link">
+    12.3 描述股价变化的过程
+  </a>
+  
+    <nav class="md-nav" aria-label="12.3 描述股价变化的过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#126" class="md-nav__link">
+    12.6 伊藤引理
+  </a>
+  
+    <nav class="md-nav" aria-label="12.6 伊藤引理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    应用：远期合约
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    例1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    例2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Risk/" class="md-nav__link">
+        Option Volatility and Pricing - Risks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VolatilitySmile/" class="md-nav__link">
+        Volatility Smile
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#131" class="md-nav__link">
+    13.1 马尔科夫性质
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132" class="md-nav__link">
+    13.2 连续时间随机过程
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 连续时间随机过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1221" class="md-nav__link">
+    12.2.1 维纳过程
+  </a>
+  
+    <nav class="md-nav" aria-label="12.2.1 维纳过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    广义维纳过程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1222" class="md-nav__link">
+    12.2.2 伊藤过程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#123" class="md-nav__link">
+    12.3 描述股价变化的过程
+  </a>
+  
+    <nav class="md-nav" aria-label="12.3 描述股价变化的过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#126" class="md-nav__link">
+    12.6 伊藤引理
+  </a>
+  
+    <nav class="md-nav" aria-label="12.6 伊藤引理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    应用：远期合约
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    例1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    例2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="wiener-processes-and-itos-lemma">Wiener processes and Ito’s lemma</h1>
+<p>若某一变量的以一种不确定的方式随时间变化，我们称它服从某种随机过程（stochastic process）。随机过程可以分为离散时间和连续时间两类。而变量本身也可以分为连续变量和离散变量两类。</p>
+<p>本章我们将导出股票价格的连续变量，连续时间的随机过程。</p>
+<h2 id="131">13.1 马尔科夫性质</h2>
+<p>Markov Process 是一种特殊的随机过程。在该过程中，只有当前的值与未来的预测相关。</p>
+<p>我们通常假设股票符合一个 Markov Process。即我们对股票未来价格的预测只和股票当前价格有关，与一周前，一年前的价格无关。</p>
+<p>这也符合弱型市场有效性（the weak form of market efficiency）。它指出，一种股票的当前价格包含过去价格的所有信息。如果弱型市场有效性不成立，则分析师可以通过历史数据获得高于平均收益率的收益。事实上，现实中我们没有任何证据证明可以做到这一点。</p>
+<h2 id="132">13.2 连续时间随机过程</h2>
+<p>假设一个变量服从 Markov Process。它现在的值是 10，在一年中的变化满足正态分布 <span class="arithmatex">\(N(\mu, \sigma^2)\)</span>。那么它在 2 年中的变化的概率分布是什么？</p>
+<p>假设在第 1 年中的变化是 <span class="arithmatex">\(x_1\)</span>，第二年中的变化是 <span class="arithmatex">\(x_2\)</span>。假设两者相互独立。</p>
+<p>显然，<span class="arithmatex">\(x_1\)</span>和 <span class="arithmatex">\(x_2\)</span> 都服从 <span class="arithmatex">\(N(\mu, \sigma^2)\)</span>。则两者的和服从分布 <span class="arithmatex">\(N(2\mu, 2\sigma^2)\)</span>。</p>
+<p>同理，0.5 年中的变化的概率分布为 <span class="arithmatex">\(N(0.5\mu, 0.5\sigma^2)\)</span>。</p>
+<p>结论是，变量在任意时间段 <span class="arithmatex">\(T\)</span> （以年为单位）变化的分布服从 <span class="arithmatex">\(N(\mu T, \sigma^2 T)\)</span>。</p>
+<h4 id="_1">证明</h4>
+<p>均值部分很简单，可以稍微证明一下方差部分。</p>
+<p>已知 <span class="arithmatex">\(D(x_1)\)</span> 和 <span class="arithmatex">\(D(x_2)\)</span>，且<span class="arithmatex">\(x_1\)</span>，<span class="arithmatex">\(x_2\)</span> 相互独立，求<span class="arithmatex">\(D(x_1 + x_2)\)</span> 。</p>
+<p>将 <span class="arithmatex">\(D(x_1 + x_2)\)</span> 做如下变形：</p>
+<div class="arithmatex">\[\begin{align}
+D(x_1 + x_2) &amp;= E[(x_1+x_2)^2] - [E(x_1+x_2)]^2 \\
+&amp;= D(x_1) + D(x_2) + 2E(x_1 x_2) - 2E(x_1)E(x_2)
+\end{align}\]</div>
+<p>由于 <span class="arithmatex">\(x_1\)</span>，<span class="arithmatex">\(x_2\)</span> 相互独立，有：</p>
+<div class="arithmatex">\[COV(x_1,x_2) = E(x_1 x_2) - E(x_1)E(x_2) = 0\]</div>
+<p>因此有：</p>
+<div class="arithmatex">\[D(x_1 + x_2) = D(x_1) + D(x_2)\]</div>
+<h3 id="1221">12.2.1 维纳过程</h3>
+<p>如果我们令以上变化的期望 <span class="arithmatex">\(\mu = 0\)</span>，<span class="arithmatex">\(\sigma = 1\)</span>，我们就得到 <strong>维纳过程</strong>(Wiener Process)。它在物理学中被用来描述某个粒子受到大量分子碰撞的运动，也被称作 <strong>布朗运动</strong>(Brownian Motion)。</p>
+<p>严格来讲，一个服从维纳过程的变量 <span class="arithmatex">\(z\)</span> 具有如下两条性质：</p>
+<ol>
+<li>变化量 <span class="arithmatex">\(\Delta z\)</span> 在一个小的时间 <span class="arithmatex">\(\Delta t\)</span> 中符合：</li>
+</ol>
+<div class="arithmatex">\[\Delta z = \epsilon\sqrt{\Delta t}\]</div>
+<p>其中<span class="arithmatex">\(\epsilon\)</span> 服从标准正态分布 <span class="arithmatex">\(N(0,1)\)</span></p>
+<ol>
+<li>变化量 <span class="arithmatex">\(\Delta z\)</span> 在任意两个不同的时间段独立</li>
+</ol>
+<h4 id="_2">广义维纳过程</h4>
+<p>目前我们讨论的维纳过程中，对 <span class="arithmatex">\(z\)</span> 未来时刻的期望总是等于它的初值。我们将其做一定推广，即对其叠加一个随时间变动的因子<span class="arithmatex">\(a~dt\)</span>：</p>
+<div class="arithmatex">\[dx = a~dt + b~dz\]</div>
+<p>其中，<span class="arithmatex">\(a~dt\)</span> 表示 <span class="arithmatex">\(x\)</span> 单位时间内漂移速度为 <span class="arithmatex">\(a\)</span>。
+<span class="arithmatex">\(b~dz\)</span> 表示噪声，该噪声的变动是 <span class="arithmatex">\(b\)</span> 倍的维纳过程，即服从<span class="arithmatex">\(N(0, b^2)\)</span>。</p>
+<p>在一个很短的时间 <span class="arithmatex">\(\Delta t\)</span> 中，<span class="arithmatex">\(x\)</span> 的变动 <span class="arithmatex">\(\Delta x\)</span> 可以写为：</p>
+<div class="arithmatex">\[\Delta x = a \Delta t + b \epsilon \sqrt{\Delta t}\]</div>
+<p>因此，在 <span class="arithmatex">\(T\)</span> 时刻它服从正态分布 <span class="arithmatex">\(N(aT, b^2T)\)</span>。</p>
+<p>一个典型的广义维纳过程如下所示：
+<img alt="Generalized Wiener process" src="https://upload-images.jianshu.io/upload_images/4482847-5661618f0705732d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<h4 id="_3">例</h4>
+<blockquote>
+<p>一个公司的现金服从广义维纳过程，drift 为 0.5 每季度，方差是 4.0 每季度。该公司需要多少初始现金才能保证 1 年后现金为负的概率小于 5%？</p>
+</blockquote>
+<p>根据上面广义维纳过程的推论，假设其初始现金是<span class="arithmatex">\(m_0\)</span>，1 年后现金 <span class="arithmatex">\(m\)</span> 服从 <span class="arithmatex">\(N(m_0 + 4 \times 0.5, 4 \times 4)\)</span>。</p>
+<p>假设 <span class="arithmatex">\(\epsilon\)</span>  服从标准正态分布 <span class="arithmatex">\(N(0,1)\)</span>，显然 <span class="arithmatex">\(m = m_0 + 2 + 4\epsilon\)</span>。</p>
+<p>因此问题转化为 <span class="arithmatex">\(P(m &lt; 0) = P(\epsilon &lt; -\frac{m_0+2}{4})\leq 0.05\)</span>。</p>
+<p>查<a href="https://wenku.baidu.com/view/cd811b103a3567ec102de2bd960590c69fc3d849.html">标准正态分布表</a>得到 <span class="arithmatex">\(P(\epsilon &lt; 1.65) = 0.9505\)</span>，因此 <span class="arithmatex">\(P(\epsilon &lt; -1.65) = 0.0495\)</span>。因此有<span class="arithmatex">\(m_0 = 4.6\)</span>。即需要初始资金 4.6 百万美元。</p>
+<h3 id="1222">12.2.2 伊藤过程</h3>
+<p>当广义维纳过程中的 <span class="arithmatex">\(a\)</span>，<span class="arithmatex">\(b\)</span> 不是常数，而是关于<span class="arithmatex">\((x,t)\)</span> 的函数时，就变为了一个伊藤过程：</p>
+<div class="arithmatex">\[dx = a(x,t)~dt + b(x,t)~dz\]</div>
+<p>在一个很短的时间 <span class="arithmatex">\(\Delta t\)</span> 内，假设 <span class="arithmatex">\(a\)</span> 和 <span class="arithmatex">\(b\)</span> 在 <span class="arithmatex">\(t\)</span> 到 <span class="arithmatex">\(t+\Delta t\)</span>中保持不变，我们有：</p>
+<div class="arithmatex">\[\Delta x = a(x, t)~\Delta t + b(x,t) \epsilon \sqrt{\Delta t}\]</div>
+<h2 id="123">12.3 描述股价变化的过程</h2>
+<p>假设我们对股票的期望收益率为 <span class="arithmatex">\(\mu\)</span>，则经过一个很短的时间 <span class="arithmatex">\(\Delta t\)</span>，我们期望的股票价值是 <span class="arithmatex">\(\mu S \Delta t\)</span>。利用伊藤过程来理解，则股票价格的漂移速度 (drift rate) 是 <span class="arithmatex">\(\mu S\)</span>。</p>
+<p>如果我们不考虑任何扰动，即股票价格总按照期望上涨。则可以计算：</p>
+<div class="arithmatex">\[\frac{dS}{dt} = \mu S\]</div>
+<p>将 S 从 0 至 T 积分，可以得出：</p>
+<div class="arithmatex">\[S_T = S_0 e^{\mu T}\]</div>
+<p>现实中肯定是存在扰动的，我们一般假设扰动与股票价格成正比，假设比例是<span class="arithmatex">\(\sigma\)</span>，则我们得到以下伊藤过程：</p>
+<div class="arithmatex">\[dS = \mu S dt + \sigma S dz \]</div>
+<p>即：</p>
+<div class="arithmatex">\[\frac{ dS}{ S} = \mu dt + \sigma dz\]</div>
+<p>其离散时间模型为：</p>
+<div class="arithmatex">\[\frac{\Delta S}{S} = \mu \Delta t + \sigma \epsilon \sqrt{\Delta t}\]</div>
+<p>可以发现 <span class="arithmatex">\(\frac{ \Delta S }{ S }\)</span> 服从正态分布 <span class="arithmatex">\(N(\mu \Delta t, \sigma^2 \Delta t)\)</span>。</p>
+<p>其中：
+- <span class="arithmatex">\(\mu\)</span>：股票的期望回报率，在风险中性假设下，<span class="arithmatex">\(\mu\)</span> 等于无风险利率 <span class="arithmatex">\(r\)</span>
+- <span class="arithmatex">\(\sigma\)</span>:  股票价格的波动率</p>
+<h4 id="_4">例</h4>
+<blockquote>
+<p>分析以上股票价格变化过程与下面三个过程的区别，并解释为什么上述模型更好。<br/>
+<span class="arithmatex">\(\Delta S = \mu \Delta t + \sigma \epsilon \sqrt{\Delta t}\)</span> <br/>
+<span class="arithmatex">\(\Delta S = \mu S \Delta t + \sigma \epsilon \sqrt{\Delta t}\)</span> <br/>
+<span class="arithmatex">\(\Delta S = \mu \Delta t + \sigma S \epsilon \sqrt{\Delta t}\)</span></p>
+</blockquote>
+<p>股票价格的预期增长量和变化量都应该与股票当时价格成正比。因此以上过程都不如下式的描述准确</p>
+<div class="arithmatex">\[\frac{\Delta S}{S} = \mu \Delta t + \sigma \epsilon \sqrt{\Delta t}\]</div>
+<h2 id="126">12.6 伊藤引理</h2>
+<p>若变量 x 符合以下伊藤过程：</p>
+<div class="arithmatex">\[dx = a(x,t)~dt + b(x,t)~dz\]</div>
+<p>那么关于 <span class="arithmatex">\(x\)</span> 和 <span class="arithmatex">\(t\)</span> 的可微函数 <span class="arithmatex">\(G(x,t)\)</span> 遵循以下伊藤过程：</p>
+<div class="arithmatex">\[dG = (\frac{\partial G}{\partial x}a + \frac{\partial G}{\partial t} + \frac{1}{2} \frac{\partial^2 G}{\partial x^2}b^2)~dt +  \frac{\partial G}{\partial x}b~dz\]</div>
+<h4 id="_5">证明</h4>
+<p>根据多元泰勒展开公式，对 <span class="arithmatex">\(G(x,t)\)</span> 作二阶展开，得：</p>
+<div class="arithmatex">\[\Delta G = \frac{\partial G}{\partial x}\Delta x + \frac{\partial G}{\partial t}\Delta t + \frac{1}{2!}(\frac{\partial^2 G}{\partial x^2}\Delta x^2 + 2\frac{\partial^2 G}{\partial x \partial t}\Delta x \Delta t + \frac{\partial^2 G}{\partial x^2}\Delta t^2)\]</div>
+<p>由于 <span class="arithmatex">\(\Delta x\)</span> 也是 <span class="arithmatex">\(\Delta t\)</span> 的函数：</p>
+<div class="arithmatex">\[\Delta x = a(x,t)~\Delta t + b(x,t) \epsilon \sqrt{\Delta t}\]</div>
+<p>忽略 <span class="arithmatex">\(\Delta t\)</span> 的高阶无穷小 <span class="arithmatex">\(o(\Delta t)\)</span>，可得：</p>
+<div class="arithmatex">\[\Delta x^2 = b^2(x,t) \epsilon^2 \Delta t \]</div>
+<p>由于 <span class="arithmatex">\(\epsilon\)</span> 服从 <span class="arithmatex">\(N(0,1)\)</span>，可知 <span class="arithmatex">\(\epsilon^2\)</span> 服从 <span class="arithmatex">\(\chi^2_1\)</span>，其中 <span class="arithmatex">\(\chi^2_n\)</span> 是卡方分布，满足 <span class="arithmatex">\(E(\chi^2_n) = n\)</span>，<span class="arithmatex">\(D(\chi^2_n) = 2n\)</span>。</p>
+<p>因此，对于 <span class="arithmatex">\(\epsilon^2 \Delta t\)</span>，它的期望值是 <span class="arithmatex">\(\Delta t\)</span>，方差是 <span class="arithmatex">\(2\Delta t^2\)</span>。</p>
+<p>就整个 <span class="arithmatex">\(\Delta G\)</span> 来看：</p>
+<div class="arithmatex">\[\Delta G = \frac{\partial G}{\partial x}\Delta x + \frac{\partial G}{\partial t}\Delta t + \frac{1}{2}\frac{\partial^2 G}{\partial x^2}\Delta x^2\]</div>
+<p>由于 <span class="arithmatex">\(\Delta x\)</span> 部分还有方差为 <span class="arithmatex">\(\Delta t\)</span> 扰动，因此方差为 <span class="arithmatex">\(\Delta t^2\)</span> 的扰动从数量级上就可以忽略。我们因此可以直接把 <span class="arithmatex">\(\epsilon^2\)</span> 近似为常数，也就是它的期望值 1。得到：</p>
+<div class="arithmatex">\[\Delta G = \frac{ \partial G}{ \partial x}(a\Delta t + b \epsilon \sqrt{\Delta t}) + \frac{\partial G}{\partial t}\Delta t + \frac{1}{2}\frac{\partial^2 G}{\partial x^2}b^2\Delta t\]</div>
+<div class="arithmatex">\[\Delta G = (\frac{\partial G}{\partial x}a +  \frac{\partial G}{\partial t} + \frac{1}{2}\frac{\partial^2 G}{\partial x^2}b^2)\Delta t + \frac{\partial G}{\partial x} b \epsilon \sqrt{\Delta t}\]</div>
+<p>也写作：</p>
+<div class="arithmatex">\[ dG = (\frac{\partial G}{\partial x}a +  \frac{\partial G}{\partial t} + \frac{1}{2}\frac{\partial^2 G}{\partial x^2}b^2)~dt + \frac{\partial G}{\partial x} b~dz \]</div>
+<h4 id="_6">应用：远期合约</h4>
+<p>对于远期合约，假设到期时间为 <span class="arithmatex">\(T\)</span>，无风险利率为 <span class="arithmatex">\(r\)</span>，当前时间为 <span class="arithmatex">\(t\)</span>，当前现货价格为 <span class="arithmatex">\(S\)</span>，则远期合约的执行价格应该为<span class="arithmatex">\(S\)</span> 和 <span class="arithmatex">\(t\)</span> 的函数（否则存在套利机会）：</p>
+<div class="arithmatex">\[F = Se^{r(T-t)}\]</div>
+<p>如我们在 12.3 介绍的，假设 <span class="arithmatex">\(S\)</span> 满足伊藤过程：</p>
+<div class="arithmatex">\[dS = \mu S dt + \sigma S dz \]</div>
+<p>其中期望收益为 <span class="arithmatex">\(\mu\)</span>，波动率为 <span class="arithmatex">\(\sigma\)</span>。则 <span class="arithmatex">\(F\)</span> 的价格变化过程可以利用伊藤引理确定。</p>
+<p><span class="arithmatex">\(\frac{ \partial F}{\partial S} = e^{r(T-t)}\)</span>，<span class="arithmatex">\(\frac{\partial^2 F}{\partial S^2} = 0\)</span>，<span class="arithmatex">\(\frac{\partial F}{\partial t} = -r S e^{r(T-t)}\)</span>，带入伊藤引理有：</p>
+<div class="arithmatex">\[dF = (a - r S) e^{r(T-t)}~dt + e^{r(T-t)}b~dz \]</div>
+<p>而，<span class="arithmatex">\(a\)</span> 为期望收益 <span class="arithmatex">\(\mu S\)</span>，<span class="arithmatex">\(b\)</span> 为波动率 <span class="arithmatex">\(\sigma S\)</span>，带入有：</p>
+<div class="arithmatex">\[dF = (\mu - r ) F~dt + \sigma F~dz\]</div>
+<h4 id="1">例1</h4>
+<blockquote>
+<p>假设 <span class="arithmatex">\(G(S, t)\)</span> 是关于股票价格 <span class="arithmatex">\(S\)</span> 和时间 <span class="arithmatex">\(t\)</span> 的函数，<span class="arithmatex">\(\sigma_S\)</span> 及 <span class="arithmatex">\(\sigma_G\)</span> 分别为 <span class="arithmatex">\(S\)</span> 和 <span class="arithmatex">\(G\)</span> 的波动率，证明当 <span class="arithmatex">\(S\)</span> 的期望回报上升 <span class="arithmatex">\(\lambda \sigma_S\)</span> 时，<span class="arithmatex">\(G\)</span> 的期望回报上升 <span class="arithmatex">\(\lambda \sigma_G\)</span>，其中 <span class="arithmatex">\(\lambda\)</span> 是常数。</p>
+</blockquote>
+<p>假设 <span class="arithmatex">\(S\)</span> 符合伊藤过程：</p>
+<div class="arithmatex">\[ dS = a~dt + b~dz\]</div>
+<p>由伊藤引理可知：</p>
+<div class="arithmatex">\[ dG = (\frac{\partial G}{\partial x}a +  \frac{\partial G}{\partial t} + \frac{1}{2}\frac{\partial^2 G}{\partial x^2}b^2)~dt + \frac{\partial G}{\partial x} b~dz \]</div>
+<p>因此，波动率有如下关系：</p>
+<div class="arithmatex">\[ \sigma_G = \frac{ \partial G }{ \partial x } \sigma_S \]</div>
+<p>若 <span class="arithmatex">\(S\)</span> 的期望收益 <span class="arithmatex">\(a\)</span> 上升了 <span class="arithmatex">\(\lambda \sigma_S\)</span>，则显然有 <span class="arithmatex">\(G\)</span> 的期望收益上升了 <span class="arithmatex">\(\frac{ \partial G }{\partial x } \lambda \sigma_S = \lambda \sigma_G\)</span>。</p>
+<h4 id="2">例2</h4>
+<blockquote>
+<p>假设股票价格 <span class="arithmatex">\(S\)</span> 服从几何布朗运动：<br/>
+<span class="arithmatex">\(dS = \mu S~dt + \sigma S~dz\)</span>
+其中期望回报率是 <span class="arithmatex">\(\mu\)</span>，波动率是 <span class="arithmatex">\(\sigma\)</span>。证明 <span class="arithmatex">\(S^n\)</span> 也服从几何布朗运动。</p>
+</blockquote>
+<p>同样是伊藤引理的应用。令 <span class="arithmatex">\(G(S,t) = S^n\)</span>。则有：</p>
+<div class="arithmatex">\[dG = (\frac{\partial G}{\partial S} a + \frac{\partial G}{\partial t} + \frac{1}{2}\frac{\partial^2 G}{\partial S^2}b^2)~dt + \frac{\partial G}{\partial S} b~dz\]</div>
+<p>带入 <span class="arithmatex">\(a = \mu S\)</span>，<span class="arithmatex">\(b = \sigma S\)</span> 可得：</p>
+<div class="arithmatex">\[dG = (n\mu + \frac{ 1}{ 2} n(n-1)\sigma^2) G~dt + n \sigma G~dz\]</div>
+<p>因此 <span class="arithmatex">\(S^n\)</span> 与 <span class="arithmatex">\(S\)</span> 具有同样的形式，也满足几何布朗运动。其期望的收益率为 <span class="arithmatex">\(n\mu + \frac{1}{2} n(n-1)\sigma^2\)</span>，波动率为 <span class="arithmatex">\(n \sigma\)</span>。</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../Greeks/" class="md-footer__link md-footer__link--prev" aria-label="Previous: The Greek letters" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              The Greek letters
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Risk/" class="md-footer__link md-footer__link--next" aria-label="Next: Option Volatility and Pricing - Risks" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Option Volatility and Pricing - Risks
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
