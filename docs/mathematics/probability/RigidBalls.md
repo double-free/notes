@@ -30,7 +30,7 @@ G(y) &= P(X_1 \leq y) P( X_2 \leq y) P(X_n \leq y) \\
 其中 $F$ 表示 $X$ 的累积分布函数。
 
 
-那么 y 的期望值可以表示为：
+那么 $Y$ 的期望值可以表示为：
 
 $$\begin{align}
 E(Y) &= \int_a^b y G'(y) dy \\
