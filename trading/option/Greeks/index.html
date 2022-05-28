@@ -1,0 +1,1879 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ye">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Greeks - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#184-delta" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Greeks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Ye's Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Mathematics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mathematics" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mathematics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          CFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CFR" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          CFR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/CfrAndKuhnPoker/" class="md-nav__link">
+        Counterfactual Regret Minimization and Kuhn Poker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/MonteCarloCfr/" class="md-nav__link">
+        Monte Carlo CFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
+        Regret Matching and Blotto Game
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          ESL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ESL" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          ESL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
+        ESL 3: Linear Methods for Regression
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL4_LinearMethodsForClassification/" class="md-nav__link">
+        ESL 4: Linear Methods for Classification
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Matrix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Matrix" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Matrix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/matrix/MatrixCalculus/" class="md-nav__link">
+        向量和矩阵求导
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Probability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Probability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Probability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/RigidBalls/" class="md-nav__link">
+        小球碰撞问题中的统计学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/martingale/" class="md-nav__link">
+        Martingale
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Trading
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Trading" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Trading
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          Option
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Option" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Option
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Greeks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Greeks
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#184-delta" class="md-nav__link">
+    18.4 Delta
+  </a>
+  
+    <nav class="md-nav" aria-label="18.4 Delta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1841-delta" class="md-nav__link">
+    18.4.1 欧式期权的 Delta
+  </a>
+  
+    <nav class="md-nav" aria-label="18.4.1 欧式期权的 Delta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1843-delta" class="md-nav__link">
+    18.4.3 远期合约 Delta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1844-delta" class="md-nav__link">
+    18.4.4 期货的 Delta
+  </a>
+  
+    <nav class="md-nav" aria-label="18.4.4 期货的 Delta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#185-theta" class="md-nav__link">
+    18.5 Theta
+  </a>
+  
+    <nav class="md-nav" aria-label="18.5 Theta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#186-gamma" class="md-nav__link">
+    18.6 Gamma
+  </a>
+  
+    <nav class="md-nav" aria-label="18.6 Gamma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1861-gamma" class="md-nav__link">
+    18.6.1 Gamma 中性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1862-gamma" class="md-nav__link">
+    18.6.2 Gamma 计算
+  </a>
+  
+    <nav class="md-nav" aria-label="18.6.2 Gamma 计算">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#187-delta-theta-gamma" class="md-nav__link">
+    18.7 Delta, Theta, Gamma 之间的关系
+  </a>
+  
+    <nav class="md-nav" aria-label="18.7 Delta, Theta, Gamma 之间的关系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#188-vega" class="md-nav__link">
+    18.8 Vega
+  </a>
+  
+    <nav class="md-nav" aria-label="18.8 Vega">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    例 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#189-rho" class="md-nav__link">
+    18.9 Rho
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1810" class="md-nav__link">
+    18.10 实际应用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1812" class="md-nav__link">
+    18.12 公式的推广
+  </a>
+  
+    <nav class="md-nav" aria-label="18.12 公式的推广">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_4" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_3" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    例 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-greeks-from-traders-perspective" class="md-nav__link">
+    Appendix: Greeks from Trader's perspective
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix: Greeks from Trader's perspective">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-cash-greeks" class="md-nav__link">
+    A.1 cash Greeks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-gamma-theta" class="md-nav__link">
+    A.2 Gamma 和 Theta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-slippage" class="md-nav__link">
+    A.3 Slippage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#184-delta" class="md-nav__link">
+    18.4 Delta
+  </a>
+  
+    <nav class="md-nav" aria-label="18.4 Delta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1841-delta" class="md-nav__link">
+    18.4.1 欧式期权的 Delta
+  </a>
+  
+    <nav class="md-nav" aria-label="18.4.1 欧式期权的 Delta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1843-delta" class="md-nav__link">
+    18.4.3 远期合约 Delta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1844-delta" class="md-nav__link">
+    18.4.4 期货的 Delta
+  </a>
+  
+    <nav class="md-nav" aria-label="18.4.4 期货的 Delta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#185-theta" class="md-nav__link">
+    18.5 Theta
+  </a>
+  
+    <nav class="md-nav" aria-label="18.5 Theta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#186-gamma" class="md-nav__link">
+    18.6 Gamma
+  </a>
+  
+    <nav class="md-nav" aria-label="18.6 Gamma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1861-gamma" class="md-nav__link">
+    18.6.1 Gamma 中性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1862-gamma" class="md-nav__link">
+    18.6.2 Gamma 计算
+  </a>
+  
+    <nav class="md-nav" aria-label="18.6.2 Gamma 计算">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#187-delta-theta-gamma" class="md-nav__link">
+    18.7 Delta, Theta, Gamma 之间的关系
+  </a>
+  
+    <nav class="md-nav" aria-label="18.7 Delta, Theta, Gamma 之间的关系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#188-vega" class="md-nav__link">
+    18.8 Vega
+  </a>
+  
+    <nav class="md-nav" aria-label="18.8 Vega">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    例 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#189-rho" class="md-nav__link">
+    18.9 Rho
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1810" class="md-nav__link">
+    18.10 实际应用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1812" class="md-nav__link">
+    18.12 公式的推广
+  </a>
+  
+    <nav class="md-nav" aria-label="18.12 公式的推广">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_4" class="md-nav__link">
+    例 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_3" class="md-nav__link">
+    例 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    例 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-greeks-from-traders-perspective" class="md-nav__link">
+    Appendix: Greeks from Trader's perspective
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix: Greeks from Trader's perspective">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-cash-greeks" class="md-nav__link">
+    A.1 cash Greeks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-gamma-theta" class="md-nav__link">
+    A.2 Gamma 和 Theta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-slippage" class="md-nav__link">
+    A.3 Slippage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>Greeks</h1>
+
+<p>Greeks 是为描述期权持仓风险引入的，他们各自代表一个维度的风险。</p>
+<h2 id="184-delta">18.4 Delta</h2>
+<p><em>delta</em> (<span class="arithmatex">\(\Delta\)</span>) 表示期权价格变动与标的物价格变动之间的比率。若假设 <span class="arithmatex">\(c\)</span> 为看涨期权价格，<span class="arithmatex">\(S\)</span> 为对应的股票价格，则有：</p>
+<div class="arithmatex">\[\Delta  = \frac{\partial c}{\partial S}\]</div>
+<p><img alt="delta的计算" src="https://upload-images.jianshu.io/upload_images/4482847-6a997c1bdd11d59f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>例如，某股票价格为 $100，它的某个看涨期权价格为 $10。一个投资者卖了 20 份看涨期权（每份 100 share，共 2000 share）。这个投资者的仓位可以通过购买 <span class="arithmatex">\(0.6 \times 2000 = 1200\)</span> share 股票对冲，使整个组合的 delta 为 0，即 delta 中性。</p>
+<p>值得注意的是，由于期权的 delta 是一直变化的，上面例子中的 delta 中性只能保持非常短的一段时间。</p>
+<p>假设过一段时间，该股票价格涨到了 $110，看涨期权的 delta 随之上涨到 0.65。则我们需要额外再买入 <span class="arithmatex">\(0.05 \times 2000 = 100\)</span> share 来保持 delta 中性。这样持续依据最新的 delta 进行对冲的过程被称为动态对冲(<em>dynamic hedging</em>)。否则被称为静态对冲。</p>
+<h3 id="1841-delta">18.4.1 欧式期权的 Delta</h3>
+<p>对于一个欧式看涨期权，利用 B-S-M 公式，我们可以得到：</p>
+<div class="arithmatex">\[\Delta_{call} = \Phi(d_1)\]</div>
+<p>对于欧式看跌期权，则有：</p>
+<div class="arithmatex">\[\Delta_{put} = \Delta_{call} - 1\]</div>
+<h4 id="_1">证明</h4>
+<p>由 B-S-M 公式稍作变形（计算 <span class="arithmatex">\(t\)</span> 时刻而非 0 时刻的价格），我们可以得到：</p>
+<div class="arithmatex">\[c = S \Phi(d_1) - Ke^{-r(T-t)}\Phi(d_2)\]</div>
+<p>我们不能简单得到结果，因为 <span class="arithmatex">\(d_1\)</span> 和 <span class="arithmatex">\(d_2\)</span> 都是关于 <span class="arithmatex">\(S\)</span> 的函数：</p>
+<div class="arithmatex">\[d_1 = \frac{\ln(\frac{ S }{ K }) + (r + \frac{ 1}{ 2} \sigma^2)(T-t)} {\sigma \sqrt{T-t}}\]</div>
+<div class="arithmatex">\[d_2 = d_1 - \sigma \sqrt{T-t}\]</div>
+<p>我们利用求导公式有：</p>
+<div class="arithmatex">\[\frac{ \partial c}{ \partial S} = \Phi(d_1) + S\Phi'(d_1)\frac{ \partial d_1}{ \partial S} - Ke^{-r(T-t)}\Phi'(d_2)\frac{ \partial d_2}{ \partial S}\]</div>
+<p>其中 <span class="arithmatex">\(\Phi'(x)\)</span> 是正态分布的密度函数：</p>
+<div class="arithmatex">\[\Phi'(x) = \frac{1}{ \sqrt{2\pi}}e^{-\frac{ x^2}{2}}\]</div>
+<p>我们很容易得到：</p>
+<div class="arithmatex">\[\frac{\partial d_1}{\partial S} = \frac{\partial d_2}{\partial S} = \frac{1}{S\sigma \sqrt{T-t}}\]</div>
+<p>而利用 <span class="arithmatex">\(d_1 = d_2 + \sigma \sqrt{T-t}\)</span> 可以得到：</p>
+<div class="arithmatex">\[S\Phi'(d_1) = \frac{S}{\sqrt{2\pi}}e^{-\frac{(d_2 + \sigma \sqrt{T-t})^2}{2}} = Se^{-d_2\sigma\sqrt{T-t} ~-\frac{1}{2}\sigma^2(T-t)}\Phi'(d_2)\]</div>
+<p>代入 <span class="arithmatex">\(d_2\)</span>：</p>
+<div class="arithmatex">\[d_2 = \frac{\ln(\frac{S}{K}) + (r - \frac{1}{2}\sigma^2)(T-t)}{\sigma \sqrt{T-t}}\]</div>
+<p>可以得到：</p>
+<div class="arithmatex">\[S\Phi'(d_1) = Se^{-\ln(\frac{S}{K}) - r (T-t)} \Phi'(d_2) = Ke^{-r(T-t)}\Phi'(d_2)\]</div>
+<p>因此有：</p>
+<div class="arithmatex">\[\frac{\partial c}{\partial S} = \Delta = \Phi(d_1)\]</div>
+<p>对于看跌期权，可以由 put-call-parity 得到。</p>
+<p>典型的 <span class="arithmatex">\(\Delta\)</span> 与标的物价格的关系图如下：</p>
+<p><img alt="Delta and stock price" src="https://upload-images.jianshu.io/upload_images/4482847-0c2df9aed1022989.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>可以看到 call 和 put 两者趋势一致，差距 1.0。</p>
+<p>call 的 <span class="arithmatex">\(\Delta\)</span> 与到期时间的关系图如下：
+<img alt="Delta and expiration date" src="https://upload-images.jianshu.io/upload_images/4482847-64b250160166335f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>即，离到期日越近，OTM 会越来越不值钱，Delta 趋近于 0。 ITM 的 Delta 则会趋近于 1。这符合直观。</p>
+<p>有种说法是，将 Delta 理解为期权到期时 In The Money 的概率。这并不是很准确，我们在 <a href="https://www.jianshu.com/p/dacaa5620388">第十四章</a> 例 5 中已经证明了，对于一个欧式看涨期权，到期时 In The Money 的概率是 <span class="arithmatex">\(\Phi(d_2)\)</span> 而不是 <span class="arithmatex">\(\Delta = \Phi(d_1)\)</span>。准确的说它只是这个概率的一个 proxy，如 <a href="https://www.macroption.com/delta-calls-puts-probability-expiring-itm/">Delta of Calls vs. Puts and Probability of Expiring In the Money</a> 所描述的。</p>
+<h3 id="1843-delta">18.4.3 远期合约 Delta</h3>
+<p>我们已经知道一个远期合约的价值为：</p>
+<div class="arithmatex">\[f = S_0 - Ke^{-rT}\]</div>
+<p>其中 <span class="arithmatex">\(K\)</span> 是交割价格， <span class="arithmatex">\(T\)</span> 是距离到期日时间。因此若股票价格变化 <span class="arithmatex">\(\Delta S\)</span>，则远期合约价格也变化 <span class="arithmatex">\(\Delta S\)</span>。这说明它的 Delta 恒等于 1.0，与现货一致。</p>
+<h3 id="1844-delta">18.4.4 期货的 Delta</h3>
+<p>期货的合约价格为：</p>
+<div class="arithmatex">\[F = S_0e^{rT}\]</div>
+<p>其中 <span class="arithmatex">\(S_0\)</span> 为当前现货价格，<span class="arithmatex">\(T\)</span> 为距离交割日时间。
+因此一个期货的 Delta 就是 <span class="arithmatex">\(e^{rT}\)</span>，在 <span class="arithmatex">\(r &gt; 0\)</span> 时有 <span class="arithmatex">\(\Delta &gt; 1\)</span>。这看起来可能很奇怪，因为期货是每天 settle，因此几乎能立即拿到这个钱。</p>
+<p>有时我们用期货合约来达成 Delta 中性。假设 <span class="arithmatex">\(T\)</span> 是距离期货到期日时间， <span class="arithmatex">\(H_A\)</span> 是用标的物资产对冲需要的的仓位，<span class="arithmatex">\(H_F\)</span> 是用期货对冲时需要的仓位。有：</p>
+<div class="arithmatex">\[H_F = e^{-rT}H_A\]</div>
+<p>欧式期货期权的 Delta 通常被定义为与 <strong>期货价格（而非即期价格）</strong> 相关的期权价格变化率，即 <strong>远期（而非即期）</strong> 的 Delta。</p>
+<h4 id="_2">证明</h4>
+<p>已知期货价格 <span class="arithmatex">\(F\)</span> 满足：</p>
+<div class="arithmatex">\[F = S_0 e^{rT}\]</div>
+<p>如果期货的到期日为 <span class="arithmatex">\(T_1\)</span>，期权的到期日为 <span class="arithmatex">\(T_2\)</span>，那么可以将 <span class="arithmatex">\(d_1\)</span> 表示为：</p>
+<div class="arithmatex">\[d_1 = \frac{\ln(\frac{Fe^{-rT_2}}{K}) + (r + \frac{1}{2}\sigma^2)T_1}{\sigma \sqrt{T_1}} = \frac{\ln(\frac{F}{K}) + r(T_1 - T_2) + \frac{1}{2}\sigma^2T_1}{\sigma \sqrt{T_1}} \]</div>
+<p>假设 <span class="arithmatex">\(T_1 = T_2 = T\)</span>那么这个期权关于 <strong>现货</strong> 的 Delta 就可以写为：</p>
+<div class="arithmatex">\[\Delta = \Phi(d_1) = \Phi(\frac{\ln(\frac{F}{K}) + \frac{1}{2}\sigma^2T} {\sigma \sqrt{T}})\]</div>
+<p>由于现货的 Delta 是 1，而期货的 Delta 是 <span class="arithmatex">\(e^{rT}\)</span>，我们可以得出该期权关于 <strong>期货</strong> 的 Delta：</p>
+<div class="arithmatex">\[\Delta_F = e^{-rT} \Delta \]</div>
+<h4 id="1">例 1</h4>
+<blockquote>
+<p>假设某白银期货交割日在 9 个月以后，交割价格为 $8 每盎司。同时某个白银的欧式看涨期权到期日在 8 个月以后，执行价格为 $8 每盎司。无风险利率为 12% 每年，白银的波动率为 18% 每年。<br/>
+则 1000 份该白银期货的欧式看涨期权空头的 Delta 是多少？</p>
+</blockquote>
+<p>由于期货期权的 Delta 定义为与 <strong>期货交割价格</strong> 相关的变化率，因此这里我们需要计算：</p>
+<div class="arithmatex">\[d_1 = \frac{\ln(\frac{F}{K}) + r(T_1 - T_2) + \frac{1}{2}\sigma^2 T_1}{\sigma \sqrt{T_1}} = 0.00544331 \]</div>
+<p>然后可以继续得到</p>
+<div class="arithmatex">\[\Delta = e^{-rT}\Phi(d_1) = e^{-0.12*9/12} \times 0.5022 = 0.4590\]</div>
+<p>因此1000份该期权空头的 Delta 为 -459.0，注意这个 Delta 是关于期货的 Delta。</p>
+<h4 id="2">例 2</h4>
+<blockquote>
+<p>在例 1 中，为了对冲必需的白银期货初始仓位是多少？如果直接用白银现货对冲，初始仓位又该是多少？如果用还有 12 个月到期的白银期货呢？忽略白银的存放费用。</p>
+</blockquote>
+<ol>
+<li>若用 9 个月后到期的期货进行对冲，则应该用 459.0 盎司。</li>
+<li>若用白银现货，则需要把远期 Delta 转为即期的，即 502.2 盎司。</li>
+<li>若用 12 个月到期的，则以即期的乘以 <span class="arithmatex">\(e^{-0.12}\)</span>，得 445.4 盎司。</li>
+</ol>
+<h2 id="185-theta">18.5 Theta</h2>
+<p>Theta( <span class="arithmatex">\(\Theta\)</span>) 用于描述 portfolio 价值随时间的变化率，即 time decay。可以表示为：</p>
+<div class="arithmatex">\[\Theta = \frac{\partial c}{\partial t}\]</div>
+<p>对于 call 有：</p>
+<div class="arithmatex">\[\Theta_{call} = -\frac{ S_0 \Phi'(d_1)\sigma} { 2 \sqrt{T-t}} - rKe^{-r(T-t)}\Phi(d_2)\]</div>
+<p>对于 put 有：</p>
+<div class="arithmatex">\[\Theta_{put} = \Theta_{call} + rKe^{-r(T-t)} \]</div>
+<p>其中</p>
+<div class="arithmatex">\[\Phi'(x) =  \frac{ 1}{ \sqrt{2\pi} }e^{-\frac{ x^2 }{ 2}}\]</div>
+<p>我们通过公式发现，对于 call， <span class="arithmatex">\(\Theta\)</span> <strong>总是小于 0 的</strong>。即随着到期日临近，期权越来越不值钱。</p>
+<p>但是有一个例外就是对于 deep in the money 的 put，<span class="arithmatex">\(\Theta\)</span> 可能为正。直观上，假设某个股票价格已经跌到接近0，随着到期日临近，该股票上涨的概率越低，所以它的 put 具有更大的确定性赚钱。</p>
+<p>关于这点，可以参考 <a href="https://www.jianshu.com/p/1a753c2272db">股票期权的性质</a> 中的欧式看跌期权的上下限分析部分。在其中我们指出了对于 deep in the money 的 put，它的时间价值为负。而期权随着到期日临近，时间价值总是趋近于0。因此必然有一个渐渐增大的过程。</p>
+<h4 id="_3">证明</h4>
+<p>我们需要利用 B-S-M 公式得出期权价格相对于时间的导数。注意，这里不能直接对 <span class="arithmatex">\(T\)</span> 求导，因为它是到期时间，我们实际需要对 <span class="arithmatex">\(t\)</span> 求导。</p>
+<p>先将 B-S-M 写成在 <span class="arithmatex">\(t\)</span> 时刻而非 <span class="arithmatex">\(0\)</span> 时刻的表达形式：</p>
+<div class="arithmatex">\[c = S_t\Phi(d_1) - Ke^{-r(T-t)}\Phi(d_2)\]</div>
+<p>其中：</p>
+<div class="arithmatex">\[d_1 = \frac{ \ln(\frac{S_t}{ K}) + (r + \frac{ 1}{ 2}\sigma^2)(T-t)}{\sigma \sqrt{T-t}}\]</div>
+<div class="arithmatex">\[d_2 = d_1 - \sigma \sqrt{T-t}\]</div>
+<p>对 <span class="arithmatex">\(t\)</span> 求导，有：</p>
+<div class="arithmatex">\[\frac{\partial c}{\partial t} = S_t\Phi'(d_1)\frac{\partial d_1}{\partial t}  - Ke^{-r(T-t)}\Phi'(d_2)\frac{\partial d_2}{\partial t} - rKe^{-r(T-t)}\Phi(d_2)\]</div>
+<p>我们已经在证明 <span class="arithmatex">\(\Delta = \Phi(d_1)\)</span> 过程中得到：</p>
+<div class="arithmatex">\[S_t\Phi'(d_1) = Ke^{-r(T-t)}\Phi'(d_2)\]</div>
+<p>因此我们可以得到：</p>
+<div class="arithmatex">\[\frac{\partial c}{\partial t} = S_t\Phi'(d_1)\frac{\partial(d_1 - d_2)}{\partial t} - rKe^{-r(T-t)}\Phi(d_2) = -\frac{\sigma S_t}{2\sqrt{T-t}}\Phi'(d_1) - rKe^{-r(T-t)}\Phi(d_2)\]</div>
+<p>对于一个 put，B-S-M 公式为：</p>
+<div class="arithmatex">\[p = c + Ke^{-r(T-t)} - S_t\]</div>
+<p>显然有：</p>
+<div class="arithmatex">\[\frac{\partial p}{\partial t} = \frac{\partial c}{\partial t} + rKe^{-r(T-t)}\]</div>
+<p>典型的 call 的 <span class="arithmatex">\(\Theta\)</span> 与股票价格关系的曲线如下：
+<img alt="Theta and stock price" src="https://upload-images.jianshu.io/upload_images/4482847-17ab3884c8509bc0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>当股票价格足够高时，<span class="arithmatex">\(d_1\)</span> 和 <span class="arithmatex">\(d_2\)</span> 趋近于无限大。此时<span class="arithmatex">\(\Phi'(d_1) \to 0\)</span>，<span class="arithmatex">\(\Phi(d_2) \to 1\)</span>。因此有看涨期权的 <span class="arithmatex">\(\Theta \to -rKe^{-r(T-t)}\)</span>。</p>
+<p><span class="arithmatex">\(\Theta\)</span> 与距离到期日时间的关系如下：
+<img alt="Theta and time to maturity" src="https://upload-images.jianshu.io/upload_images/4482847-4aa2b88f0b6aa3a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>可以看到，对于所有类型的期权，<span class="arithmatex">\(\Theta\)</span> 是小于 0 的。即随着到期日临近，期权价格趋近于降低。对于 ATM 的看涨期权，当临近到期日(<span class="arithmatex">\(t \to T\)</span>)时，它的 <span class="arithmatex">\(\Theta\)</span> 趋近于负无穷。</p>
+<p>综合来看，<strong>短期的 ATM 期权具有绝对值最大的负 Theta</strong>。</p>
+<h4 id="_4">例</h4>
+<blockquote>
+<p>一个期权的 Theta 为 -0.1 （以年计算）含义是什么？如果交易员认为股票价格和波动率都不会变化，那么这个期权的仓位应该是多少？</p>
+</blockquote>
+<ol>
+<li>这表示每经过一个很短的时间 <span class="arithmatex">\(\Delta t\)</span>，期权的价格会变化 <span class="arithmatex">\(-0.1\Delta t\)</span>。</li>
+<li>如果股票价格和波动率都不会变化，则该期权价格会随着到期日临近越来越低。交易员应该选择卖出 Theta 为负，且绝对值较大的期权。而由于 <strong>短期的 ATM 期权具有绝对值最大的负 Theta</strong>，应该卖出短期的 ATM 期权。</li>
+</ol>
+<h2 id="186-gamma">18.6 Gamma</h2>
+<p>Gamma (<span class="arithmatex">\(\Gamma\)</span>) 表示 portfolio 的 Delta 随标的物价格变动的变化率。
+假设某 portfolio 价值为 <span class="arithmatex">\(\Pi\)</span>，标的物价格为 <span class="arithmatex">\(S\)</span>，则有：</p>
+<div class="arithmatex">\[\Delta = \frac{\partial \Pi}{\partial S}\]</div>
+<div class="arithmatex">\[ \Gamma = \frac{ \partial \Delta} {\partial S} = \frac{ \partial^2 \Pi}{\partial S^2} \]</div>
+<p>如果 Gamma 绝对值较小，那 portfolio 的 Delta 变化也较慢，因此维持这个 portfolio Delta 中性较容易。否则，即使在很短的时间内不进行 Rebalance，都
+有较高的风险。</p>
+<p>对于一个 <strong>Delta 中性的</strong> portfolio，我们有以下关系（这里的 <span class="arithmatex">\(\Delta\)</span> 表示全微分）：</p>
+<div class="arithmatex">\[\Delta \Pi = \Theta ~ \Delta t + \frac{1}{2}\Gamma \Delta S^2\]</div>
+<p>这个结论可以利用 Taylor 展开，代入 <span class="arithmatex">\(\frac{ \partial \Pi}{ \partial S} = 0\)</span>， 并忽略 <span class="arithmatex">\(\Delta t\)</span> 的高阶项得到。</p>
+<p>下面的图描述了股票价格变化对于不同 Gamma 的 portfolio 的价值影响。</p>
+<p><img alt="Portfolio value variance and stock price variance" src="https://upload-images.jianshu.io/upload_images/4482847-457d3a5c0e783bba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>例如，某个 Delta 中性的 portfolio 的 Gamma 是 -10000，该公式表明，如果标的物资产价格在很短的时间内变动 +2 或者 -2，即使它在价格变动之前是 Delta 中性的，这个 portfolio 会损失 20000。</p>
+<h3 id="1861-gamma">18.6.1 Gamma 中性</h3>
+<p>刚才的例子表明，我们希望一个 portfolio 有较小的 Gamma 以降低风险。</p>
+<p>由于标的物资产的 Delta 为常数 1，因此它的 Gamma 为 0，不能用于调节 portfolio 的 Gamma。因此，不同于 Delta Hedging，我们需要使用和标的物资产 <strong>非线形相关的</strong> 衍生品，例如期权，来进行 Gamma 的调节。</p>
+<p>假设一个 portfolio Delta 中性，但有 -3000 的 Gamma。同时，某个 call option 的 Delta 和 Gamma 分别为 0.62 和 1.50。则可以通过买入 <span class="arithmatex">\(3000/1.5 = 2000\)</span> 单位的 call 来使这个 portfolio Gamma 中性。</p>
+<p>但是，这样又引入了额外的 <span class="arithmatex">\(0.62 \times 2000 = 1240\)</span> 的 Delta，因此我们还需要卖出 1240 个标的资产，使得该 portfolio 的 Delta 和 Gamma 均为中性。</p>
+<h3 id="1862-gamma">18.6.2 Gamma 计算</h3>
+<p>可以简单通过求导得到：</p>
+<div class="arithmatex">\[\Gamma = \frac{ \partial \Delta }{ \partial S } = \Phi'(d_1) \frac{\partial d_1}{\partial S} = \frac{\Phi'(d_1)}{\sigma S_0 \sqrt{T}}\]</div>
+<p>其中</p>
+<div class="arithmatex">\[\Phi'(x) = \frac{ 1 }{ \sqrt{2 \ pi} } e^{-\frac{ x^2 }{ 2 }}\]</div>
+<p>可以看出，<span class="arithmatex">\(\Gamma &gt; 0\)</span> <strong>总是成立的</strong>。可以回想 Delta 关于股票价格的曲线，无论对于 put 还是 call，随着股票价格上升，Delta 总是增加的。即 <span class="arithmatex">\(\Gamma = \frac{ \partial \Delta} { \partial S}&gt; 0\)</span>。</p>
+<p><span class="arithmatex">\(\Gamma\)</span> 与股票价格 <span class="arithmatex">\(S\)</span> 关系如下所示：
+<img alt="Gamma and stock price" src="https://upload-images.jianshu.io/upload_images/4482847-b6000743e31dfaf1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p><span class="arithmatex">\(\Gamma\)</span> 与距离到期日时间的关系如下所示：
+<img alt="Gamma and time to maturity" src="https://upload-images.jianshu.io/upload_images/4482847-f40b98af8cd47250.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p>可以看出：
+- Gamma 一定为非负数
+- 对于 ATM 的期权，Gamma 最大
+- 随着到期日临近，ATM 的期权 Gamma 单调增加，而 ITM 和 OTM 都是先增加后减少至 0</p>
+<h4 id="1_1">例 1</h4>
+<blockquote>
+<p>某公司对由标的物是货币的看涨/看跌期权组成的 portfolio 进行了 Delta 对冲。哪种情况下 portfolio 盈利情况较好？<br/>
+a. 该货币汇率基本稳定 <br/>
+b. 该货币汇率剧烈波动</p>
+</blockquote>
+<p>从 portfolio 价值上讲，根据公式（这里<span class="arithmatex">\(\Delta\)</span> 表示全微分）：</p>
+<div class="arithmatex">\[\Delta \Pi = \Theta ~\Delta t + \frac{1}{2}\Gamma \Delta S^2\]</div>
+<p>我们可以发现对于正的 Gamma，当标的物价格变动较大时，portfolio 价值会变高（可以回忆图 18.8）。</p>
+<p>同时，期权多头具有正的 Gamma，Gamma 绝对值小则对冲效果好。根据公式可知，<span class="arithmatex">\(\sigma\)</span> 越小 Gamma 越大，因此如果汇率剧烈波动则 Gamma 会较小，对冲也较容易。</p>
+<h4 id="2_1">例 2</h4>
+<blockquote>
+<p>例 1 中，若 portfolio 是空头，哪种情况好？</p>
+</blockquote>
+<p>期权空头具有负的 Gamma，标的物价格变动小则 portfolio 价值变高。</p>
+<h2 id="187-delta-theta-gamma">18.7 Delta, Theta, Gamma 之间的关系</h2>
+<p>我们之前已经推导过 B-S-M 微分方程：</p>
+<div class="arithmatex">\[\frac{\partial \Pi}{\partial t} + \frac{\partial \Pi}{\partial S}rS + \frac{1}{2} \frac{\partial^2 \Pi}{\partial S^2}\sigma^2 S^2 = r\Pi\]</div>
+<p>根据我们对 Delta, Theta, Gamma 的定义，上式可以改写为：</p>
+<div class="arithmatex">\[\Theta + rS \Delta + \frac{1}{2} \sigma^2 S^2 \Gamma  = r \Pi \]</div>
+<p>那么对于 Delta 中性的 portfolio，我们有：</p>
+<div class="arithmatex">\[\Theta + \frac{ 1 }{ 2 } \sigma^2 S^2 \Gamma  = r \ \Pi \]</div>
+<p>我们发现，如果一个 Delta 中性的 portfolio 的 <span class="arithmatex">\(\Theta\)</span> 是一个很大的负数，则 <span class="arithmatex">\(\Gamma\)</span> 会是一个很大的正数，反之同理。</p>
+<p>这也就是上一章中提到的， <span class="arithmatex">\(\Theta\)</span> 可以作 <span class="arithmatex">\(\Gamma\)</span> 的一个 “proxy”。</p>
+<h4 id="1_2">例 1</h4>
+<blockquote>
+<p>计算 Delta, Theta, Gamma 的关系式，针对：
+a. 货币的衍生品
+b. 期货的衍生品</p>
+</blockquote>
+<h2 id="188-vega">18.8 Vega</h2>
+<p>我们之前为了简化，一直把 volatility 作为一个常数。实际上，volatility 也是不断变化的。衍生品的价格同样会由于 volatility 的变化而变化。我们将这个变化率称为 Vega (<span class="arithmatex">\(\nu\)</span>)：</p>
+<div class="arithmatex">\[\nu = \frac{ \partial \Pi}{ \partial \sigma}\]</div>
+<p>对于欧式看涨和看跌期权，有：</p>
+<div class="arithmatex">\[\nu = \frac{ \partial c}{ \partial \sigma} = \frac{ \partial p}{ \partial \sigma}  = S_0 \sqrt{T} \Phi'(d_1)\]</div>
+<p>证明较简单，直接求导并利用 <span class="arithmatex">\(S_0\Phi'(d_1) = Ke^{-rT}\Phi'(d_2)\)</span> 就可以得到。可以看出必然有 <span class="arithmatex">\(\nu &gt; 0\)</span>，这与我们之前的结论吻合，volatility 上升会引起看涨和看跌期权价格上升。</p>
+<p><img alt="Vega and stock price" src="https://upload-images.jianshu.io/upload_images/4482847-208930cc089db341.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
+<p><strong>标的物的 Vega 为 0</strong>。因此我们如果需要 Vega 中性，需要通过买卖期权实现。一般而言，我们需要 2 种以上的期权的组合来实现 Gamma 和 Vega 同时呈中性。</p>
+<h4 id="1_3">例 1</h4>
+<blockquote>
+<p>考虑一个 Delta 中性的 portfolio，它现在具有 -5000 的 Gamma 和 -8000 的 Vega。有两种可以交易的期权，如下表所示：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">Delta</th>
+<th align="center">Gamma</th>
+<th align="center">Vega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Portfolio</td>
+<td align="center">0</td>
+<td align="center">-5000</td>
+<td align="center">-8000</td>
+</tr>
+<tr>
+<td align="center">Option 1</td>
+<td align="center">0.6</td>
+<td align="center">0.5</td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td align="center">Option 2</td>
+<td align="center">0.5</td>
+<td align="center">0.8</td>
+<td align="center">1.2</td>
+</tr>
+</tbody>
+</table>
+<p>我们需要 Vega 和 Gamma 同时中性，假设两者数量配比分别为 <span class="arithmatex">\(w_1\)</span> 和 <span class="arithmatex">\(w_2\)</span>，则：</p>
+<div class="arithmatex">\[0.5w_1 + 0.8w_2 = 5000\]</div>
+<div class="arithmatex">\[2.0w_1 + 1.2w_2 = 8000\]</div>
+<p>可以解出 <span class="arithmatex">\(w_1 = 400\)</span>，<span class="arithmatex">\(w_2 = 6000\)</span>。买入 400 份 Option 1 和 6000 份 Option 2 后，Delta 从 0 变为 3240，所以还需要卖出 3240 份标的资产。</p>
+<p>Gamma 中性可以在 Delta Hedging 的间隔时间里保护 portfolio 的价值不因为标的资产的价格变化产生变动，而 Vega 中性可以在 volatility 变化的时候保护 portfolio 的价值。需要根据对冲再平衡间隔时间以及波动率的波动率来决定选择哪些期权。</p>
+<h4 id="2_2">例 2</h4>
+<blockquote>
+<p>什么情况下 2 个指数的欧式期权组成的 portfolio 可以同时 Gamma 和 Vega 中性？</p>
+</blockquote>
+<p>即以下关于 <span class="arithmatex">\(w_1\)</span>，<span class="arithmatex">\(w_2\)</span> 的方程组有非零解：</p>
+<div class="arithmatex">\[\Gamma_1 w_1 + \Gamma_2 w_2 = 0\]</div>
+<div class="arithmatex">\[\nu_1 w_1 + \nu_2 w_2 = 0\]</div>
+<p>可以得到</p>
+<div class="arithmatex">\[\Gamma_1 \nu_2 = \Gamma_2 \nu_1\]</div>
+<p>两个期权基于同一个标的物，因此必然有同样的 <span class="arithmatex">\(S_0\)</span>, <span class="arithmatex">\(q\)</span>, <span class="arithmatex">\(r\)</span>, <span class="arithmatex">\(\sigma\)</span>。唯一不同的就是到期日 <span class="arithmatex">\(T\)</span> 和执行价格 <span class="arithmatex">\(K\)</span>，这也导致具有不同的 <span class="arithmatex">\(d_1\)</span> 和 <span class="arithmatex">\(d_2\)</span>。</p>
+<div class="arithmatex">\[\Gamma_1 \nu_2 = \frac{1}{\sigma} e^{-q(T_1 + T_2)} \sqrt{\frac{T_2}{T_1}} \Phi'(d_{1(1)}) \Phi'(d_{1(2)}) \]</div>
+<div class="arithmatex">\[\Gamma_2 \nu_1 = \frac{1}{\sigma} e^{-q(T_1 + T_2)} \sqrt{\frac{T_1}{T_2}} \Phi'(d_{1(1)}) \Phi'(d_{1(2)}) \]</div>
+<p>要两者相等，必然有 <span class="arithmatex">\(T_1 = T_2\)</span>，即期限相同。</p>
+<h4 id="3">例 3</h4>
+<blockquote>
+<p>某银行持有的美元/欧元汇率期权头寸有 30000 的 Delta 和 -80000 的 Gamma。<br/>
+a. 解释这些数据的含义 <br/>
+b. 假设目前汇率是 0.90 美元兑换 1.0 欧元，则如何使头寸 Delta 中性？<br/>
+c. 在很短的时间后，欧元升值，汇率变为 0.93 美元兑换 1.0 欧元，则新的 Delta 为多少？如果要保持其 Delta 中性，需要什么额外的交易操作？<br/>
+d. 假设该头寸最初是 Delta 中性的，那么它从汇率的变化中赚了还是赔了？</p>
+</blockquote>
+<ol>
+<li>说明若欧元升值 0.01 美元，则该头寸的价值上升 300，Delta 降低 800。该银行应该是持有欧元看跌期权的空头，因此具有正的 Delta 和负的 Gamma。</li>
+<li>需要卖空 30000 欧元。</li>
+<li>新的 Delta 为 30000 - 80000*0.03 = 27600，如果已经卖空 30000 欧元使其 Delta 中性，那么还需要买入 2400 欧元以保持 Delta 中性。</li>
+<li>由于最初 Delta 中性，Gamma 为负，因此欧元汇率在最初肯定大于 0.9 美元，在下降过程中，Delta 变为正。而它持有欧元看跌期权的空头，因此欧元汇率下跌，这个头寸有亏损。</li>
+</ol>
+<h2 id="189-rho">18.9 Rho</h2>
+<p>Rho 描述了 portfolio 价值随利率 <span class="arithmatex">\(r\)</span> 的变化率：</p>
+<div class="arithmatex">\[\rho = \frac{\partial \Pi}{\partial r}\]</div>
+<p>通过简单的求导可以得到：</p>
+<div class="arithmatex">\[\rho_{call} = KTe^{-rT}\Phi(d_2)\]</div>
+<p>再利用 put-call-parity 可以得到：</p>
+<div class="arithmatex">\[\rho_{put} = -KTe^{-rT}\Phi(-d_2)\]</div>
+<p>我们发现，利率上升会促使 call 的价值上升，put 的价值下降。这是符合我们直观的。当利率上升（假设资产价格不变），执行价格折现后变少。因此 call 相当于以更便宜的价格买到了资产，价格会升高。put 则反之。</p>
+<p>由于利率不经常变化，这个 Greek 并没有其他几个受关注。</p>
+<h2 id="1810">18.10 实际应用</h2>
+<p>对于一个 portfolio 的每个 Greek，交易公司都会设置一个上限。</p>
+<p>Delta 的上限通常表示为标的物最大仓位。例如对于一个股票的 cash Delta 上限是 100 万，股票价格为 50，则最大仓位为 2 万。</p>
+<p>Vega 的上限通常表示为 1% 的 volatility 变化引起的 portfolio 价值变化的上限。</p>
+<p>期权交易员会尽量使得自己在每天交易结束时 Delta 中性。Gamma 和 Vega 也会监控，但是不会要求每天都是中性。</p>
+<p>我们从 Gamma 和 Vega 的曲线可以看出，ATM 的期权具有最高的 Gamma 和Vega。随着股价变化，这些期权慢慢变为 OTM 或者 ITM，Gamma 和 Vega 就会自然减小。</p>
+<h2 id="1812">18.12 公式的推广</h2>
+<p>我们目前导出的公式都是针对无股息股票的欧式期权。</p>
+<p>假设股票的股息收益以复利计算为 <span class="arithmatex">\(q\)</span>，则我们可以将 <span class="arithmatex">\(S_0\)</span> 替换为 <span class="arithmatex">\(S_0 e^{-qT}\)</span>，得到适用于有收益的标的物的 B-S-M 公式：</p>
+<div class="arithmatex">\[c = S_0 e^{-qT} \Phi(d_1) - K e^{-rT} \Phi(d_2)\]</div>
+<div class="arithmatex">\[p = K e^{-rT} \Phi(-d_2) - S_0 e^{-qT} \Phi(-d_1)\]</div>
+<div class="arithmatex">\[d_1 = \frac{\ln(S_0 / K) + (r - q + \frac{1}{2}\sigma^2)T}{\sigma \sqrt{T}}\]</div>
+<div class="arithmatex">\[d_2 = d_1 - \sigma \sqrt{T}\]</div>
+<p>根据这个推导出其各个 Greeks 的计算公式：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Greeks</th>
+<th align="center">European call</th>
+<th align="center">European put</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Delta</td>
+<td align="center"><span class="arithmatex">\(e^{-qT}\Phi(d_1)\)</span></td>
+<td align="center"><span class="arithmatex">\(\Delta_{call} - e^{-qT}\)</span></td>
+</tr>
+<tr>
+<td align="center">Theta</td>
+<td align="center"><span class="arithmatex">\(q e^{-qT} S_0 \Phi(d_1) - rKe^{-rT}\Phi(d_2) - \frac{e^{-qT}S_0 \Phi'(d_1)\sigma}{2\sqrt{T}}\)</span></td>
+<td align="center"><span class="arithmatex">\(\Theta_{call} + rKe^{-rT}\)</span></td>
+</tr>
+<tr>
+<td align="center">Gamma</td>
+<td align="center"><span class="arithmatex">\(\frac{ e^{-qT}\Phi'(d_1) }{ \sigma S_0\sqrt{T} }\)</span></td>
+<td align="center"><span class="arithmatex">\(\Gamma_{call}\)</span></td>
+</tr>
+<tr>
+<td align="center">Vega</td>
+<td align="center"><span class="arithmatex">\(e^{-qT}S_0\sqrt{T}\Phi'(d_1)\)</span></td>
+<td align="center"><span class="arithmatex">\(\nu_{call}\)</span></td>
+</tr>
+<tr>
+<td align="center">Rho</td>
+<td align="center"><span class="arithmatex">\(KTe^{-rT}\Phi(d_2)\)</span></td>
+<td align="center"><span class="arithmatex">\(\rho_{call} - KTe^{-rT}\)</span></td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p>无股息的情况其实是上面的一个特例，令 <span class="arithmatex">\(q = 0\)</span> 即可得到。</p>
+</li>
+<li>
+<p>令 <span class="arithmatex">\(q = r\)</span>，则可以得到期货期权的公式，<strong>此时 Rho 不能使用通用公式</strong>。<span class="arithmatex">\(\rho_{call} = -cT\)</span>，<span class="arithmatex">\(\rho_{put} = -pT\)</span>。这是由于 <span class="arithmatex">\(q = r\)</span>，对 <span class="arithmatex">\(r\)</span> 求导时不能把 <span class="arithmatex">\(q\)</span> 作为常数。</p>
+</li>
+<li>
+<p>当我们分析货币期权时，有两个利率，本币无风险利率 <span class="arithmatex">\(r\)</span> 和外币无风险利率 <span class="arithmatex">\(r_f\)</span>，令 <span class="arithmatex">\(q = r_f\)</span> 即得到对货币期权的公式。</p>
+</li>
+</ol>
+<h4 id="1_4">例 1</h4>
+<blockquote>
+<p>某个金融机构刚刚出售了 1000 份 7 个月后到期的标的物是日元的欧式看涨期权。假设即期汇率是 0.8 美分兑换 1 日元，执行价格是 0.81 美分。美国的无风险利率是 8%，日本的无风险利率是 5%。日元波动率是 15%。计算该仓位的 Delta, Gamma, Vega, Theta, Rho。</p>
+</blockquote>
+<p>我们可以将 <span class="arithmatex">\(q = r_f = 0.05\)</span> 代入上面表格中的公式进行计算，将执行价格统一换算为美元。</p>
+<p>然后计算 <span class="arithmatex">\(d_1\)</span>：</p>
+<div class="arithmatex">\[d_1 = \frac{\ln(S_0 / K) + (r - q + \frac{1}{2}\sigma^2)T}{\sigma \sqrt{T}} = 0.1016\]</div>
+<div class="arithmatex">\[d_2 = d_1 - \sigma \sqrt{T} = -0.0130\]</div>
+<div class="arithmatex">\[\Phi(d_1) = 0.5405 \]</div>
+<div class="arithmatex">\[\Phi(d_2) = 0.4948 \]</div>
+<div class="arithmatex">\[\Phi'(d_1) = \frac{1}{\sqrt{2\pi}}e^{-\frac{d_1^2}{2}} = 0.3969\]</div>
+<table>
+<thead>
+<tr>
+<th align="center">Greeks</th>
+<th align="center">European call</th>
+<th align="center">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Delta</td>
+<td align="center"><span class="arithmatex">\(e^{-qT}\Phi(d_1)\)</span></td>
+<td align="center">0.5250</td>
+</tr>
+<tr>
+<td align="center">Theta</td>
+<td align="center"><span class="arithmatex">\(q e^{-qT} S_0 \Phi(d_1) - rKe^{-rT}\Phi(d_2) - \frac{e^{-qT}S_0 \Phi'(d_1)\sigma}{2\sqrt{T}}\)</span></td>
+<td align="center">0.0004</td>
+</tr>
+<tr>
+<td align="center">Gamma</td>
+<td align="center"><span class="arithmatex">\(\frac{e^{-qT}\Phi'(d_1)}{\sigma S_0\sqrt{T}}\)</span></td>
+<td align="center">420.6051</td>
+</tr>
+<tr>
+<td align="center">Vega</td>
+<td align="center"><span class="arithmatex">\(e^{-qT}S_0\sqrt{T}\Phi'(d_1)\)</span></td>
+<td align="center">0.0024</td>
+</tr>
+<tr>
+<td align="center">Rho</td>
+<td align="center"><span class="arithmatex">\(KTe^{-rT}\Phi(d_2)\)</span></td>
+<td align="center">0.0022</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2_3">例 2</h4>
+<blockquote>
+<p>一个股指的远期合约和期货具有同样的 Delta 吗？解释你的结论。</p>
+</blockquote>
+<p>股指期货会定期派发股息，假设其股息收益按复利计算为 <span class="arithmatex">\(q\)</span> ，则远期合约多头价值为：</p>
+<div class="arithmatex">\[S_0e^{-qT} - Ke^{-rT}\]</div>
+<p>其 Delta 为 <span class="arithmatex">\(e^{-qT}\)</span>。</p>
+<p>对于期货，其约定的执行价格满足：</p>
+<div class="arithmatex">\[K = S_0e^{(r-q)T}\]</div>
+<p>虽然它仅仅是未来的执行价格，但是由于期货每日结算制度，投资者能立即拿到收益。所以其即期价值就是执行价格，Delta 为 <span class="arithmatex">\(e^{(r-q)T}\)</span>。</p>
+<p>因此两者的 Delta 不同，期货 Delta 是远期 Delta 的 <span class="arithmatex">\(e^{rT}\)</span> 倍。</p>
+<h4 id="3_1">例 3</h4>
+<blockquote>
+<p>期货的欧式看涨期权与期货价格 <span class="arithmatex">\(F_0\)</span> 关系式为：<br/>
+<span class="arithmatex">\(c = e^{-rT}[F_0 \Phi(d_1) - K \Phi(d_2)]\)</span> <br/>
+其中 <br/>
+<span class="arithmatex">\(d_1 = \frac{\ln(F_0 / K) + \frac{1}{2}\sigma^2 T}{\sigma \sqrt{T}}\)</span> <br/>
+<span class="arithmatex">\(d_2 = d_1 - \sigma \sqrt{T}\)</span> <br/>
+a. 证明 <span class="arithmatex">\(F_0 \Phi'(d_1) = K \Phi'(d_2)\)</span> <br/>
+b. 证明其 Delta 等于 <span class="arithmatex">\(e^{-rT}\Phi(d_1)\)</span> <br/>
+c. 证明其 Vega 等于 <span class="arithmatex">\(F_0 \sqrt{T} \Phi'(d_1) e^{-rT}\)</span> <br/>
+d. 证明其 Rho 等于 <span class="arithmatex">\(-cT\)</span></p>
+</blockquote>
+<p>(a)
+由于</p>
+<div class="arithmatex">\[\Phi'(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}\]</div>
+<p>代入可知：</p>
+<div class="arithmatex">\[F_0\Phi'(d_1) = \frac{F_0}{\sqrt{2\pi}} e^{-\frac{d_2^2 + 2\sigma \sqrt{T}d_2 + \sigma^2 T}{2}}\]</div>
+<p>而</p>
+<div class="arithmatex">\[2\sigma \sqrt{T}d_2 + \sigma^2 T = 2\ln(\frac{F_0} {K})\]</div>
+<p>代入可以得到：</p>
+<div class="arithmatex">\[F_0\Phi'(d_1) = \frac{F_0}{\sqrt{2\pi}} \frac{K}{F_0} e^{-\frac{d_2^2} {2} } = K \Phi'(d_2)\]</div>
+<p>(b)</p>
+<div class="arithmatex">\[\Delta = \frac{\partial c}{\partial F_0} = e^{-rT}[\Phi(d_1) + F_0 \Phi'(d_1) \frac{\partial d_1}{\partial F_0} - K \Phi'(d_2) \frac{\partial d_2}{\partial F_0} ]\]</div>
+<p>利用 (a) 中的结论，有：</p>
+<div class="arithmatex">\[\Delta = e^{-rT}\Phi(d_1)\]</div>
+<p>(c)</p>
+<div class="arithmatex">\[\nu = \frac{\partial c}{\partial \sigma} = e^{-rT}[F_0 \Phi'(d_1)\frac{\partial d_1}{\partial \sigma} - K \Phi'(d_2) \frac{\partial d_2}{\partial \sigma}]\]</div>
+<p>利用 (a) 中的结论，有：</p>
+<div class="arithmatex">\[\nu = e^{-rT} F_0 \sqrt{T} \Phi'(d_1)\]</div>
+<p>(d)</p>
+<div class="arithmatex">\[\rho =  \frac{\partial c}{\partial r} = -Te^{-rT}[F_0 \Phi(d_1) - K \Phi(d_2)] = -cT\]</div>
+<h2 id="appendix-greeks-from-traders-perspective">Appendix: Greeks from Trader's perspective</h2>
+<p>以上都是以工科思维来考虑 Greeks。那么在实际交易中，我们怎么利用 Greeks 呢？</p>
+<p>在实际交易中，我们往往交易的都是近月的期权和期货。几乎可以忽略贴现问题。即，期货价格和现货价格我们认为是几乎相等的。在以下的内容中，我们都不再涉及贴现问题，也不刻意区分现货和期货价格。</p>
+<h3 id="a1-cash-greeks">A.1 cash Greeks</h3>
+<p>在实际交易中，我们常常需要比较不同 underlying，不同 portfolio 的风险。因此我们引入了 cash Delta, cash Gamma 等概念。实际上就是将 Greeks 转为实际的现金。</p>
+<p>假设某标的资产的价格为 <span class="arithmatex">\(S\)</span>。它的 1 份期货合约包括标的资产为 <span class="arithmatex">\(M\)</span> 份(multiplier)。则对于该期货以及其期权衍生品，我们可以得出以下关系：</p>
+<table>
+<thead>
+<tr>
+<th align="center">cash Greek</th>
+<th align="center">定义</th>
+<th align="center">计算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">cash Delta</td>
+<td align="center">由 Delta 决定的 portfolio 的价值</td>
+<td align="center"><span class="arithmatex">\(S \times M \times \Delta\)</span></td>
+</tr>
+<tr>
+<td align="center">cash Gamma</td>
+<td align="center">当 underlying 价格变化 1% 时 cache Delta 的变化量</td>
+<td align="center"><span class="arithmatex">\(\frac{S^2}{100} \times M \times \Gamma\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>主要说下 cash Gamma 的计算。由于 <span class="arithmatex">\(\Gamma\)</span> 定义为标的资产价格变化 1 时 <span class="arithmatex">\(\Delta\)</span> 的变化量，因此 <span class="arithmatex">\(\frac{S}{100} \Gamma\)</span> 就是标的资产价格变化 1% 时 <span class="arithmatex">\(\Delta\)</span> 的变化量。再乘以系数 <span class="arithmatex">\(S \times M\)</span> 就是对 cash Delta 的影响。</p>
+<blockquote>
+<p>玉米价格为 $3.5 每 bushel，一个期货合约交易 5000 bushels。假设我们持有 3 个 Delta 为 0.3 的看涨期权，那 cashe Delta 是多少？</p>
+</blockquote>
+<div class="arithmatex">\[3 \times 0.3 \times 3.5 \times 5000 = 15750\]</div>
+<p>即我们 long 15.75k cash Delta。若玉米价格上升 1% 将盈利 $157.5，反之亏损 $157.5。</p>
+<blockquote>
+<p>原油价格为 $50 一桶，一个期货合约交易 1000 桶原油。某原油为标的物的 portfolio 如果价格上升 1% 会导致 +3 Delta，cash Gamma 是多少？</p>
+</blockquote>
+<p>将 3 Delta 转化为 cash Delta：</p>
+<div class="arithmatex">\[3 * 50 * 1000 = 150000\]</div>
+<p>也就是说 1% 的原油价格变化会导致我们增加 150k 的 cash Delta。因此我们 long 150k cash Gamma。</p>
+<blockquote>
+<p>原油现货价格为 $104.8，期货的 multiplier 为 1000。已知执行价格为 $105 的看涨期权 Gamma 为 0.1527。现在持有 50 个 $105 的 straddle。
+(a) Gamma 为多少？cash Gamma 为多少？
+(b) 假设原油价格上涨 0.5%，持仓的 Delta 如何变化</p>
+</blockquote>
+<p>(a)
+straddle 是买入同样执行价格的 call 和 put，他们具有同样的 Gamma。</p>
+<div class="arithmatex">\[\Gamma = 0.1527 \times 2 \times 50 = 15.27\]</div>
+<div class="arithmatex">\[cash~\Gamma = \frac{104.8^2}{100} \times 1000 \times \Gamma = 1.677 \times 10^6\]</div>
+<p>(b)
+正的 Gamma 导致的 Delta 变化为：</p>
+<div class="arithmatex">\[0.5\% \times 104.8 \times \Gamma = 8 \]</div>
+<p>即额外 long 8 Delta。</p>
+<h3 id="a2-gamma-theta">A.2 Gamma 和 Theta</h3>
+<p>当我们持有期权时，Gamma 为正。此时，若标的物价格上涨，Delta 也随之上涨。我们需要卖出额外的标的资产。相反，当标的物价格下跌，Delta 也随之下跌，我们需要买入额外的标的资产。
+如果不考虑 Theta，以上的交易看起来似乎有利可图。期权带来的Gamma 鼓励我们低买高卖得到收益，那为什么需要卖出期权呢？事实上，持有期权时 Theta 一般会带来损失。</p>
+<p>在 18.6 中我们已经证明，于一个 <strong>Delta 中性的</strong> portfolio，我们有以下关系（这里的 <span class="arithmatex">\(\Delta\)</span> 表示全微分）：</p>
+<div class="arithmatex">\[\Delta \Pi = \Theta ~ \Delta t + \frac{1}{2}\Gamma \Delta S^2\]</div>
+<p>上式说明，在保持 Delta 中性时，portfolio 价值变化可由 Theta 和 Gamma 共同决定。我们需要比较到底是在 Theta 上亏的钱多还是在 Gamma 上赚的钱多。</p>
+<p>我们可以令 <span class="arithmatex">\(\Delta t\)</span> 为一天，此时 <span class="arithmatex">\(\Delta S\)</span> 的最好估计就是将 <span class="arithmatex">\(\sigma\)</span> 也转为一天的变化后再乘以 <span class="arithmatex">\(S\)</span>。当以下关系成立时，我们认为仓位是 "effecient" 的：</p>
+<div class="arithmatex">\[  \Theta t_{day} + \frac{1}{2} \Gamma  \sigma_{day}^2 S^2 &gt; 0\]</div>
+<p>而</p>
+<div class="arithmatex">\[\Gamma_{cash} = \frac{S^2} {100} \times M \times \Gamma \]</div>
+<p>我们可以得出，每天持仓的现金 Decay 应该小于：</p>
+<div class="arithmatex">\[ \frac{1}{2} \times 100 \times \sigma_{day}^2 \Gamma_{cash} \]</div>
+<blockquote>
+<p>假设我们仓位的 cash Gamma 为 1,000,000，波动率为 16%。问我们能接受的最大的 Decay 是多少？</p>
+</blockquote>
+<p>一年有约 250 个交易日，由波动率为 16%，可以得出每天的波动率大约在 1%。可以计算能接受的最大 Decay：</p>
+<div class="arithmatex">\[ 0.5 \times 100 \times 0.01^2 *10^6 = 5000\]</div>
+<h3 id="a3-slippage">A.3 Slippage</h3>
+<p>slippage 定义为通过交易标的物来对冲 Delta 的成本。对于期权交易者来说，由于必须维持中性的 Delta，这是必然的成本。理想情况下我们能在理论价格上去交易，实际上，我们有时候不能完全在 top of book 成交，有时甚至需要交易几个 level 来对冲。这将影响我们在期权交易中的收益。</p>
+<p>举例来讲，这是某个时刻原油期货的 book（仅列出 3 个 level）。</p>
+<table>
+<thead>
+<tr>
+<th align="center">Bid Quantity</th>
+<th align="center">Price</th>
+<th align="center">Ask Quantity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"></td>
+<td align="center">66.87</td>
+<td align="center">31</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">66.86</td>
+<td align="center">59</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">66.85</td>
+<td align="center">38</td>
+</tr>
+<tr>
+<td align="center">30</td>
+<td align="center">66.84</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">59</td>
+<td align="center">66.83</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">50</td>
+<td align="center">66.82</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>此时的理论价格是 66.843 （该价格通过 book 得出，具体不展开）</p>
+<p>同时，与该原油期货相同到期日的两个正在交易的期权：</p>
+<table>
+<thead>
+<tr>
+<th align="center">#</th>
+<th align="center">Delta</th>
+<th align="center">Bid Price</th>
+<th align="center">Theo</th>
+<th align="center">Ask Price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1</td>
+<td align="center">0.30</td>
+<td align="center">1.23</td>
+<td align="center">1.237</td>
+<td align="center">1.24</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">0.15</td>
+<td align="center">0.63</td>
+<td align="center">0.640</td>
+<td align="center">0.65</td>
+</tr>
+</tbody>
+</table>
+<p>以下实际例子可以帮助理解对冲成本（slippage），我们同时还可以引入一个 Retained Edge 概念。这是用于表示在 hedge 之后我们还能保留的来自期权交易的 edge。</p>
+<table>
+<thead>
+<tr>
+<th align="center">Operation</th>
+<th align="center">Option Edge</th>
+<th align="center">Hedge Loss</th>
+<th align="center">Retained Edge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">buy option #1</td>
+<td align="center">1.237 - 1.230 = 0.007</td>
+<td align="center">0.003*0.3 = 0.0009</td>
+<td align="center">0.0061 (87%)</td>
+</tr>
+<tr>
+<td align="center">buy option #2</td>
+<td align="center">0.640 - 0.63 = 0.01</td>
+<td align="center">0.003*0.15 = 0.00045</td>
+<td align="center">0.00955 (96%)</td>
+</tr>
+<tr>
+<td align="center">sell option #1</td>
+<td align="center">1.24 - 1.237 = 0.003</td>
+<td align="center">0.007*0.3 = 0.0021</td>
+<td align="center">0.0009 (30%)</td>
+</tr>
+<tr>
+<td align="center">sell option #2</td>
+<td align="center">0.65 - 0.64 = 0.01</td>
+<td align="center">0.007*0.15 = 0.00105</td>
+<td align="center">0.00895 (90%)</td>
+</tr>
+</tbody>
+</table>
+<p>或者，也可以从另一种方式理解。期权的理论价格由期货的 book 决定。我们在交易期权后，需要在期货上 hedge。这个行为会导致期货的 book 变动，从而导致期权的理论价格向 <strong>不利</strong> 我们的方向更新。Retained Edge 是指利用更新后的理论价格得到的 edge，而非交易期权时刻的理论价格。</p>
+<p>对于上面表格中的第一个例子，交易期权时理论价格是1.237，此后去 hedge 时，由于我们需要跨越 bid ask spread 去卖出期货，交易发生时刻期货的理论价格不再是 66.843，而是期货的 top of book bid，即66.84。</p>
+<p>期货理论价格变动了 -0.003，乘以期权 #1 的 Delta 0.3，可以得出期权的理论价格变动为 -0.0009，新的期权价格为 1.2361。此时再来看这笔交易的 Edge，就是 Retained Edge，1.2361 - 1.23 = 0.0061。与表格中结论一致。</p>
+<h2 id="_5">参考</h2>
+<ol>
+<li>
+<p><a href="http://www.mwrf.net/tool/mathematics/2014/13618.html">在线正态分布计算器</a></p>
+</li>
+<li>
+<p>Trading 101</p>
+</li>
+</ol>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../../mathematics/probability/martingale/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Martingale" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Martingale
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
