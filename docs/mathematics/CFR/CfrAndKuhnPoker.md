@@ -90,7 +90,7 @@ $$ r(I, a) = \sum_{h \in I} r(h, a) $$
 
 Let $r_i^t(I, a)$ refer to the regret in time $t$ belonging to player $i$, the **cumulative** counterfactual regret is defined as:
 
-$$R_i^T(I, a) = \sum_{t=1}^T r_i^t(I, a)$$
+$$ R_i^T(I, a) = \sum_{t=1}^T r_i^t(I, a) $$
 
 For each information set $I$, the probability of choosing action $a$ is calculated by:
 
@@ -107,6 +107,7 @@ $+$ means positive (>0). It selects actions in proportion to positive regrets. T
 ### 2.3 Algorithm
 
 CFR 参数：
+
 1. action history: $h$
 2. learning player id: $i$
 3. time step: $t$

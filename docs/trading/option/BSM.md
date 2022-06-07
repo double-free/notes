@@ -360,13 +360,13 @@ $$x \sim N(\mu-\frac{1}{2}\sigma^2, \frac{\sigma^2}{T})$$
 
 假设我们已经知道以某个较小采样间隔（例如每周） $\Delta t$ 的股票回报率历史数据，我们可以估计其方差 $D$。
 
-假设第 $i$ 个 $\Delta t$ 内的回报率为 $u_i$，其平均值为 $\bar{u}$。对于方差 $D$ 的无偏估计可以表示为：
+假设第 $i$ 个 $\Delta t$ 内的回报率为 $u_i$，其平均值为 $\overline{u}$。对于方差 $D$ 的无偏估计可以表示为：
 
-$$\hat{D} = \frac{1}{n-1}\sum_{i=1}^n (u_i - \bar{u})^2$$
+$$\hat{D} = \frac{1}{n-1}\sum_{i=1}^n (u_i - \overline{u})^2$$
 
 也可以写为：
 
-$$ \hat{D} = \frac{ 1}{n-1} [ \sum_{i = 1}^n u_i^2 - n \bar{u}^2] $$
+$$ \hat{D} = \frac{ 1}{n-1} [ \sum_{i = 1}^n u_i^2 - n \overline{u}^2] $$
 
 然后根据下式求波动率的估计：
 

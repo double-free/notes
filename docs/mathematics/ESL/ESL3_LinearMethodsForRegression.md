@@ -317,7 +317,7 @@ TBD
 - 运算量小。当维度 $p >= 40$ 时，几乎无法算出最优解。但是依旧可以用 forward stepwise selection （即使维度 p 大于样本数 N）。
 - 方差小。最优子集方差比 forward stepwise selection 大，虽然后者可能会有一定的 bias。
 
-![Subset selection](images/subset_selection.png)
+![Subset selection](images/3/subset_selection.png)
 
 那么如何选择“最能提高拟合度“的参数呢？我们在之前“显著性分析”中已经证明了，去掉一个参数对残差的影响为其 z-score 的平方。那么，我们直接**从 z-score 最大的参数开始依次加入**即可。第 $j$ 个参数的 z-score 可以由于下式计算：
 
