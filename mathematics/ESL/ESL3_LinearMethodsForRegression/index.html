@@ -515,6 +515,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ESL4_LinearMethodsForClassification/" class="md-nav__link">
+        ESL 4: Linear Methods for Classification
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -1175,7 +1189,7 @@ E(\alpha^T \hat{\beta}) &amp;= E(\alpha^T  (\textbf{X}^T\textbf{X})^{-1}\textbf{
 <li>运算量小。当维度 <span class="arithmatex">\(p &gt;= 40\)</span> 时，几乎无法算出最优解。但是依旧可以用 forward stepwise selection （即使维度 p 大于样本数 N）。</li>
 <li>方差小。最优子集方差比 forward stepwise selection 大，虽然后者可能会有一定的 bias。</li>
 </ul>
-<p><img alt="Subset selection" src="../images/subset_selection.png" /></p>
+<p><img alt="Subset selection" src="../images/3/subset_selection.png" /></p>
 <p>那么如何选择“最能提高拟合度“的参数呢？我们在之前“显著性分析”中已经证明了，去掉一个参数对残差的影响为其 z-score 的平方。那么，我们直接<strong>从 z-score 最大的参数开始依次加入</strong>即可。第 <span class="arithmatex">\(j\)</span> 个参数的 z-score 可以由于下式计算：</p>
 <div class="arithmatex">\[ z_j = \frac{\hat{\beta}_j}{\hat{\sigma} \sqrt{v_j} }\]</div>
 <p>where:</p>
@@ -1295,13 +1309,13 @@ x_{ij}^c&amp;= x_{ij} - \overline{x_j} &amp; (j &gt;=1)
       
       
         
-        <a href="../../matrix/MatrixCalculus/" class="md-footer__link md-footer__link--next" aria-label="Next: 向量和矩阵求导" rel="next">
+        <a href="../ESL4_LinearMethodsForClassification/" class="md-footer__link md-footer__link--next" aria-label="Next: ESL 4: Linear Methods for Classification" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              向量和矩阵求导
+              ESL 4: Linear Methods for Classification
             </div>
           </div>
           <div class="md-footer__button md-icon">

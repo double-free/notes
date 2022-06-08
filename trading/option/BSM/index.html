@@ -330,6 +330,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL4_LinearMethodsForClassification/" class="md-nav__link">
+        ESL 4: Linear Methods for Classification
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -1133,10 +1147,10 @@ b. 40% 股指收益 <br/>
 <p>因此回报率满足：</p>
 <div class="arithmatex">\[x \sim N(\mu-\frac{1}{2}\sigma^2, \frac{\sigma^2}{T})\]</div>
 <p>假设我们已经知道以某个较小采样间隔（例如每周） <span class="arithmatex">\(\Delta t\)</span> 的股票回报率历史数据，我们可以估计其方差 <span class="arithmatex">\(D\)</span>。</p>
-<p>假设第 <span class="arithmatex">\(i\)</span> 个 <span class="arithmatex">\(\Delta t\)</span> 内的回报率为 <span class="arithmatex">\(u_i\)</span>，其平均值为 <span class="arithmatex">\(\bar{u}\)</span>。对于方差 <span class="arithmatex">\(D\)</span> 的无偏估计可以表示为：</p>
-<div class="arithmatex">\[\hat{D} = \frac{1}{n-1}\sum_{i=1}^n (u_i - \bar{u})^2\]</div>
+<p>假设第 <span class="arithmatex">\(i\)</span> 个 <span class="arithmatex">\(\Delta t\)</span> 内的回报率为 <span class="arithmatex">\(u_i\)</span>，其平均值为 <span class="arithmatex">\(\overline{u}\)</span>。对于方差 <span class="arithmatex">\(D\)</span> 的无偏估计可以表示为：</p>
+<div class="arithmatex">\[\hat{D} = \frac{1}{n-1}\sum_{i=1}^n (u_i - \overline{u})^2\]</div>
 <p>也可以写为：</p>
-<div class="arithmatex">\[ \hat{D} = \frac{ 1}{n-1} [ \sum_{i = 1}^n u_i^2 - n \bar{u}^2] \]</div>
+<div class="arithmatex">\[ \hat{D} = \frac{ 1}{n-1} [ \sum_{i = 1}^n u_i^2 - n \overline{u}^2] \]</div>
 <p>然后根据下式求波动率的估计：</p>
 <div class="arithmatex">\[\hat{\sigma} = \sqrt{\hat{D}~T}\]</div>
 <p>这个 <span class="arithmatex">\(T\)</span> 表示一年时间，假设 <span class="arithmatex">\(\Delta t\)</span> 是周，那么 <span class="arithmatex">\(T = 365/7 = 52\)</span>。</p>

@@ -457,6 +457,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ESL/ESL4_LinearMethodsForClassification/" class="md-nav__link">
+        ESL 4: Linear Methods for Classification
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -999,7 +1013,7 @@
 <p>Since <strong>an information set may be reached through multiple game histories</strong>, the counterfactual regret of not taking action <span class="arithmatex">\(a\)</span> at <strong>information set</strong> <span class="arithmatex">\(I\)</span> is:</p>
 <div class="arithmatex">\[ r(I, a) = \sum_{h \in I} r(h, a) \]</div>
 <p>Let <span class="arithmatex">\(r_i^t(I, a)\)</span> refer to the regret in time <span class="arithmatex">\(t\)</span> belonging to player <span class="arithmatex">\(i\)</span>, the <strong>cumulative</strong> counterfactual regret is defined as:</p>
-<p><span class="arithmatex">\(<span class="arithmatex">\(R_i^T(I, a) = \sum_{t=1}^T r_i^t(I, a)\)</span>\)</span></p>
+<p>$$ R_i^T(I, a) = \sum_{t=1}^T r_i^t(I, a) $$</p>
 <p>For each information set <span class="arithmatex">\(I\)</span>, the probability of choosing action <span class="arithmatex">\(a\)</span> is calculated by:</p>
 <div class="arithmatex">\[
 \sigma^{T+1}_i (I, a) = \begin{cases}
@@ -1009,12 +1023,14 @@
 \]</div>
 <p><span class="arithmatex">\(+\)</span> means positive (&gt;0). It selects actions in proportion to positive regrets. This is the same as the <strong>regret matching</strong> algorithm in <a href="https://www.jianshu.com/p/8995c4c2ac16">Regret Matching and Blotto Game</a>.</p>
 <h3 id="23-algorithm">2.3 Algorithm</h3>
-<p>CFR 参数：
-1. action history: <span class="arithmatex">\(h\)</span>
-2. learning player id: <span class="arithmatex">\(i\)</span>
-3. time step: <span class="arithmatex">\(t\)</span>
-4. reach probability of action history <span class="arithmatex">\(h\)</span> for player 1: <span class="arithmatex">\(\pi_1\)</span>
-5. reach probability of action history <span class="arithmatex">\(h\)</span> for player 2: <span class="arithmatex">\(\pi_2\)</span></p>
+<p>CFR 参数：</p>
+<ol>
+<li>action history: <span class="arithmatex">\(h\)</span></li>
+<li>learning player id: <span class="arithmatex">\(i\)</span></li>
+<li>time step: <span class="arithmatex">\(t\)</span></li>
+<li>reach probability of action history <span class="arithmatex">\(h\)</span> for player 1: <span class="arithmatex">\(\pi_1\)</span></li>
+<li>reach probability of action history <span class="arithmatex">\(h\)</span> for player 2: <span class="arithmatex">\(\pi_2\)</span></li>
+</ol>
 <p><img alt="Counterfactual Regret Minimization Algorithm" src="https://upload-images.jianshu.io/upload_images/4482847-f2a29b5c86d0da9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p>
 <p>这个算法其实写的比较晦涩，参数设计也不是特别合理。实际上，我们只需要三个参数：</p>
 <ul>
