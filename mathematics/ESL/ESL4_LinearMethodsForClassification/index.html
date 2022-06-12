@@ -385,6 +385,26 @@
     4.3 Linear discriminant analysis
   </a>
   
+    <nav class="md-nav" aria-label="4.3 Linear discriminant analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#432-computation-of-lda" class="md-nav__link">
+    4.3.2 Computation of LDA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-reduced-rank-linear-discriminant-analysis" class="md-nav__link">
+    4.3.3 Reduced-Rank Linear Discriminant Analysis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -720,6 +740,26 @@
     4.3 Linear discriminant analysis
   </a>
   
+    <nav class="md-nav" aria-label="4.3 Linear discriminant analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#432-computation-of-lda" class="md-nav__link">
+    4.3.2 Computation of LDA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-reduced-rank-linear-discriminant-analysis" class="md-nav__link">
+    4.3.3 Reduced-Rank Linear Discriminant Analysis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -865,10 +905,92 @@
 <a id="__codelineno-1-73" name="__codelineno-1-73" href="#__codelineno-1-73"></a><span class="n">show</span><span class="p">(</span><span class="n">layouts</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">hist_fig</span><span class="p">,</span> <span class="n">line_fig</span><span class="p">))</span>
 </code></pre></div>
 <h2 id="43-linear-discriminant-analysis">4.3 Linear discriminant analysis</h2>
+<p>为了获得最优的分类结果，我们需要知道后验概率（<span class="arithmatex">\(X = x\)</span> 时属于第 <span class="arithmatex">\(k\)</span> 类的概率）：</p>
+<div class="arithmatex">\[ \text{Pr}(G=k | X=x) = \frac{f_k(x) \pi_k}{\sum_{i=1}^K f_i(x) \pi_i}\]</div>
+<p>因为本质上，我们是在找到一个 k 使得后验概率最大，即：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{k} &amp;= \mathop{\arg \max}_{k}  \text{Pr}(G=k | X=x) \\
+&amp;= \mathop{\arg \max}_{k}  f_k(x) \pi_k \\
+&amp;= \mathop{\arg \max}_{k}  [\ln(f_k(x)) + \ln(\pi_k)]
+\end{align}\]</div>
+<p>这被称为 <strong>判别函数</strong>（discriminant function），其中：</p>
+<ul>
+<li><span class="arithmatex">\(f_i(x)\)</span> 是第 i 类样本取 x 的概率</li>
+<li><span class="arithmatex">\(\pi_i\)</span> 是属于第 i 类的先验概率</li>
+</ul>
+<p>这里的难点在于确定 <span class="arithmatex">\(f_i(x)\)</span>，显然 <span class="arithmatex">\(\pi_i\)</span> 的估计是可以通过样本数据直接得到的。</p>
+<p>线性判别分析（Linear Discriminant Analysis, LDA）<strong>假设变量 X 服从多维高斯分布</strong>（X 包含多维）：</p>
+<div class="arithmatex">\[ f_k(x) = \frac{1}{(2 \pi)^{p/2} |\mathbf{\Sigma}_k|^{1/2}} e^{-\frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k)} \]</div>
+<p>带入最优分类的式子, 逐步去掉与 <span class="arithmatex">\(k\)</span> 无关的部分：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{k} &amp;= \mathop{\arg \max}_{k}  [\ln(f_k(x)) + \ln(\pi_k)] \\
+&amp;= \mathop{\arg \max}_{k}  [- \ln((2 \pi)^{p/2} |\mathbf{ \Sigma }_k|^{1/2}) - \frac{1}{2}(x - \mu_k)^T \mathbf{ \Sigma }_k^{-1} (x - \mu_k) + \ln(\pi_k)] \\
+&amp;= \mathop{\arg \max}_{k}  [- \frac{1}{2} \ln |\mathbf{ \Sigma }_k|^{1/2} - \frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k) + \ln(\pi_k)] \\
+\end{align}\]</div>
+<p>此时，判别函数为：</p>
+<div class="arithmatex">\[\delta_k(x) = - \frac{1}{2} \ln |\mathbf{ \Sigma }_k|^{1/2} - \frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k) + \ln(\pi_k)\]</div>
+<p>是 <span class="arithmatex">\(x\)</span> 的二次函数。因此称为二次判别分析(Quadratic Discriminant Analysis, QDA)。</p>
+<p>我们再 <strong>假设每个类中变量 X 分布的方差是相等的</strong>，则 <span class="arithmatex">\(\mathbf{\Sigma}\)</span> 也与 <span class="arithmatex">\(k\)</span> 无关了，可以进步一化简判别函数为：</p>
+<div class="arithmatex">\[\delta_k(x) = x^T\mathbf{\Sigma}^{-1}\mu_k - \frac{1}{2}\mu_k^T\mathbf{\Sigma}^{-1} \mu_k + \ln(\pi_k)\]</div>
+<p>我们可以看出，化简后判别函数对于 <span class="arithmatex">\(x\)</span> 是 <strong>线性</strong> 的。这说明两个类的分界面（即判别函数相等时）也是线性的。因此叫做线性判别分析(Linear Discriminant Analysis, LDA)。</p>
+<p>实际中，我们可以通过样本估计高斯分布的参数：</p>
+<ul>
+<li><span class="arithmatex">\(\hat{\pi}_k = N_k / N\)</span>，即第 k 类的样本数占总样本数的比例</li>
+<li><span class="arithmatex">\(\hat{\mu}_k = \sum_{g_i = k} x_i / N_k\)</span>，即第 k 类样本 X 的平均值</li>
+<li><span class="arithmatex">\(\hat{\mathbf{\Sigma}} = \sum_{k=1}^K \sum_{g_i = k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T / (N - K)\)</span>，对协方差矩阵的无偏估计，证明在 ESL3 中</li>
+</ul>
+<p>有了判别函数的表达式 <span class="arithmatex">\(\delta_k(x)\)</span>，我们只需要依次带入 <span class="arithmatex">\(k = 1, ..., K\)</span>, 当得到的 <span class="arithmatex">\(\delta_k(x)\)</span> 最大时的 <span class="arithmatex">\(k\)</span> 即为最佳分类。</p>
+<h3 id="432-computation-of-lda">4.3.2 Computation of LDA</h3>
+<p>协方差矩阵 <span class="arithmatex">\(\mathbf{\Sigma}\)</span> 是一个对称矩阵，可以进行特征值分解：</p>
+<div class="arithmatex">\[ \mathbf{\Sigma} = \mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^T \]</div>
+<p>其中：<span class="arithmatex">\(\mathbf{Q}\)</span> 是单位正交矩阵，<span class="arithmatex">\(\mathbf{\Lambda}\)</span> 是对角阵。带入判别函数有：</p>
+<div class="arithmatex">\[\begin{align}
+\delta_k(x) &amp;= x^T\mathbf{\Sigma}^{-1}\mu_k - \frac{1}{2}\mu_k^T\mathbf{\Sigma}^{-1} \mu_k + \ln(\pi_k) \\
+&amp;= x^T\mathbf{Q}^{T}\mathbf{\Lambda}^{-1}\mathbf{Q}\mu_k - \frac{1}{2}\mu_k^T\mathbf{Q}^{T}\mathbf{\Lambda}^{-1}\mathbf{Q}\mu_k + \ln(\pi_k)
+\end{align}\]</div>
+<p>令：</p>
+<div class="arithmatex">\[ x^{*} = \mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}x \]</div>
+<div class="arithmatex">\[ \mu^{*} = \mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q} \mu \]</div>
+<p>有：</p>
+<div class="arithmatex">\[ \delta_k(x^{*}) = x^{* T}\mu_k^{*} - \frac{1}{2}\mu_k^{* T} \mu_k^{*} + \ln(\pi_k) \]</div>
+<p>当我们判断某个样本 <span class="arithmatex">\(x_1\)</span> 属于 m 和 n 中的哪一个类时，可以比较其判别函数，我们判断它是 m 类如果满足：</p>
+<div class="arithmatex">\[ \delta_m(x_1^*) &gt; \delta_n(x_1^*) \]</div>
+<p>带入表达式有：</p>
+<div class="arithmatex">\[ x^{*T} (\mu^*_m - \mu^*_n) &gt; \frac{1}{2} (\mu^*_m + \mu^*_n)^T(\mu^*_m - \mu^*_n) - \ln(\pi_m/\pi_n)\]</div>
+<p>这样看起来就非常直观了。 <strong>LDA 是将样本投影在两个类中心的连线上，并且比较它更靠近哪一边，以此决定它属于哪个类</strong>。当然，这个过程还考虑了两个类的先验概率（<span class="arithmatex">\(\ln(\pi_m/\pi_n)\)</span> 项）。</p>
+<h3 id="433-reduced-rank-linear-discriminant-analysis">4.3.3 Reduced-Rank Linear Discriminant Analysis</h3>
+<p>LDA 也是一种降维的手段。假设我们有 <span class="arithmatex">\(p\)</span> 维特征，<span class="arithmatex">\(K\)</span> 个类别。根据 4.3.2 中介绍的计算方式，我们一共有 <span class="arithmatex">\(K\)</span> 个类中心点。他们一定在一个最高 <span class="arithmatex">\(K-1\)</span> 维的空间里。</p>
+<p>例如，对于 2 个类的分类问题，<strong>无论特征是多少维</strong>，我们只有 2 个类中心点。他们必定在一条直线（1维）上。同理，对于 3 个类的分类问题，我们只有 3 个类中心点。他们必定在一个平面（2维）内，如果特征维度大于等于 2。</p>
+<p>因此，经过 LDA，原始数据总能被投影到一个超平面上，其维度为（对应 sklearn LDA 方法中的 <code>n_components</code> 参数）：</p>
+<div class="arithmatex">\[ \text{n_components} = \min(p, K-1) \]</div>
+<p>这说明，<strong>在 <span class="arithmatex">\(p \gg K\)</span> 时，使用 LDA 可以将一个 <span class="arithmatex">\(p\)</span> 维的输入降维到 <span class="arithmatex">\(K-1\)</span> 维</strong>。</p>
+<p>我们以 sklearn 中的 wine 数据集为例。它具有 13 维特征，3 个类别。我们使用 LDA 可以将这些数据投影到一个 2 维的平面上。</p>
+<p><img alt="LDA projection of wine data" src="../images/4/lda.png" /></p>
+<p>代码：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">wine</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_wine</span><span class="p">()</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">wine</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">wine</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">y</span> <span class="o">=</span> <span class="n">wine</span><span class="o">.</span><span class="n">target</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1"># LDA projection</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">model</span> <span class="o">=</span> <span class="n">LinearDiscriminantAnalysis</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c1"># plot</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="n">data_to_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="s2">&quot;x2&quot;</span><span class="p">,</span> <span class="s2">&quot;class&quot;</span><span class="p">])</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="n">show</span><span class="p">(</span><span class="n">create_scatter_figure</span><span class="p">(</span><span class="s2">&quot;LDA projection for wine data&quot;</span><span class="p">,</span> <span class="n">data_to_plot</span><span class="p">))</span>
+</code></pre></div>
 <h2 id="44-logistic-regression">4.4 Logistic regression</h2>
 <h2 id="reference">Reference</h2>
 <ol>
 <li><a href="https://stats.stackexchange.com/questions/475458/masking-in-linear-regression-for-multiple-classes">masking in linear regression for multiple classes</a></li>
+<li><a href="https://yangxiaozhou.github.io/data/2019/10/02/linear-discriminant-analysis.html">Linear discriminant analysis, explained</a></li>
 </ol>
 
               
