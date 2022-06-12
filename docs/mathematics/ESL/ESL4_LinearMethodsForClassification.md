@@ -140,6 +140,130 @@ show(layouts.column(hist_fig, line_fig))
 
 ## 4.3 Linear discriminant analysis
 
+为了获得最优的分类结果，我们需要知道后验概率（$X = x$ 时属于第 $k$ 类的概率）：
+
+$$ \text{Pr}(G=k | X=x) = \frac{f_k(x) \pi_k}{\sum_{i=1}^K f_i(x) \pi_i}$$
+
+因为本质上，我们是在找到一个 k 使得后验概率最大，即：
+
+$$\begin{align}
+\hat{k} &= \mathop{\arg \max}_{k}  \text{Pr}(G=k | X=x) \\
+&= \mathop{\arg \max}_{k}  f_k(x) \pi_k \\
+&= \mathop{\arg \max}_{k}  [\ln(f_k(x)) + \ln(\pi_k)]
+\end{align}$$
+
+这被称为 __判别函数__（discriminant function），其中：
+
+- $f_i(x)$ 是第 i 类样本取 x 的概率
+- $\pi_i$ 是属于第 i 类的先验概率
+
+这里的难点在于确定 $f_i(x)$，显然 $\pi_i$ 的估计是可以通过样本数据直接得到的。
+
+线性判别分析（Linear Discriminant Analysis, LDA）__假设变量 X 服从多维高斯分布__（X 包含多维）：
+
+$$ f_k(x) = \frac{1}{(2 \pi)^{p/2} |\mathbf{\Sigma}_k|^{1/2}} e^{-\frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k)} $$
+
+带入最优分类的式子, 逐步去掉与 $k$ 无关的部分：
+
+$$\begin{align}
+\hat{k} &= \mathop{\arg \max}_{k}  [\ln(f_k(x)) + \ln(\pi_k)] \\
+&= \mathop{\arg \max}_{k}  [- \ln((2 \pi)^{p/2} |\mathbf{ \Sigma }_k|^{1/2}) - \frac{1}{2}(x - \mu_k)^T \mathbf{ \Sigma }_k^{-1} (x - \mu_k) + \ln(\pi_k)] \\
+&= \mathop{\arg \max}_{k}  [- \frac{1}{2} \ln |\mathbf{ \Sigma }_k|^{1/2} - \frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k) + \ln(\pi_k)] \\
+\end{align}$$
+
+此时，判别函数为：
+
+$$\delta_k(x) = - \frac{1}{2} \ln |\mathbf{ \Sigma }_k|^{1/2} - \frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k) + \ln(\pi_k)$$
+
+是 $x$ 的二次函数。因此称为二次判别分析(Quadratic Discriminant Analysis, QDA)。
+
+我们再 __假设每个类中变量 X 分布的方差是相等的__，则 $\mathbf{\Sigma}$ 也与 $k$ 无关了，可以进步一化简判别函数为：
+
+$$\delta_k(x) = x^T\mathbf{\Sigma}^{-1}\mu_k - \frac{1}{2}\mu_k^T\mathbf{\Sigma}^{-1} \mu_k + \ln(\pi_k)$$
+
+我们可以看出，化简后判别函数对于 $x$ 是 __线性__ 的。这说明两个类的分界面（即判别函数相等时）也是线性的。因此叫做线性判别分析(Linear Discriminant Analysis, LDA)。
+
+实际中，我们可以通过样本估计高斯分布的参数：
+
+- $\hat{\pi}_k = N_k / N$，即第 k 类的样本数占总样本数的比例
+- $\hat{\mu}_k = \sum_{g_i = k} x_i / N_k$，即第 k 类样本 X 的平均值
+- $\hat{\mathbf{\Sigma}} = \sum_{k=1}^K \sum_{g_i = k} (x_i - \hat{\mu}_k)(x_i - \hat{\mu}_k)^T / (N - K)$，对协方差矩阵的无偏估计，证明在 ESL3 中
+
+有了判别函数的表达式 $\delta_k(x)$，我们只需要依次带入 $k = 1, ..., K$, 当得到的 $\delta_k(x)$ 最大时的 $k$ 即为最佳分类。
+
+
+### 4.3.2 Computation of LDA
+
+协方差矩阵 $\mathbf{\Sigma}$ 是一个对称矩阵，可以进行特征值分解：
+
+$$ \mathbf{\Sigma} = \mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^T $$
+
+其中：$\mathbf{Q}$ 是单位正交矩阵，$\mathbf{\Lambda}$ 是对角阵。带入判别函数有：
+
+$$\begin{align}
+\delta_k(x) &= x^T\mathbf{\Sigma}^{-1}\mu_k - \frac{1}{2}\mu_k^T\mathbf{\Sigma}^{-1} \mu_k + \ln(\pi_k) \\
+&= x^T\mathbf{Q}^{T}\mathbf{\Lambda}^{-1}\mathbf{Q}\mu_k - \frac{1}{2}\mu_k^T\mathbf{Q}^{T}\mathbf{\Lambda}^{-1}\mathbf{Q}\mu_k + \ln(\pi_k)
+\end{align}$$
+
+令：
+
+$$ x^{*} = \mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}x $$
+
+$$ \mu^{*} = \mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q} \mu $$
+
+有：
+
+$$ \delta_k(x^{*}) = x^{* T}\mu_k^{*} - \frac{1}{2}\mu_k^{* T} \mu_k^{*} + \ln(\pi_k) $$
+
+当我们判断某个样本 $x_1$ 属于 m 和 n 中的哪一个类时，可以比较其判别函数，我们判断它是 m 类如果满足：
+
+$$ \delta_m(x_1^*) > \delta_n(x_1^*) $$
+
+带入表达式有：
+
+$$ x^{*T} (\mu^*_m - \mu^*_n) > \frac{1}{2} (\mu^*_m + \mu^*_n)^T(\mu^*_m - \mu^*_n) - \ln(\pi_m/\pi_n)$$
+
+这样看起来就非常直观了。 **LDA 是将样本投影在两个类中心的连线上，并且比较它更靠近哪一边，以此决定它属于哪个类**。当然，这个过程还考虑了两个类的先验概率（$\ln(\pi_m/\pi_n)$ 项）。
+
+
+### 4.3.3 Reduced-Rank Linear Discriminant Analysis
+
+LDA 也是一种降维的手段。假设我们有 $p$ 维特征，$K$ 个类别。根据 4.3.2 中介绍的计算方式，我们一共有 $K$ 个类中心点。他们一定在一个最高 $K-1$ 维的空间里。
+
+例如，对于 2 个类的分类问题，__无论特征是多少维__，我们只有 2 个类中心点。他们必定在一条直线（1维）上。同理，对于 3 个类的分类问题，我们只有 3 个类中心点。他们必定在一个平面（2维）内，如果特征维度大于等于 2。
+
+因此，经过 LDA，原始数据总能被投影到一个超平面上，其维度为（对应 sklearn LDA 方法中的 `n_components` 参数）：
+
+$$ \text{n_components} = \min(p, K-1) $$
+
+这说明，__在 $p \gg K$ 时，使用 LDA 可以将一个 $p$ 维的输入降维到 $K-1$ 维__。
+
+我们以 sklearn 中的 wine 数据集为例。它具有 13 维特征，3 个类别。我们使用 LDA 可以将这些数据投影到一个 2 维的平面上。
+
+![LDA projection of wine data](images/4/lda.png)
+
+代码：
+
+```py
+import pandas as pd
+import numpy as np
+from sklearn import datasets
+
+wine = datasets.load_wine()
+X = pd.DataFrame(wine.data, columns = wine.feature_names)
+y = wine.target
+
+# LDA projection
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+model = LinearDiscriminantAnalysis(n_components=2).fit(X, y)
+model.transform(X)
+
+# plot
+data_to_plot = pd.DataFrame(
+    np.insert(model.transform(X), 2, y, axis=1),
+    columns=["x1", "x2", "class"])
+show(create_scatter_figure("LDA projection for wine data", data_to_plot))
+```
 
 
 ## 4.4 Logistic regression
@@ -148,3 +272,4 @@ show(layouts.column(hist_fig, line_fig))
 ## Reference
 
 1. [masking in linear regression for multiple classes](https://stats.stackexchange.com/questions/475458/masking-in-linear-regression-for-multiple-classes)
+2. [Linear discriminant analysis, explained](https://yangxiaozhou.github.io/data/2019/10/02/linear-discriminant-analysis.html)
