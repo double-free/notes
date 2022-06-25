@@ -400,6 +400,40 @@
     4.3.3 Reduced-Rank Linear Discriminant Analysis
   </a>
   
+    <nav class="md-nav" aria-label="4.3.3 Reduced-Rank Linear Discriminant Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    例：红酒分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-the-optimal-subspace" class="md-nav__link">
+    Find the optimal subspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    定理证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    例：手写数字分类
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -755,6 +789,40 @@
     4.3.3 Reduced-Rank Linear Discriminant Analysis
   </a>
   
+    <nav class="md-nav" aria-label="4.3.3 Reduced-Rank Linear Discriminant Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    例：红酒分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-the-optimal-subspace" class="md-nav__link">
+    Find the optimal subspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    定理证明
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    例：手写数字分类
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -960,9 +1028,10 @@
 <p>这样看起来就非常直观了。 <strong>LDA 是将样本投影在两个类中心的连线上，并且比较它更靠近哪一边，以此决定它属于哪个类</strong>。当然，这个过程还考虑了两个类的先验概率（<span class="arithmatex">\(\ln(\pi_m/\pi_n)\)</span> 项）。</p>
 <h3 id="433-reduced-rank-linear-discriminant-analysis">4.3.3 Reduced-Rank Linear Discriminant Analysis</h3>
 <p>LDA 也是一种降维的手段。假设我们有 <span class="arithmatex">\(p\)</span> 维特征，<span class="arithmatex">\(K\)</span> 个类别。根据 4.3.2 中介绍的计算方式，我们一共有 <span class="arithmatex">\(K\)</span> 个类中心点。他们一定在一个最高 <span class="arithmatex">\(K-1\)</span> 维的空间里。</p>
+<h4 id="_1">例：红酒分类</h4>
 <p>例如，对于 2 个类的分类问题，<strong>无论特征是多少维</strong>，我们只有 2 个类中心点。他们必定在一条直线（1维）上。同理，对于 3 个类的分类问题，我们只有 3 个类中心点。他们必定在一个平面（2维）内，如果特征维度大于等于 2。</p>
 <p>因此，经过 LDA，原始数据总能被投影到一个超平面上，其维度为（对应 sklearn LDA 方法中的 <code>n_components</code> 参数）：</p>
-<div class="arithmatex">\[ \text{n_components} = \min(p, K-1) \]</div>
+<div class="arithmatex">\[ L = \min(p, K-1) \]</div>
 <p>这说明，<strong>在 <span class="arithmatex">\(p \gg K\)</span> 时，使用 LDA 可以将一个 <span class="arithmatex">\(p\)</span> 维的输入降维到 <span class="arithmatex">\(K-1\)</span> 维</strong>。</p>
 <p>我们以 sklearn 中的 wine 数据集为例。它具有 13 维特征，3 个类别。我们使用 LDA 可以将这些数据投影到一个 2 维的平面上。</p>
 <p><img alt="LDA projection of wine data" src="../images/4/lda.png" /></p>
@@ -986,11 +1055,125 @@
 <a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="s2">&quot;x2&quot;</span><span class="p">,</span> <span class="s2">&quot;class&quot;</span><span class="p">])</span>
 <a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="n">show</span><span class="p">(</span><span class="n">create_scatter_figure</span><span class="p">(</span><span class="s2">&quot;LDA projection for wine data&quot;</span><span class="p">,</span> <span class="n">data_to_plot</span><span class="p">))</span>
 </code></pre></div>
+<h4 id="find-the-optimal-subspace">Find the optimal subspace</h4>
+<p>在实际中，如果 <span class="arithmatex">\(K\)</span> 也很大，那还需要进一步降低维度。假设我们目标是降低到 <span class="arithmatex">\(L\)</span> 维（<span class="arithmatex">\(L \ll K-1\)</span>)，即寻找超平面 <span class="arithmatex">\(H_{K-1}\)</span> 的最优子空间 <span class="arithmatex">\(H_L\)</span>。</p>
+<p>Fisher 将这个问题提炼为：</p>
+<blockquote>
+<p>找到线性组合 <span class="arithmatex">\(Z = a^T X\)</span> 使得类间的方差相对于类内方差最大</p>
+</blockquote>
+<p><span class="arithmatex">\(X\)</span> 的类内(Within)方差为：</p>
+<div class="arithmatex">\[ \textbf{W} = \sum_{k=1}^K \sum_{g_i=k} (x_i - \mu_k)(x_i - \mu_k)^T \]</div>
+<p><span class="arithmatex">\(X\)</span> 的类间(Between)方差为：</p>
+<div class="arithmatex">\[ \textbf{B} = \sum_{k=1}^K (\mu - \mu_k)(\mu - \mu_k)^T \]</div>
+<p>根据向量的统计特性，有 <span class="arithmatex">\(Z\)</span> 的类内方差为 <span class="arithmatex">\(a^T \textbf{W} a\)</span>，类间方差为 <span class="arithmatex">\(a^T \textbf{B} a\)</span>。</p>
+<p>于是，Fisher 实际上是在解决这个优化问题：</p>
+<div class="arithmatex">\[ \mathop{\arg \max}_a \frac{a^T \textbf{B} a}{a^T \textbf{W} a} \]</div>
+<p>由于我们总可以通过调节求得的 <span class="arithmatex">\(a\)</span> 的系数使得 <span class="arithmatex">\(a^T \textbf{W} a = 1\)</span>，我们可以将其改写为：</p>
+<div class="arithmatex">\[\begin{align}
+\mathop{\arg \max}_a &amp; ~ a^T \textbf{B} a \\
+\text{s.t.} &amp; ~ a^T \textbf{W} a = 1
+\end{align}\]</div>
+<p><strong>假设 <span class="arithmatex">\(\mathbf{W}\)</span> 可逆</strong>，令 <span class="arithmatex">\(u = \mathbf{W}^{\frac{1}{2}} a\)</span>，由于 <span class="arithmatex">\(\textbf{W}\)</span> 是对称矩阵，有：</p>
+<div class="arithmatex">\[\begin{align}
+\mathop{\arg \max}_u &amp; ~ u^T \mathbf{W}^{-\frac{1}{2}}\textbf{B}\mathbf{W}^{-\frac{1}{2}} u \\
+\text{s.t.} &amp; ~ u^Tu = 1
+\end{align}\]</div>
+<p><span class="arithmatex">\(\mathbf{W}^{-\frac{1}{2}}\textbf{B}\mathbf{W}^{-\frac{1}{2}}\)</span> 也是对称矩阵，必定存在特征值分解：</p>
+<div class="arithmatex">\[ \mathbf{W}^{-\frac{1}{2}}\textbf{B}\mathbf{W}^{-\frac{1}{2}} = \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^T \]</div>
+<p>因此化简为：</p>
+<div class="arithmatex">\[\begin{align}
+\mathop{\arg \max}_u &amp; ~ u^T \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^T u \\
+\text{s.t.} &amp; ~ u^Tu = 1
+\end{align}\]</div>
+<p>再令 <span class="arithmatex">\(v = \mathbf{Q}^T u\)</span>，由于 <span class="arithmatex">\(\mathbf{Q}\)</span> 是单位正交矩阵，<span class="arithmatex">\(v^T v = 1\)</span> 依然成立：</p>
+<div class="arithmatex">\[\begin{align}
+\mathop{\arg \max}_v &amp; ~ v^T \mathbf{\Lambda} v \\
+\text{s.t.} &amp; ~ v^Tv = 1
+\end{align}\]</div>
+<p><span class="arithmatex">\(\mathbf{\Lambda}\)</span> 是对角矩阵，所以 <strong>该优化问题本质是求最大特征值</strong>。假设 <span class="arithmatex">\(\lambda_i\)</span> 最大，显然在 <span class="arithmatex">\(v_i = 1\)</span> 时取得最大值 <span class="arithmatex">\(\lambda_i^2\)</span>。</p>
+<p>由于 <span class="arithmatex">\(\mathbf{\Lambda}\)</span> 是 <span class="arithmatex">\(\mathbf{W}^{-\frac{1}{2}}\textbf{B}\mathbf{W}^{-\frac{1}{2}}\)</span> 的特征值，为了简化求解，我们利用定理：</p>
+<blockquote>
+<p><span class="arithmatex">\(\mathbf{AB}\)</span> 与 <span class="arithmatex">\(\mathbf{BA}\)</span> 具有同样的特征值，如果 <span class="arithmatex">\(x\)</span> 是 <span class="arithmatex">\(\mathbf{AB}\)</span> 的某个特征向量，则对应的 <span class="arithmatex">\(\mathbf{BA}\)</span> 的特征向量是 <span class="arithmatex">\(y = \mathbf{B}x\)</span></p>
+</blockquote>
+<p>可以得到 <span class="arithmatex">\(\mathbf{\Lambda}\)</span> 也是 <span class="arithmatex">\(\mathbf{W}^{-1}\textbf{B}\)</span> 的特征值。</p>
+<p>假设 <span class="arithmatex">\(\mathbf{W}^{-1}\textbf{B}\)</span> 的最大特征值为 <span class="arithmatex">\(\lambda_i\)</span>，对应的特征向量为 <span class="arithmatex">\(\xi\)</span>，则所求的线性变换为：</p>
+<div class="arithmatex">\[ a = \mathbf{W}^{-\frac{1}{2}} \xi \]</div>
+<p>这样就找到了 <span class="arithmatex">\(H_L\)</span> 的 1 个维度，同理，我们选取 top L 个维度，即得到了 <span class="arithmatex">\(H_L\)</span>。</p>
+<h4 id="_2">定理证明</h4>
+<p>假设 <span class="arithmatex">\(\lambda\)</span> 是 <span class="arithmatex">\(\mathbf{AB}\)</span> 的任意特征值。</p>
+<div class="arithmatex">\[ \mathbf{AB}x = \lambda x \]</div>
+<p>令 <span class="arithmatex">\(y = \mathbf{B}x\)</span>，则有：</p>
+<div class="arithmatex">\[ \mathbf{A}y = \lambda x \]</div>
+<p>同时左乘 <span class="arithmatex">\(\mathbf{B}\)</span>：</p>
+<div class="arithmatex">\[ \mathbf{BA}y = \lambda \mathbf{B}x = \lambda y \]</div>
+<h4 id="_3">例：手写数字分类</h4>
+<p>手写数字分类是通过 8x8 的手写数字图片判断是 0-9 中的哪个数字。显然，这是一个具有 <span class="arithmatex">\(p = 8 \times 8 = 64\)</span> 维特征，<span class="arithmatex">\(K = 10\)</span> 个类别的分类任务。我们可以用 sklearn 库的 LDA 得到下面的结果（降至 2 维 plot）：</p>
+<p><img alt="sklearn lda" src="../images/4/sklearn_lda.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">import</span> <span class="nn">scipy</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">digits</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_digits</span><span class="p">()</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">digits</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">y</span> <span class="o">=</span> <span class="n">digits</span><span class="o">.</span><span class="n">target</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">trainX</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">trainY</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="n">model</span> <span class="o">=</span> <span class="n">LinearDiscriminantAnalysis</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;eigen&quot;</span><span class="p">,</span> <span class="n">shrinkage</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="c1"># reduce rank to 2 dimension data</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="n">reduceRankX</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">trainX</span><span class="p">)</span>
+</code></pre></div>
+<p>显然，直接调包隐藏了太多细节，为了加深理解，我们根据公式推导自己手动实现一个：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span> <span class="nf">shrink</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span> <span class="n">shrinkage</span><span class="p">):</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">dimensions</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">shrinkage</span><span class="p">)</span> <span class="o">*</span> <span class="n">cov</span>  <span class="o">+</span> <span class="n">shrinkage</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span> <span class="o">/</span> <span class="n">dimensions</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">def</span> <span class="nf">my_lda</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_components</span><span class="p">,</span> <span class="n">shrinkage</span><span class="p">):</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">T</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">W</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="n">g</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>                          <span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="n">shrunkW</span> <span class="o">=</span> <span class="n">shrink</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">shrinkage</span><span class="p">)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">invShrunkW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">shrunkW</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="n">shrunkB</span> <span class="o">=</span> <span class="n">shrink</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">shrinkage</span><span class="p">)</span> <span class="o">-</span> <span class="n">shrunkW</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="c1"># eigen values is ascending</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">invShrunkW</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">shrunkB</span><span class="p">))</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    <span class="c1"># eigen vectors with greatest eigen values</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>    <span class="n">xi</span> <span class="o">=</span> <span class="n">eigenvectors</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:,:</span><span class="n">n_components</span><span class="p">]</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="c1"># L = np.linalg.cholesky(invShrunkW)</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="c1"># return L.dot(xi)</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>    <span class="c1"># W^{-1/2}, not Cholesky</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>    <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">sqrtm</span><span class="p">(</span><span class="n">invShrunkW</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+</code></pre></div>
+<p>其中，<code>shrink</code> 函数是为了处理当 <span class="arithmatex">\(\mathbf{W}\)</span> 是 <strong>奇异矩阵</strong> (不可逆)的情形。我们可以使用 <a href="https://scikit-learn.org/stable/modules/covariance.html#shrunk-covariance">shrunk covariance</a> 来使其变为可逆矩阵再处理。这在输入 <span class="arithmatex">\(X\)</span> 是稀疏矩阵时很常见，例如手写数字分类。</p>
+<div class="arithmatex">\[ \mathbf{\Sigma}_{\text{shrunk}} = (1 - \alpha) \hat{\mathbf{\Sigma}} + \alpha \frac{\mathop{tr} \hat{\mathbf{\Sigma}}}{p} \mathbf{I}\]</div>
+<p>其中 <span class="arithmatex">\(\alpha\)</span> 是 shrinkage，<span class="arithmatex">\(p\)</span> 是特征维度。</p>
+<p>另外还需要注意区分矩阵平方根 <code>sqrtm</code> 与 Cholesky Decomposition。</p>
+<p>矩阵平方根指 <span class="arithmatex">\(\mathbf{B} \mathbf{B} = \mathbf{B}^T  \mathbf{B}\mathbf{A}\)</span>，要求 <span class="arithmatex">\(\mathbf{B}\)</span> 是对称矩阵。</p>
+<p>Cholesky Decomposition 指 <span class="arithmatex">\(\mathbf{L}^T \mathbf{L} = \mathbf{A}\)</span>，要求 <span class="arithmatex">\(\mathbf{L}\)</span> 是三角矩阵。</p>
+<p>使用自己实现的 LDA 得到与 sklearn 实现类似的结果：</p>
+<p><img alt="my lda" src="../images/4/sklearn_lda.png" /></p>
+<p>可以看出，在降到 2 维后，LDA 还是能够清楚区分出数字 0, 1, 2, 3, 4, 6，但是存在一些数字的类别重叠在一起的情况。此时可以 <strong>增加维度</strong> <span class="arithmatex">\(L\)</span> 解决。</p>
+<p>下面是第3、4 维：</p>
+<p><img alt="extra dimension lda" src="../images/4/extra_dimension_lda.png" /></p>
+<p>可以看出，它较好的补足了 1、2 维无法正确分类的数字。对于数字 5、7 有了清楚的分类。</p>
 <h2 id="44-logistic-regression">4.4 Logistic regression</h2>
 <h2 id="reference">Reference</h2>
 <ol>
 <li><a href="https://stats.stackexchange.com/questions/475458/masking-in-linear-regression-for-multiple-classes">masking in linear regression for multiple classes</a></li>
 <li><a href="https://yangxiaozhou.github.io/data/2019/10/02/linear-discriminant-analysis.html">Linear discriminant analysis, explained</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/covariance.html#shrunk-covariance">shrunk covariance</a></li>
+<li><a href="https://stats.stackexchange.com/questions/123490/what-is-the-correct-formula-for-between-class-scatter-matrix-in-lda">between-class scatter matrix calculation</a></li>
 </ol>
 
               
