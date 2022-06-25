@@ -230,11 +230,13 @@ $$ x^{*T} (\mu^*_m - \mu^*_n) > \frac{1}{2} (\mu^*_m + \mu^*_n)^T(\mu^*_m - \mu^
 
 LDA 也是一种降维的手段。假设我们有 $p$ 维特征，$K$ 个类别。根据 4.3.2 中介绍的计算方式，我们一共有 $K$ 个类中心点。他们一定在一个最高 $K-1$ 维的空间里。
 
+#### 例：红酒分类
+
 例如，对于 2 个类的分类问题，__无论特征是多少维__，我们只有 2 个类中心点。他们必定在一条直线（1维）上。同理，对于 3 个类的分类问题，我们只有 3 个类中心点。他们必定在一个平面（2维）内，如果特征维度大于等于 2。
 
 因此，经过 LDA，原始数据总能被投影到一个超平面上，其维度为（对应 sklearn LDA 方法中的 `n_components` 参数）：
 
-$$ \text{n_components} = \min(p, K-1) $$
+$$ L = \min(p, K-1) $$
 
 这说明，__在 $p \gg K$ 时，使用 LDA 可以将一个 $p$ 维的输入降维到 $K-1$ 维__。
 
@@ -265,6 +267,174 @@ data_to_plot = pd.DataFrame(
 show(create_scatter_figure("LDA projection for wine data", data_to_plot))
 ```
 
+#### Find the optimal subspace
+
+在实际中，如果 $K$ 也很大，那还需要进一步降低维度。假设我们目标是降低到 $L$ 维（$L \ll K-1$)，即寻找超平面 $H_{K-1}$ 的最优子空间 $H_L$。
+
+Fisher 将这个问题提炼为：
+
+> 找到线性组合 $Z = a^T X$ 使得类间的方差相对于类内方差最大
+
+$X$ 的类内(Within)方差为：
+
+$$ \textbf{W} = \sum_{k=1}^K \sum_{g_i=k} (x_i - \mu_k)(x_i - \mu_k)^T $$
+
+$X$ 的类间(Between)方差为：
+
+$$ \textbf{B} = \sum_{k=1}^K (\mu - \mu_k)(\mu - \mu_k)^T $$
+
+根据向量的统计特性，有 $Z$ 的类内方差为 $a^T \textbf{W} a$，类间方差为 $a^T \textbf{B} a$。
+
+于是，Fisher 实际上是在解决这个优化问题：
+
+$$ \mathop{\arg \max}_a \frac{a^T \textbf{B} a}{a^T \textbf{W} a} $$
+
+由于我们总可以通过调节求得的 $a$ 的系数使得 $a^T \textbf{W} a = 1$，我们可以将其改写为：
+
+$$\begin{align}
+\mathop{\arg \max}_a & ~ a^T \textbf{B} a \\
+\text{s.t.} & ~ a^T \textbf{W} a = 1
+\end{align}$$
+
+__假设 $\mathbf{W}$ 可逆__，令 $u = \mathbf{W}^{\frac{1}{2}} a$，由于 $\textbf{W}$ 是对称矩阵，有：
+
+$$\begin{align}
+\mathop{\arg \max}_u & ~ u^T \mathbf{W}^{-\frac{1}{2}}\textbf{B}\mathbf{W}^{-\frac{1}{2}} u \\
+\text{s.t.} & ~ u^Tu = 1
+\end{align}$$
+
+$\mathbf{W}^{-\frac{1}{2}}\textbf{B}\mathbf{W}^{-\frac{1}{2}}$ 也是对称矩阵，必定存在特征值分解：
+
+$$ \mathbf{W}^{-\frac{1}{2}}\textbf{B}\mathbf{W}^{-\frac{1}{2}} = \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^T $$
+
+因此化简为：
+
+$$\begin{align}
+\mathop{\arg \max}_u & ~ u^T \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^T u \\
+\text{s.t.} & ~ u^Tu = 1
+\end{align}$$
+
+再令 $v = \mathbf{Q}^T u$，由于 $\mathbf{Q}$ 是单位正交矩阵，$v^T v = 1$ 依然成立：
+
+$$\begin{align}
+\mathop{\arg \max}_v & ~ v^T \mathbf{\Lambda} v \\
+\text{s.t.} & ~ v^Tv = 1
+\end{align}$$
+
+$\mathbf{\Lambda}$ 是对角矩阵，所以 __该优化问题本质是求最大特征值__。假设 $\lambda_i$ 最大，显然在 $v_i = 1$ 时取得最大值 $\lambda_i^2$。
+
+
+由于 $\mathbf{\Lambda}$ 是 $\mathbf{W}^{-\frac{1}{2}}\textbf{B}\mathbf{W}^{-\frac{1}{2}}$ 的特征值，为了简化求解，我们利用定理：
+
+>  $\mathbf{AB}$ 与 $\mathbf{BA}$ 具有同样的特征值，如果 $x$ 是 $\mathbf{AB}$ 的某个特征向量，则对应的 $\mathbf{BA}$ 的特征向量是 $y = \mathbf{B}x$
+
+可以得到 $\mathbf{\Lambda}$ 也是 $\mathbf{W}^{-1}\textbf{B}$ 的特征值。
+
+假设 $\mathbf{W}^{-1}\textbf{B}$ 的最大特征值为 $\lambda_i$，对应的特征向量为 $\xi$，则所求的线性变换为：
+
+$$ a = \mathbf{W}^{-\frac{1}{2}} \xi $$
+
+这样就找到了 $H_L$ 的 1 个维度，同理，我们选取 top L 个维度，即得到了 $H_L$。
+
+
+#### 定理证明
+
+假设 $\lambda$ 是 $\mathbf{AB}$ 的任意特征值。
+
+$$ \mathbf{AB}x = \lambda x $$
+
+令 $y = \mathbf{B}x$，则有：
+
+$$ \mathbf{A}y = \lambda x $$
+
+同时左乘 $\mathbf{B}$：
+
+$$ \mathbf{BA}y = \lambda \mathbf{B}x = \lambda y $$
+
+
+
+#### 例：手写数字分类
+
+手写数字分类是通过 8x8 的手写数字图片判断是 0-9 中的哪个数字。显然，这是一个具有 $p = 8 \times 8 = 64$ 维特征，$K = 10$ 个类别的分类任务。我们可以用 sklearn 库的 LDA 得到下面的结果（降至 2 维 plot）：
+
+![sklearn lda](images/4/sklearn_lda.png)
+
+```py
+import pandas as pd
+import numpy as np
+import scipy
+from sklearn import datasets
+
+digits = datasets.load_digits()
+X = pd.DataFrame(digits.data, columns = digits.feature_names)
+y = digits.target
+
+trainX = X[:len(X)//2]
+trainY = y[:len(y)//2]
+
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
+model = LinearDiscriminantAnalysis(n_components=2, solver="eigen", shrinkage=0.01).fit(trainX, trainY)
+
+# reduce rank to 2 dimension data
+reduceRankX = model.transform(trainX)
+```
+
+显然，直接调包隐藏了太多细节，为了加深理解，我们根据公式推导自己手动实现一个：
+
+```py
+def shrink(cov, shrinkage):
+    dimensions = cov.shape[0]
+    return (1-shrinkage) * cov  + shrinkage * np.trace(cov) / dimensions * np.identity(dimensions)
+
+def my_lda(X, y, n_components, shrinkage):
+    T = X.cov()
+    W = X.groupby(y).apply(lambda g: g.cov() * (len(g)-1)
+                          ).groupby(level=1).sum() / X.shape[0]
+
+    shrunkW = shrink(W, shrinkage)
+    invShrunkW = np.linalg.inv(shrunkW)
+    shrunkB = shrink(T, shrinkage) - shrunkW
+
+    # eigen values is ascending
+    eigenvalues, eigenvectors = np.linalg.eigh(invShrunkW.dot(shrunkB))
+
+    # eigen vectors with greatest eigen values
+    xi = eigenvectors[:,::-1][:,:n_components]
+
+
+    # L = np.linalg.cholesky(invShrunkW)
+    # return L.dot(xi)
+
+    # W^{-1/2}, not Cholesky
+    return scipy.linalg.sqrtm(invShrunkW).dot(xi)
+```
+
+其中，`shrink` 函数是为了处理当 $\mathbf{W}$ 是 __奇异矩阵__ (不可逆)的情形。我们可以使用 [shrunk covariance](https://scikit-learn.org/stable/modules/covariance.html#shrunk-covariance) 来使其变为可逆矩阵再处理。这在输入 $X$ 是稀疏矩阵时很常见，例如手写数字分类。
+
+$$ \mathbf{\Sigma}_{\text{shrunk}} = (1 - \alpha) \hat{\mathbf{\Sigma}} + \alpha \frac{\mathop{tr} \hat{\mathbf{\Sigma}}}{p} \mathbf{I}$$
+
+其中 $\alpha$ 是 shrinkage，$p$ 是特征维度。
+
+另外还需要注意区分矩阵平方根 `sqrtm` 与 Cholesky Decomposition。
+
+矩阵平方根指 $\mathbf{B} \mathbf{B} = \mathbf{B}^T  \mathbf{B}\mathbf{A}$，要求 $\mathbf{B}$ 是对称矩阵。
+
+Cholesky Decomposition 指 $\mathbf{L}^T \mathbf{L} = \mathbf{A}$，要求 $\mathbf{L}$ 是三角矩阵。
+
+使用自己实现的 LDA 得到与 sklearn 实现类似的结果：
+
+![my lda](images/4/sklearn_lda.png)
+
+可以看出，在降到 2 维后，LDA 还是能够清楚区分出数字 0, 1, 2, 3, 4, 6，但是存在一些数字的类别重叠在一起的情况。此时可以 __增加维度__ $L$ 解决。
+
+下面是第3、4 维：
+
+![extra dimension lda](images/4/extra_dimension_lda.png)
+
+可以看出，它较好的补足了 1、2 维无法正确分类的数字。对于数字 5、7 有了清楚的分类。
+
+
 
 ## 4.4 Logistic regression
 
@@ -273,3 +443,5 @@ show(create_scatter_figure("LDA projection for wine data", data_to_plot))
 
 1. [masking in linear regression for multiple classes](https://stats.stackexchange.com/questions/475458/masking-in-linear-regression-for-multiple-classes)
 2. [Linear discriminant analysis, explained](https://yangxiaozhou.github.io/data/2019/10/02/linear-discriminant-analysis.html)
+3. [shrunk covariance](https://scikit-learn.org/stable/modules/covariance.html#shrunk-covariance)
+4. [between-class scatter matrix calculation](https://stats.stackexchange.com/questions/123490/what-is-the-correct-formula-for-between-class-scatter-matrix-in-lda)
