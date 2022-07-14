@@ -785,26 +785,26 @@
 <tbody>
 <tr>
 <td align="center">标量</td>
-<td align="center"><span class="arithmatex">\(\frac{\partial y}{ \partial x}\)</span></td>
-<td align="center"><span class="arithmatex">\(\frac{ \partial \textbf{y} }{ \partial x }\)</span></td>
-<td align="center"><span class="arithmatex">\(\frac{\partial \textbf{Y}}{\partial x}\)</span></td>
+<td align="center"><span class="arithmatex">\(\dfrac{\partial y}{ \partial x}\)</span></td>
+<td align="center"><span class="arithmatex">\(\dfrac{ \partial \textbf{y} }{ \partial x }\)</span></td>
+<td align="center"><span class="arithmatex">\(\dfrac{\partial \textbf{Y}}{\partial x}\)</span></td>
 </tr>
 <tr>
 <td align="center">向量</td>
-<td align="center"><span class="arithmatex">\(\frac{\partial y}{ \partial \textbf{x}}\)</span></td>
-<td align="center"><span class="arithmatex">\(\frac{\partial  \textbf{y} }{ \partial \textbf{x}}\)</span></td>
+<td align="center"><span class="arithmatex">\(\dfrac{\partial y}{ \partial \textbf{x}}\)</span></td>
+<td align="center"><span class="arithmatex">\(\dfrac{\partial  \textbf{y} }{ \partial \textbf{x}}\)</span></td>
 <td align="center">/</td>
 </tr>
 <tr>
 <td align="center">矩阵</td>
-<td align="center"><span class="arithmatex">\(\frac{ \partial y }{ \partial \textbf{X} }\)</span></td>
+<td align="center"><span class="arithmatex">\(\dfrac{ \partial y }{ \partial \textbf{X} }\)</span></td>
 <td align="center">/</td>
 <td align="center">/</td>
 </tr>
 </tbody>
 </table>
 <p>我们划掉的类型是因为其结果无法在二维矩阵中很好地表示，在优化问题中也不常见。</p>
-<p>未划掉的类型中，唯一布局有歧义的就是向量对向量的求导：<span class="arithmatex">\(\frac{ \partial  \textbf{y} }{ \partial \textbf{x} }\)</span></p>
+<p>未划掉的类型中，唯一布局有歧义的就是向量对向量的求导：<span class="arithmatex">\(\dfrac{ \partial  \textbf{y} }{ \partial \textbf{x} }\)</span></p>
 <h2 id="_3">向量对向量求导</h2>
 <p>歧义在于，假设 <span class="arithmatex">\(\textbf{y}\)</span> 是一个 <span class="arithmatex">\(m\)</span> 维向量，<span class="arithmatex">\(\textbf{x}\)</span> 是一个 <span class="arithmatex">\(n\)</span> 维向量，那求导结果是一个 <span class="arithmatex">\(m \times n\)</span> 矩阵还是 <span class="arithmatex">\(n \times m\)</span> 矩阵呢？</p>
 <ul>
