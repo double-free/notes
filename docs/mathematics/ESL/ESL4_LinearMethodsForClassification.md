@@ -424,7 +424,7 @@ Cholesky Decomposition 指 $\mathbf{L}^T \mathbf{L} = \mathbf{A}$，要求 $\mat
 
 使用自己实现的 LDA 得到与 sklearn 实现类似的结果：
 
-![my lda](images/4/sklearn_lda.png)
+![my lda](images/4/my_lda.png)
 
 可以看出，在降到 2 维后，LDA 还是能够清楚区分出数字 0, 1, 2, 3, 4, 6，但是存在一些数字的类别重叠在一起的情况。此时可以 __增加维度__ $L$ 解决。
 
