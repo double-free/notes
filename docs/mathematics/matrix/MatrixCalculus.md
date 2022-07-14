@@ -18,13 +18,13 @@
 
 | 分母 \ 分子 | 标量 | 向量 | 矩阵 |
 | :-: | :-: | :-: | :-: |
-| 标量 | $\frac{\partial y}{ \partial x}$| $\frac{ \partial \textbf{y} }{ \partial x }$ | $\frac{\partial \textbf{Y}}{\partial x}$ |
-| 向量 | $\frac{\partial y}{ \partial \textbf{x}}$ | $\frac{\partial  \textbf{y} }{ \partial \textbf{x}}$ | / |
-| 矩阵 |$\frac{ \partial y }{ \partial \textbf{X} }$ | / | / |
+| 标量 | $\dfrac{\partial y}{ \partial x}$| $\dfrac{ \partial \textbf{y} }{ \partial x }$ | $\dfrac{\partial \textbf{Y}}{\partial x}$ |
+| 向量 | $\dfrac{\partial y}{ \partial \textbf{x}}$ | $\dfrac{\partial  \textbf{y} }{ \partial \textbf{x}}$ | / |
+| 矩阵 |$\dfrac{ \partial y }{ \partial \textbf{X} }$ | / | / |
 
 我们划掉的类型是因为其结果无法在二维矩阵中很好地表示，在优化问题中也不常见。
 
-未划掉的类型中，唯一布局有歧义的就是向量对向量的求导：$\frac{ \partial  \textbf{y} }{ \partial \textbf{x} }$
+未划掉的类型中，唯一布局有歧义的就是向量对向量的求导：$\dfrac{ \partial  \textbf{y} }{ \partial \textbf{x} }$
 
 ## 向量对向量求导
 

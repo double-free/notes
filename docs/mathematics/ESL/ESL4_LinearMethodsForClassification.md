@@ -168,12 +168,12 @@ $$ f_k(x) = \frac{1}{(2 \pi)^{p/2} |\mathbf{\Sigma}_k|^{1/2}} e^{-\frac{1}{2}(x 
 $$\begin{align}
 \hat{k} &= \mathop{\arg \max}_{k}  [\ln(f_k(x)) + \ln(\pi_k)] \\
 &= \mathop{\arg \max}_{k}  [- \ln((2 \pi)^{p/2} |\mathbf{ \Sigma }_k|^{1/2}) - \frac{1}{2}(x - \mu_k)^T \mathbf{ \Sigma }_k^{-1} (x - \mu_k) + \ln(\pi_k)] \\
-&= \mathop{\arg \max}_{k}  [- \frac{1}{2} \ln |\mathbf{ \Sigma }_k|^{1/2} - \frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k) + \ln(\pi_k)] \\
+&= \mathop{\arg \max}_{k}  [- \frac{1}{2} \ln |\mathbf{ \Sigma }_k| - \frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k) + \ln(\pi_k)] \\
 \end{align}$$
 
 此时，判别函数为：
 
-$$\delta_k(x) = - \frac{1}{2} \ln |\mathbf{ \Sigma }_k|^{1/2} - \frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k) + \ln(\pi_k)$$
+$$\delta_k(x) = - \frac{1}{2} \ln |\mathbf{ \Sigma }_k| - \frac{1}{2}(x - \mu_k)^T \mathbf{\Sigma}_k^{-1} (x - \mu_k) + \ln(\pi_k)$$
 
 是 $x$ 的二次函数。因此称为二次判别分析(Quadratic Discriminant Analysis, QDA)。
 
@@ -418,7 +418,7 @@ $$ \mathbf{\Sigma}_{\text{shrunk}} = (1 - \alpha) \hat{\mathbf{\Sigma}} + \alpha
 
 另外还需要注意区分矩阵平方根 `sqrtm` 与 Cholesky Decomposition。
 
-矩阵平方根指 $\mathbf{B} \mathbf{B} = \mathbf{B}^T  \mathbf{B}\mathbf{A}$，要求 $\mathbf{B}$ 是对称矩阵。
+矩阵平方根指 $\mathbf{B} \mathbf{B} = \mathbf{B}^T  \mathbf{B} = \mathbf{A}$，要求 $\mathbf{B}$ 是对称矩阵。
 
 Cholesky Decomposition 指 $\mathbf{L}^T \mathbf{L} = \mathbf{A}$，要求 $\mathbf{L}$ 是三角矩阵。
 
@@ -438,6 +438,232 @@ Cholesky Decomposition 指 $\mathbf{L}^T \mathbf{L} = \mathbf{A}$，要求 $\mat
 
 ## 4.4 Logistic regression
 
+逻辑回归希望用输入 $x$ 的线性组合建模属于 k 类的后验概率，并且要求所有概率之和为 1。
+
+以最后一个类（K 类）的后验概率 $\text{Pr} (G = K | X = x)$ 为比较基准，有：
+
+$$ \ln \frac{\text{Pr} (G = k | X = x)}{\text{Pr} (G = K | X = x)} = \beta_{k0} + \beta_{k1}^T x$$
+
+可以写为：
+
+$$
+\text{Pr} (G = k | X = x) = \begin{cases}
+ \dfrac{e^{\beta_{k0} + \beta_{k1}^Tx}}{1 + \sum_{l=1}^{K-1} e^{\beta_{l0} + \beta_{l1}^Tx}}, & k = 1, 2, ..., K-1 \\
+\dfrac{1}{1 + \sum_{l=1}^{K-1} e^{\beta_{l0} + \beta_{l1}^Tx}}, & k = K
+\end{cases}$$
+
+### 4.4.1 Fitting Logistic Regression Models
+
+对于第 k 类的某个样本 i，我们希望找到一组模型参数 $\theta$，使模型认为该样本属于 k 的概率（即 __正确分类概率__）尽量大。我们将这个概率计作：
+
+$$\text{Pr} (G = k | X = x) = p_{k} (x; \theta)$$
+
+则该优化问题是：
+
+$$\begin{align}
+\hat{\theta} = \mathop{\arg \max}_{\theta} ~ p_{k} (x; \theta)
+\end{align}$$
+
+对于所有样本，我们目标是令他们 __被正确分类的概率和最大__：
+
+$$ \ell (\theta) = \sum_{i=1}^N \ln p_{g_i} (x_i; \theta) $$
+
+为了简化这个问题，我们只考虑而 $K=2$ 即 __二分类__ 问题情况。此时样本要么属于 1 类要么属于 2 类。
+
+为了简单表示：
+
+$$p_{k} (x; \theta) = \begin{cases}
+p_1 (x; \theta), & k = 1 \\
+1 - p_1(x; \theta), & k = 2
+\end{cases}$$
+
+我们可以假设样本观测值 $y_i = 1$ 代表属于第 1 类，$y_i = 0$ 代表 __不属于__ 第 1 类（那么肯定属于第 2 类）。则
+
+$$p_{k} (x_i; \theta) = y_i p_1 (x_i; \theta) + (1-y_i)(1-p_1(x_i; \theta))$$
+
+则有：
+
+$$ \begin{align}
+\ell (\theta) &= \sum_{i=1}^N \ln p_{g_i} (x_i; \theta) \\
+ &= \sum_{i=1}^N {y_i \ln p_1 (x_i; \theta) + (1-y_i) \ln (1-p_1(x_i; \theta))} \\
+ &= \sum_{i=1}^N {\ln(1 - p_1(x_i; \theta)) + y_i \ln \frac{ p_1  (x_i; \theta)}{1 - p_1 (x_i; \theta)} } \\
+ &= \sum_{i=1}^N {\ln(1 - p_1(x_i; \theta)) + y_i \mathbf{\beta}^Tx_i } \\
+ &= \sum_{i=1}^N {y_i \mathbf{\beta}^Tx_i - \ln(1 + e^{\mathbf{\beta}^Tx_i}) }
+\end{align}$$
+
+其中 $\mathbf{\beta} = [ \beta_{10}, \beta_{11}, ... \beta_{1p} ]$，对应 $x = [1, x_1, x_2, ... x_p]$。
+
+求解这个优化问题可以令其对 $\beta$ 的导数为 0:
+
+$$ \frac{\partial \ell(\beta)}{\partial \beta} = \sum_{i=1}^N x_i(y_i - p_1(x_i; \beta)) = 0, $$
+
+为了求解 $\dfrac{\partial \ell(\beta)}{\partial \beta} = 0$，我们可以用凸优化中的 Newton-Raphson 法。即选取一个任意初始 $x_n$（不是初始解，因为要求的就是解），并取其切线与 x 轴交点 $x_{n+1}$：
+
+$$ \beta^{\text{new}} = \beta - (\frac{\partial^2 \ell(\beta)}{\partial \beta \partial \beta^T})^{-1} \frac{\partial \ell(\beta)}{\partial \beta}$$
+
+其中 $(p+1) \times (p+1)$ 维 Hessian 矩阵：
+
+$$\begin{align}
+\frac{\partial^2 \ell(\beta)}{\partial \beta \partial \beta^T} &= - \sum_{i=1}^N x_i \frac{\partial p_1(x_i; \beta)}{\partial \beta^T} \\
+&= - \sum_{i=1}^N x_i \dfrac{\partial \dfrac{e^{\beta^T x_i}}{1 + e^{\beta^T x_i}} }{\partial \beta^T} \\
+&= - \sum_{i=1}^N x_i \frac{x_i^T e^{\beta^T x_i}}{(1 + e^{\beta^T x_i})^2} \\
+&= -\sum_{i=1}^N x_i x_i^T p_1(x_i; \beta) (1 - p_1(x_i; \beta))
+\end{align}$$
+
+我们将他们写成矩阵形式：
+
+$$ \frac{\partial \ell(\beta)}{\partial \beta} = \mathbf{X}^T(\mathbf{y} - \mathbf{p})$$
+
+$$ \frac{\partial^2 \ell(\beta)}{\partial \beta \partial \beta^T} = \mathbf{X}^T \mathbf{W} \mathbf{X} $$
+
+其中 $\mathbf{X}$ 是 $N \times (p+1)$ 矩阵，$\mathbf{y} - \mathbf{p}$ 是 $N$ 维列向量，$\mathbf{W}$ 是 $N \times N$ 对角矩阵，第 i 个元素是 $p_1(x_i; \beta) (1 - p_1(x_i; \beta))$。
+
+带入 Newton-Raphson 公式：
+
+$$\begin{align}
+\beta^{\text{new}} &= \beta - (\frac{\partial^2 \ell(\beta)}{\partial \beta \partial \beta^T})^{-1} \frac{\partial \ell(\beta)}{\partial \beta} \\
+&= \beta + (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1} \mathbf{X}^T(\mathbf{y} - \mathbf{p}) \\
+&= (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1}\mathbf{X}^T \mathbf{W}(\mathbf{X}\beta + \mathbf{W}^{-1}(\mathbf{y} - \mathbf{p})) \\
+&= (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1}\mathbf{X}^T \mathbf{W}\mathbf{z}
+\end{align}$$
+
+这就是 __迭代更新__ 的计算公式。由于 $\mathbf{p}$ 和 $\mathbf{W}$ 都随 $\beta$ 变化，因此我们需要在每轮迭代重新计算他们的值。
+
+上式中，我们定义了：
+
+$$ \mathbf{z} = \mathbf{X}\beta + \mathbf{W}^{-1}(\mathbf{y} - \mathbf{p}) $$
+
+回想 __最小二乘法__ 的公式：
+
+$$ \hat{\beta} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y} $$
+
+可以发现两者非常相似，区别在于逻辑回归中多了一个权重对角矩阵 $\mathbf{W}$。因此这个算法也称为 __iteratively reweighted least squares__（重新加权迭代最小二乘法）。
+
+
+接下来我们还需要一个 $\beta$ 的 __初始值__。一般情况下可以选 $\beta = 0$。该算法 __不保证收敛__。
+
+
+### 例：乳腺癌诊断
+
+该案例通过 30 维特征来判断乳腺癌是恶性还是良性，是一个典型的 2 分类问题。
+```py
+import pandas as pd
+import numpy as np
+from sklearn import datasets, model_selection
+
+def load_sklearn_data(sk_data):
+    X = pd.DataFrame(sk_data.data, columns = sk_data.feature_names)
+    y = pd.Series(sk_data.target, name="target").apply(
+        lambda index: sk_data.target_names[index]).astype("category")
+    return X, y
+
+X, y = load_sklearn_data(datasets.load_breast_cancer())
+X_train, X_test, y_train, y_test = model_selection.train_test_split(
+    X, y, test_size=0.2)
+
+from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(solver="newton-cg").fit(X_train, y_train)
+accuracy_score(model.predict(X_test), y_test)
+```
+
+结果是 `0.9385964912280702`。我们再用自己实现的 LR 进行判断：
+
+```py
+def sigmoid(x, beta):
+    tmp = np.exp(x.dot(beta))
+    return tmp / (1 + tmp)
+
+class MyLogisticRegression:
+    def __init__(self, max_iter, tolerance = 0.01):
+        self.max_iter_ = max_iter
+        self.tolerance_ = tolerance
+        self.beta = None
+
+    def fit(self, train_X, train_y):
+        N, p = train_X.shape
+        X = train_X.to_numpy()
+        X = np.concatenate((np.atleast_2d(np.ones(N)).T,
+                            train_X.to_numpy()), axis=1)
+        self.beta = np.zeros(p+1)
+        beta = self.beta
+        for i in range(self.max_iter_):
+            prob = np.apply_along_axis(sigmoid, 1, X, beta)
+            W = np.diag(prob * (1 - prob))
+            z = X.dot(beta) + np.linalg.inv(W).dot(train_y.cat.codes - prob)
+            new_beta = np.linalg.inv(X.T @ W @ X) @ X.T @ W.dot(z)
+            beta = new_beta
+
+        self.beta = beta
+
+
+    def predict(self, test_X):
+        X = test_X.copy()
+        X.insert(0, "x_0", np.ones(test_X.shape[0]))
+        prob = X.apply(lambda row: sigmoid(row, self.beta), axis=1)
+        return prob.apply(lambda x: 1 if x >= 0.5 else 0)
+```
+
+根据公式写代码，注意 $\beta$ 的迭代更新即可。最大的难度是终止条件，因为迭代数次之后会遇到 Hessian 矩阵 $\mathbf{X}^T \mathbf{W} \mathbf{X}$ 成了奇异矩阵的问题。
+
+运行的结果表明分类正确率可以达到 `0.9473684210526315`。
+
+TODO: how to find a stopping criteria?
+
+
+### 4.4.5 Logistic Regression or LDA?
+
+在 4.3 中我们介绍了 LDA，回忆其判断某个样本属于 $k$ 还是 $l$ 的函数（当该式大于 0 时属于 $k$ 类）：
+
+$$\begin{align}
+\ln \frac{\text{Pr}(G=k | X=x)}{\text{Pr}(G=l | X=x)} &= \ln \frac{f_k(x) \pi_k}{ f_l(x) \pi_l} \\
+&= \ln \frac{\pi_k}{\pi_l} - \frac{1}{2}(\mu_k + \mu_l) \mathbf{\Sigma}^{-1} (\mu_k - \mu_l) + x^T \mathbf{\Sigma}^{-1} (\mu_k - \mu_l) \\
+&= \alpha_{k0} + \alpha_{k1}^T x
+\end{align}$$
+
+可以看出其形式与 logistic regression 一致：
+
+$$\ln \frac{\text{Pr}(G=k | X=x)}{\text{Pr}(G=l | X=x)} = \beta_{k0} + \beta_{k1}^T x$$
+
+那么他们俩是不是一样的方法呢？并不是。他们的主要区别是：
+
+- 假设不同。LDA 假设了 $x$ 服从正态分布，且各个类的协方差矩阵相同。LR 没有限定 $x$ 的分布。由于 LDA 假设了正态分布，它对于极端的 outlier 鲁棒性差（会影响分布函数)。
+
+- 优化目标不同。LDA 最大化 full log-likelihood，需要考虑 $x$ 的边缘分布函数。LR 最大化 conditional likelihood，不需要考虑 $x$ 的边缘分布函数。
+
+比较难理解的是第二点。
+
+首先，根据 Bayes 公式，在已知 B 发生时，A 的条件概率为：
+
+$$ P(A|B) = \frac{P( A \cap B ) }{P(B)} $$
+
+对于 LDA，需要最最大化的 __条件概率__ 是 __在已知 $X = x$ 时，样本类别 $G = k$ 类的概率__，即：
+
+$$\begin{align}
+\hat{k} &= \mathop{\arg \max}_{k} \text{Pr}(G=k | X=x) \\
+&= \mathop{\arg \max}_{k} \frac{f_k(x) \pi_k}{\sum_{l=1}^K f_l(x) \pi_l}
+\end{align}$$
+
+因此，我们需要知道 $x$ 的在每个类的密度函数 $f_i(x)$，并假设为正态分布，且协方差相等：
+
+$$ f_k(x) = \phi(x; \mu_k, \mathbf{\Sigma}) $$
+
+值得注意的是，我们此时有 $x$ 的边缘密度函数（marginal density）：
+
+$$ \text{Pr}(X) = \sum_{k=1}^K \phi(X; \mu_k, \mathbf{\Sigma}) \pi_k $$
+
+它也利用了假设中的分布，因此也 LDA 不可避免需要考虑 $x$ 的边缘密度函数。因此说他考虑 full log-likelihood。
+
+对于 LR，它的优化目标是使 __所有样本__ 正确分类的概率和最大：
+
+$$\begin{align}
+\hat{\theta} &= \mathop{\arg \max}_{\theta} ~ \ell (\theta) \\
+&= \mathop{\arg \max}_{\theta} ~ \sum_{i=1}^N \ln p_{g_i} (x_i; \theta) \\
+&= \sum_{i=1}^N y_i \mathbf{\beta}^Tx_i - \ln(1 + e^{\mathbf{\beta}^Tx_i})
+\end{align}$$
+
+其中不包含任何与边缘密度函数 $\text{Pr}(X)$ 相关的部分，也没有假设 $x$ 的分布。因此说它只考虑 conditional likelyhood。
 
 ## Reference
 
@@ -445,3 +671,5 @@ Cholesky Decomposition 指 $\mathbf{L}^T \mathbf{L} = \mathbf{A}$，要求 $\mat
 2. [Linear discriminant analysis, explained](https://yangxiaozhou.github.io/data/2019/10/02/linear-discriminant-analysis.html)
 3. [shrunk covariance](https://scikit-learn.org/stable/modules/covariance.html#shrunk-covariance)
 4. [between-class scatter matrix calculation](https://stats.stackexchange.com/questions/123490/what-is-the-correct-formula-for-between-class-scatter-matrix-in-lda)
+5. [逻辑回归](https://zhuanlan.zhihu.com/p/124757082)
+6. [Implementing logistic regression from scratch in Python](https://developer.ibm.com/articles/implementing-logistic-regression-from-scratch-in-python/)
