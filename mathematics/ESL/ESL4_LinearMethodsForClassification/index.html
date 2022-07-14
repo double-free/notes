@@ -1216,7 +1216,7 @@
 <p>矩阵平方根指 <span class="arithmatex">\(\mathbf{B} \mathbf{B} = \mathbf{B}^T  \mathbf{B} = \mathbf{A}\)</span>，要求 <span class="arithmatex">\(\mathbf{B}\)</span> 是对称矩阵。</p>
 <p>Cholesky Decomposition 指 <span class="arithmatex">\(\mathbf{L}^T \mathbf{L} = \mathbf{A}\)</span>，要求 <span class="arithmatex">\(\mathbf{L}\)</span> 是三角矩阵。</p>
 <p>使用自己实现的 LDA 得到与 sklearn 实现类似的结果：</p>
-<p><img alt="my lda" src="../images/4/sklearn_lda.png" /></p>
+<p><img alt="my lda" src="../images/4/my_lda.png" /></p>
 <p>可以看出，在降到 2 维后，LDA 还是能够清楚区分出数字 0, 1, 2, 3, 4, 6，但是存在一些数字的类别重叠在一起的情况。此时可以 <strong>增加维度</strong> <span class="arithmatex">\(L\)</span> 解决。</p>
 <p>下面是第3、4 维：</p>
 <p><img alt="extra dimension lda" src="../images/4/extra_dimension_lda.png" /></p>
