@@ -638,24 +638,31 @@ $$\ln \frac{\text{Pr}(G=k | X=x)}{\text{Pr}(G=l | X=x)} = \beta_{k0} + \beta_{k1
 
 $$ P(A|B) = \frac{P( A \cap B ) }{P(B)} $$
 
-对于 LDA，需要最最大化的 __条件概率__ 是 __在已知 $X = x$ 时，样本类别 $G = k$ 类的概率__，即：
+因此对于分类问题，__条件概率(conditional likelihood)__ 是 __在已知 $X = x$ 时，样本类别 $G = k$ 类的概率__。它与 __全概率(full likelihood)__ 之间存在关系：
 
 $$\begin{align}
-\hat{k} &= \mathop{\arg \max}_{k} \text{Pr}(G=k | X=x) \\
-&= \mathop{\arg \max}_{k} \frac{f_k(x) \pi_k}{\sum_{l=1}^K f_l(x) \pi_l}
+\text{Pr}(G=k | X=x) &= \frac{\text{Pr}(X, G=k)}{\text{Pr}(X)} \\
+&= \frac{\text{Pr}(X, G=k)}{\sum_{l=1}^K \text{Pr}(X, G=l)} \\
 \end{align}$$
 
-因此，我们需要知道 $x$ 的在每个类的密度函数 $f_i(x)$，并假设为正态分布，且协方差相等：
+LDA 的目标是找到一个类别 $k$ 使得后验概率最大，即：
 
-$$ f_k(x) = \phi(x; \mu_k, \mathbf{\Sigma}) $$
+$$\begin{align}
+\hat{k} &= \mathop{\arg \max}_{k}  \text{Pr}(G=k | X=x) \\
+&= \mathop{\arg \max}_{k}  \frac{\text{Pr}(X, G=k)}{\sum_{l=1}^K \text{Pr}(X, G=l)}
+\end{align}$$
 
-值得注意的是，我们此时有 $x$ 的边缘密度函数（marginal density）：
+LDA 选择 __对全概率建模__，需要知道 $x$ 的在每个类的密度函数 $f_i(x)$，LDA 假设其为正态分布，且协方差相等。全概率为：
 
-$$ \text{Pr}(X) = \sum_{k=1}^K \phi(X; \mu_k, \mathbf{\Sigma}) \pi_k $$
+$$ \text{Pr}(X, G=k) = f_k(x) \pi_k = \phi(x; \mu_k, \mathbf{\Sigma}) \pi_k $$
 
-它也利用了假设中的分布，因此也 LDA 不可避免需要考虑 $x$ 的边缘密度函数。因此说他考虑 full log-likelihood。
+所以说它考虑的是 full log-likelihood。
 
-对于 LR，它的优化目标是使 __所有样本__ 正确分类的概率和最大：
+对于 LR，它直接 __对条件概率建模__。即假设存在一组 $\beta$ 能够使条件概率的 log ratio 和 $x$ 有如下线性关系：
+
+$$\ln \frac{\text{Pr}(G=k | X=x)}{\text{Pr}(G=l | X=x)} = \beta_{k0} + \beta_{k1}^T x$$
+
+并且，这一组 $\beta$ 使 __所有样本正确分类的概率和__ 最大：
 
 $$\begin{align}
 \hat{\theta} &= \mathop{\arg \max}_{\theta} ~ \ell (\theta) \\
@@ -663,7 +670,7 @@ $$\begin{align}
 &= \sum_{i=1}^N y_i \mathbf{\beta}^Tx_i - \ln(1 + e^{\mathbf{\beta}^Tx_i})
 \end{align}$$
 
-其中不包含任何与边缘密度函数 $\text{Pr}(X)$ 相关的部分，也没有假设 $x$ 的分布。因此说它只考虑 conditional likelyhood。
+其中不包含任何与边缘密度函数 $\text{Pr}(X)$ 相关的部分，也没有假设 $x$ 的分布。因此说它只考虑 conditional likelihood。
 
 ## Reference
 
