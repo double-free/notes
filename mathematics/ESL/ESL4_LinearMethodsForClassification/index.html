@@ -1366,23 +1366,28 @@ p_1 (x; \theta), &amp; k = 1 \\
 <p>比较难理解的是第二点。</p>
 <p>首先，根据 Bayes 公式，在已知 B 发生时，A 的条件概率为：</p>
 <div class="arithmatex">\[ P(A|B) = \frac{P( A \cap B ) }{P(B)} \]</div>
-<p>对于 LDA，需要最最大化的 <strong>条件概率</strong> 是 <strong>在已知 <span class="arithmatex">\(X = x\)</span> 时，样本类别 <span class="arithmatex">\(G = k\)</span> 类的概率</strong>，即：</p>
+<p>因此对于分类问题，<strong>条件概率(conditional likelihood)</strong> 是 <strong>在已知 <span class="arithmatex">\(X = x\)</span> 时，样本类别 <span class="arithmatex">\(G = k\)</span> 类的概率</strong>。它与 <strong>全概率(full likelihood)</strong> 之间存在关系：</p>
 <div class="arithmatex">\[\begin{align}
-\hat{k} &amp;= \mathop{\arg \max}_{k} \text{Pr}(G=k | X=x) \\
-&amp;= \mathop{\arg \max}_{k} \frac{f_k(x) \pi_k}{\sum_{l=1}^K f_l(x) \pi_l}
+\text{Pr}(G=k | X=x) &amp;= \frac{\text{Pr}(X, G=k)}{\text{Pr}(X)} \\
+&amp;= \frac{\text{Pr}(X, G=k)}{\sum_{l=1}^K \text{Pr}(X, G=l)} \\
 \end{align}\]</div>
-<p>因此，我们需要知道 <span class="arithmatex">\(x\)</span> 的在每个类的密度函数 <span class="arithmatex">\(f_i(x)\)</span>，并假设为正态分布，且协方差相等：</p>
-<div class="arithmatex">\[ f_k(x) = \phi(x; \mu_k, \mathbf{\Sigma}) \]</div>
-<p>值得注意的是，我们此时有 <span class="arithmatex">\(x\)</span> 的边缘密度函数（marginal density）：</p>
-<div class="arithmatex">\[ \text{Pr}(X) = \sum_{k=1}^K \phi(X; \mu_k, \mathbf{\Sigma}) \pi_k \]</div>
-<p>它也利用了假设中的分布，因此也 LDA 不可避免需要考虑 <span class="arithmatex">\(x\)</span> 的边缘密度函数。因此说他考虑 full log-likelihood。</p>
-<p>对于 LR，它的优化目标是使 <strong>所有样本</strong> 正确分类的概率和最大：</p>
+<p>LDA 的目标是找到一个类别 <span class="arithmatex">\(k\)</span> 使得后验概率最大，即：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{k} &amp;= \mathop{\arg \max}_{k}  \text{Pr}(G=k | X=x) \\
+&amp;= \mathop{\arg \max}_{k}  \frac{\text{Pr}(X, G=k)}{\sum_{l=1}^K \text{Pr}(X, G=l)}
+\end{align}\]</div>
+<p>LDA 选择 <strong>对全概率建模</strong>，需要知道 <span class="arithmatex">\(x\)</span> 的在每个类的密度函数 <span class="arithmatex">\(f_i(x)\)</span>，LDA 假设其为正态分布，且协方差相等。全概率为：</p>
+<div class="arithmatex">\[ \text{Pr}(X, G=k) = f_k(x) \pi_k = \phi(x; \mu_k, \mathbf{\Sigma}) \pi_k \]</div>
+<p>所以说它考虑的是 full log-likelihood。</p>
+<p>对于 LR，它直接 <strong>对条件概率建模</strong>。即假设存在一组 <span class="arithmatex">\(\beta\)</span> 能够使条件概率的 log ratio 和 <span class="arithmatex">\(x\)</span> 有如下线性关系：</p>
+<div class="arithmatex">\[\ln \frac{\text{Pr}(G=k | X=x)}{\text{Pr}(G=l | X=x)} = \beta_{k0} + \beta_{k1}^T x\]</div>
+<p>并且，这一组 <span class="arithmatex">\(\beta\)</span> 使 <strong>所有样本正确分类的概率和</strong> 最大：</p>
 <div class="arithmatex">\[\begin{align}
 \hat{\theta} &amp;= \mathop{\arg \max}_{\theta} ~ \ell (\theta) \\
 &amp;= \mathop{\arg \max}_{\theta} ~ \sum_{i=1}^N \ln p_{g_i} (x_i; \theta) \\
 &amp;= \sum_{i=1}^N y_i \mathbf{\beta}^Tx_i - \ln(1 + e^{\mathbf{\beta}^Tx_i})
 \end{align}\]</div>
-<p>其中不包含任何与边缘密度函数 <span class="arithmatex">\(\text{Pr}(X)\)</span> 相关的部分，也没有假设 <span class="arithmatex">\(x\)</span> 的分布。因此说它只考虑 conditional likelyhood。</p>
+<p>其中不包含任何与边缘密度函数 <span class="arithmatex">\(\text{Pr}(X)\)</span> 相关的部分，也没有假设 <span class="arithmatex">\(x\)</span> 的分布。因此说它只考虑 conditional likelihood。</p>
 <h2 id="reference">Reference</h2>
 <ol>
 <li><a href="https://stats.stackexchange.com/questions/475458/masking-in-linear-regression-for-multiple-classes">masking in linear regression for multiple classes</a></li>
