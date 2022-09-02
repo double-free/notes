@@ -10,19 +10,19 @@
         <meta name="author" content="Ye">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
     
     
       
-        <title>My Notes</title>
+        <title>Light GBM 原理 - My Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.c382b1dc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.cc9b2e1e.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -37,7 +37,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -61,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#yes-notes" class="md-skip">
+        <a href="#light-gbm" class="md-skip">
           Skip to content
         </a>
       
@@ -75,7 +75,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ye's Notes
+              Light GBM 原理
             
           </span>
         </div>
@@ -161,7 +161,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -178,66 +178,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Ye's Notes
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
         Ye's Notes
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#trading" class="md-nav__link">
-    Trading
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#computer-science" class="md-nav__link">
-    Computer Science
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mathematics" class="md-nav__link">
-    Mathematics
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -248,12 +193,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       
       
@@ -302,7 +249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="computer-science/algorithm/swiss_map/" class="md-nav__link">
+      <a href="../../algorithm/swiss_map/" class="md-nav__link">
         Hash Table in Rust: SwissTable
       </a>
     </li>
@@ -321,12 +268,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
       
       
       
@@ -349,7 +298,7 @@
   
   
     <li class="md-nav__item">
-      <a href="computer-science/lgbm/LgbmL1AndL2/" class="md-nav__link">
+      <a href="../LgbmL1AndL2/" class="md-nav__link">
         LightGBM 参数中的 lambda_l1 和 lambda_l2
       </a>
     </li>
@@ -363,7 +312,7 @@
   
   
     <li class="md-nav__item">
-      <a href="computer-science/lgbm/LgbmVol1/" class="md-nav__link">
+      <a href="../LgbmVol1/" class="md-nav__link">
         LightGBM 实战：波动率预测(1)
       </a>
     </li>
@@ -377,7 +326,7 @@
   
   
     <li class="md-nav__item">
-      <a href="computer-science/lgbm/LgbmVol2/" class="md-nav__link">
+      <a href="../LgbmVol2/" class="md-nav__link">
         LightGBM 实战：波动率预测(2)
       </a>
     </li>
@@ -389,11 +338,106 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="computer-science/lgbm/LightGBM/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Light GBM 原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Light GBM 原理
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 论文要点
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 论文要点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 直方图算法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 基于梯度的单边采样
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    1.3 互斥特征捆绑
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 互斥特征捆绑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131" class="md-nav__link">
+    1.3.1 选取互斥特征
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132" class="md-nav__link">
+    1.3.2 捆绑互斥特征
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 实例说明
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -438,7 +482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="computer-science/memory/CPU_Caches/" class="md-nav__link">
+      <a href="../../memory/CPU_Caches/" class="md-nav__link">
         Memory3: CPU Caches
       </a>
     </li>
@@ -519,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/CFR/CfrAndKuhnPoker/" class="md-nav__link">
+      <a href="../../../mathematics/CFR/CfrAndKuhnPoker/" class="md-nav__link">
         Counterfactual Regret Minimization and Kuhn Poker
       </a>
     </li>
@@ -533,7 +577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/CFR/MonteCarloCfr/" class="md-nav__link">
+      <a href="../../../mathematics/CFR/MonteCarloCfr/" class="md-nav__link">
         Monte Carlo CFR
       </a>
     </li>
@@ -547,7 +591,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
+      <a href="../../../mathematics/CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
         Regret Matching and Blotto Game
       </a>
     </li>
@@ -594,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
+      <a href="../../../mathematics/ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
         ESL 3: Linear Methods for Regression
       </a>
     </li>
@@ -608,7 +652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/ESL/ESL4_LinearMethodsForClassification/" class="md-nav__link">
+      <a href="../../../mathematics/ESL/ESL4_LinearMethodsForClassification/" class="md-nav__link">
         ESL 4: Linear Methods for Classification
       </a>
     </li>
@@ -622,7 +666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/ESL/ESL6_KernelSmoothingMethods/" class="md-nav__link">
+      <a href="../../../mathematics/ESL/ESL6_KernelSmoothingMethods/" class="md-nav__link">
         ESL6: Kernel Smoothing Methods
       </a>
     </li>
@@ -669,7 +713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/matrix/MatrixCalculus/" class="md-nav__link">
+      <a href="../../../mathematics/matrix/MatrixCalculus/" class="md-nav__link">
         向量和矩阵求导
       </a>
     </li>
@@ -716,7 +760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/probability/RigidBalls/" class="md-nav__link">
+      <a href="../../../mathematics/probability/RigidBalls/" class="md-nav__link">
         小球碰撞问题中的统计学
       </a>
     </li>
@@ -730,7 +774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mathematics/probability/martingale/" class="md-nav__link">
+      <a href="../../../mathematics/probability/martingale/" class="md-nav__link">
         Martingale
       </a>
     </li>
@@ -811,7 +855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="trading/option/BSM/" class="md-nav__link">
+      <a href="../../../trading/option/BSM/" class="md-nav__link">
         The Black-Scholes-Merton model
       </a>
     </li>
@@ -825,7 +869,7 @@
   
   
     <li class="md-nav__item">
-      <a href="trading/option/BinomialTree/" class="md-nav__link">
+      <a href="../../../trading/option/BinomialTree/" class="md-nav__link">
         Binomial Trees
       </a>
     </li>
@@ -839,7 +883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="trading/option/Greeks/" class="md-nav__link">
+      <a href="../../../trading/option/Greeks/" class="md-nav__link">
         The Greek letters
       </a>
     </li>
@@ -853,7 +897,7 @@
   
   
     <li class="md-nav__item">
-      <a href="trading/option/Ito/" class="md-nav__link">
+      <a href="../../../trading/option/Ito/" class="md-nav__link">
         Wiener processes and Ito’s lemma
       </a>
     </li>
@@ -867,7 +911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="trading/option/Risk/" class="md-nav__link">
+      <a href="../../../trading/option/Risk/" class="md-nav__link">
         Option Volatility and Pricing - Risks
       </a>
     </li>
@@ -881,7 +925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="trading/option/VolatilitySmile/" class="md-nav__link">
+      <a href="../../../trading/option/VolatilitySmile/" class="md-nav__link">
         Volatility Smile
       </a>
     </li>
@@ -928,7 +972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="trading/portfolio/MarkowitzPO/" class="md-nav__link">
+      <a href="../../../trading/portfolio/MarkowitzPO/" class="md-nav__link">
         Portfolio Optimization with Known Parameters
       </a>
     </li>
@@ -976,22 +1020,62 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#trading" class="md-nav__link">
-    Trading
+  <a href="#1" class="md-nav__link">
+    1. 论文要点
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 论文要点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 直方图算法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 基于梯度的单边采样
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#computer-science" class="md-nav__link">
-    Computer Science
+  <a href="#13" class="md-nav__link">
+    1.3 互斥特征捆绑
   </a>
+  
+    <nav class="md-nav" aria-label="1.3 互斥特征捆绑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131" class="md-nav__link">
+    1.3.1 选取互斥特征
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132" class="md-nav__link">
+    1.3.2 捆绑互斥特征
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#mathematics" class="md-nav__link">
-    Mathematics
+  <a href="#2" class="md-nav__link">
+    2. 实例说明
   </a>
   
 </li>
@@ -1010,27 +1094,85 @@
                 
 
 
-<h1 id="yes-notes">Ye's Notes</h1>
-<p>Notes for my random readings. There's no explicit goal, but I'd love to keep my brain busy.</p>
-<p>The notes can be roughly split to 3 topics, they are related to my work to varying degrees:</p>
-<ul>
-<li>
-<p>Trading</p>
-</li>
-<li>
-<p>Computer science</p>
-</li>
-<li>
-<p>Mathematics</p>
-</li>
-</ul>
-<p>Again, I'm not an expert in any of these areas, sorry for any error or incompleteness, and appreciate if you can point them out.</p>
-<h2 id="trading">Trading</h2>
-<p>WIP</p>
-<h2 id="computer-science">Computer Science</h2>
-<p>WIP</p>
-<h2 id="mathematics">Mathematics</h2>
-<p>WIP</p>
+<h1 id="light-gbm">Light GBM 原理</h1>
+<p>我们在 <a href="https://www.jianshu.com/p/a9274dfb0007">Boosting Trees</a> 中介绍了 Gradient Boosting Decision Tree (GBDT) 的原理。Light GBM 是 GBDT 的一个衍生方法。相比其他的衍生方法（如 XGBoost），它最明显的优势就是训练速度快，这也是它被命名为 "light" 的原因。它在保持训练精度的前提下，将传统 GBDT 的训练速度提高了 20 倍。</p>
+<h2 id="1">1. 论文要点</h2>
+<p>LightGBM 的目的是缩短训练时间，而训练时间主要取决于样本数量和特征维度。</p>
+<p>它使用了三种重要的优化：
+1. （非原创）在训练树的时候，使用直方图算法来寻找最佳划分节点
+2. （原创）使用基于梯度的单边采样(GOSS)降低样本数量
+3. （原创）使用互斥特征捆绑 (EFB)降低特征维度</p>
+<h3 id="11">1.1 直方图算法</h3>
+<p>在 GBDT 的训练中，每次迭代，我们都会拟合负梯度来生成一个决策树，这也是 GBDT 训练中最耗时的部分。其中，计算量最大的部分就是寻找最佳划分节点。</p>
+<p>最简单直接的方法就是预排序法。即，先将所有样本以某个特征为比较对象排序，再依次遍历寻找最优划分点。这种虽然能找到最优点， 但是缺点很明显：</p>
+<ol>
+<li>效率低下，时间复杂度是 <span class="arithmatex">\(O(\#data \times \#feature)\)</span></li>
+<li>对噪声敏感</li>
+</ol>
+<p>LightGBM 选择了直方图法。即，先将数据划分到多个 bin 中，用 bin 的值覆盖原始值进行训练。它的优势是：</p>
+<ol>
+<li>将时间复杂度降低到了 <span class="arithmatex">\(O(\#bin \times \#feature)\)</span>。由于 bin 的数量肯定远小于样本的数量，因此优化很明显</li>
+<li>不需要对样本数据进行排序</li>
+<li>增强了对数据噪声的鲁棒性</li>
+</ol>
+<p>当然，它也有缺点，但是都可以接受：</p>
+<ol>
+<li>找到的划分点不一定是最优的</li>
+<li>由于相似的数据被划分到了一个 bin 中，忽略了一些细节特征</li>
+<li>bin 的数量选择过少可能导致欠拟合</li>
+</ol>
+<p>直方图算法并不是 LightGBM 的原创：</p>
+<blockquote>
+<p>Scikit-learn和gbm in R演变算法使用了pre-sorted algorithm算法，pGBRT算法是使用了histogram-based algorithm，而XGBoost两者都支持</p>
+</blockquote>
+<p><img alt="直方图算法" src="../images/algo1.png" /></p>
+<h2 id="12">1.2 基于梯度的单边采样</h2>
+<p>基于梯度的单边采样(Gradient-based One Side Sample, GOSS)是 LightGBM 论文中提出的一大创新点，用于减少训练样本，从而提高效率。</p>
+<p>在 AdaBoost 中（见我之前的文章 <a href="https://www.jianshu.com/p/ce54ba0d4e58">ESL 10.1 Boosting Methods</a>），每个样本都被赋予了权重，因此可以简单地丢弃掉权重小的样本。然而，GBDT 中的样本并没有权重这一概念。因此，文中提出了利用梯度来筛选样本的思路。如果一个样本的梯度较小，说明它已经是充分训练过的了，可以丢弃。</p>
+<p>但是，这个方法的问题在于丢弃样本会改变数据的分布，影响模型精度。为了避免这个问题，LightGBM 保留所有梯度较大的样本，同时，对梯度较小的样本进行__随机采样__，因此称为“单边采样”。</p>
+<p><img alt="GOSS 算法" src="../images/algo2.png" /></p>
+<p>其中输入：
+- <span class="arithmatex">\(a\)</span> 是“较大梯度样本”的比例，top <span class="arithmatex">\(a\)</span> 的样本都被全部选取
+- <span class="arithmatex">\(b\)</span> 是“较小梯度样本”采样后的比例（相对于所有样本）</p>
+<p>因此必然有 <span class="arithmatex">\(a + b &lt; 1\)</span>，且 $ \text{fact} = (1-a) / b &gt; 1$。</p>
+<p>核心思想是：
+1. 将样本梯度（残差）由高到低排序
+2. 选取前 <span class="arithmatex">\(a * 100 \%\)</span> 的样本为集合 A
+3. 从后 <span class="arithmatex">\((1-a) * 100 \%\)</span> 的样本中选取 $ b * 100\% $ 的样本为集合 B
+4. 将被选取的样本（A + B）用于训练
+5. 在更新模型时，需要对集合 B 进行补偿，乘以 <span class="arithmatex">\((1-a)/b\)</span></p>
+<h2 id="13">1.3 互斥特征捆绑</h2>
+<p>实际应用中的特征之间有时是存在互斥关系的，即，他们不会同时有值。我们可以将这一类特征“捆绑”成一个特征。这样我们可以把时间复杂度由 <span class="arithmatex">\(O(\#data \times \#feature)\)</span> 降低到 <span class="arithmatex">\(O(\#data \times \#bundles)\)</span>。为了能捆绑更多的特征，LightGBM 还引入了一个”冲突率“<span class="arithmatex">\(\gamma\)</span>，即两个特征同时不为 0 的比例。我们通过调节 <span class="arithmatex">\(\gamma\)</span> 来使部分几乎互斥的特征也可以捆绑成一个。</p>
+<p>那么我们就需要处理两个问题：</p>
+<ol>
+<li>如何找到互斥特征</li>
+<li>如何捆绑</li>
+</ol>
+<h3 id="131">1.3.1 选取互斥特征</h3>
+<p>寻找互斥特征的问题本质上是一个图着色问题。假设把每个特征看作图的一个顶点，若两个特征互斥，那他们之间没有路径。这样就可以构造一个无向图。图着色问题就是使图的相邻顶点颜色不同，即非互斥的特征不在同一个 bundle 里。</p>
+<p>具体来说，算法为：</p>
+<ol>
+<li>构造一个有权重的无向图，以特征为顶点，每条边的权重是特征之间的冲突率 <span class="arithmatex">\(\gamma\)</span>。</li>
+<li>将特征按他们的度（degree，即边的数量）降序排列</li>
+<li>检查每个特征，若 <span class="arithmatex">\(\gamma\)</span> 小于阈值，则将其加入现有的 bundle，否则创建一个新的 bundle。</li>
+</ol>
+<p>时间复杂度为 <span class="arithmatex">\(O(\# feature^2)\)</span>，而且只用运行一次，完全可以接受。</p>
+<p><img alt="图着色贪婪算法" src="../images/algo3.png" /></p>
+<h3 id="132">1.3.2 捆绑互斥特征</h3>
+<p>我们在 1.3.1 中已经将特征组合成了多个 bundle，现在需要考虑如何将同一个 bundle 内的特征在不丢失信息的情况下转为一个特征。</p>
+<p>一个简单直接的方法就是附加一个偏移量。例如，我们已知 A 特征取值范围是 [0, 10)，B 特征取值范围是 [0, 20)。那么我们可以构建一个合并的特征，取值范围是 [0, 30)，对于所有的 B 特征附加一个偏移量 10。这样就将 B 特征从 [0,20) 映射到了 [10, 30)。这个合并的特征将替代 A 和 B 两个特征进行训练。</p>
+<p><img alt="特征捆绑算法" src="../images/algo4.png" /></p>
+<p>假设互斥特征空间 F 中有 n 个特征 f。由于我们采用的是 bin，不同特征 f 可能有不同数量的 bin。他们捆绑过后的合并特征 bin 的个数应该等于所有特征 bin 的个数之和。</p>
+<p>对于每个样本，假设它原先属于第 j 个特征的第 i 个 bin，则融合后它应该属于第$\sum_{k=0}^{j-1} # bin_k + i $ 个 bin。即附加前 j-1 个特征的 bin 数量之和的偏移。</p>
+<h2 id="2">2. 实例说明</h2>
+<p>计划用这个比赛的数据 <a href="https://www.kaggle.com/c/optiver-realized-volatility-prediction">Optiver Realized Volatility Prediction</a>，在另一篇更新。</p>
+<p>（已更新，见 <a href="https://www.jianshu.com/p/b0988fcaa842">LightGBM 实战：波动率预测(1)</a> ）</p>
+<h1 id="reference">Reference</h1>
+<ol>
+<li><a href="https://proceedings.neurips.cc/paper/2017/file/6449f44a102fde848669bdd9eb6b76fa-Paper.pdf">LightGBM 论文</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzI5NDMzMjY1MA==&amp;mid=2247485433&amp;idx=1&amp;sn=6c65f76ed251ada52e22b875d43c1053&amp;scene=21#wechat_redirect">深入理解LightGBM</a></li>
+<li><a href="https://mp.weixin.qq.com/s/XxFHmxV4_iDq8ksFuZM02w">LightGBM 源码阅读</a></li>
+</ol>
 
               
             </article>
@@ -1043,15 +1185,30 @@
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
+        
+        <a href="../LgbmVol2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: LightGBM 实战：波动率预测(2)" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              LightGBM 实战：波动率预测(2)
+            </div>
+          </div>
+        </a>
+      
       
         
-        <a href="computer-science/algorithm/swiss_map/" class="md-footer__link md-footer__link--next" aria-label="Next: Hash Table in Rust: SwissTable" rel="next">
+        <a href="../../memory/CPU_Caches/" class="md-footer__link md-footer__link--next" aria-label="Next: Memory3: CPU Caches" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Hash Table in Rust: SwissTable
+              Memory3: CPU Caches
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -1081,12 +1238,12 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.a6c66575.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
       
-        <script src="javascripts/mathjax.js"></script>
+        <script src="../../../javascripts/mathjax.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       

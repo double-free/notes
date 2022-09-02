@@ -1,0 +1,1739 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ye">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>LightGBM 实战：波动率预测(1) - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lightgbm-1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LightGBM 实战：波动率预测(1)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Ye's Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Computer science
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Computer science" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Computer science
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          Algorithm
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Algorithm" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Algorithm
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../algorithm/swiss_map/" class="md-nav__link">
+        Hash Table in Rust: SwissTable
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Lgbm
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lgbm" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lgbm
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LgbmL1AndL2/" class="md-nav__link">
+        LightGBM 参数中的 lambda_l1 和 lambda_l2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          LightGBM 实战：波动率预测(1)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        LightGBM 实战：波动率预测(1)
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-data-overview" class="md-nav__link">
+    1. Data overview
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Data overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-order-book" class="md-nav__link">
+    1.1 Order book
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-trade" class="md-nav__link">
+    1.2 Trade
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-benchmark" class="md-nav__link">
+    2. Benchmark
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Benchmark">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-benchmark-code" class="md-nav__link">
+    2.1 Benchmark code
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Benchmark code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-volatility-calculation" class="md-nav__link">
+    2.1.1 Volatility calculation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-rmspe-calculation" class="md-nav__link">
+    2.1.2 RMSPE calculation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-lightgbm-volatility" class="md-nav__link">
+    3. 用 LightGBM 预测 volatility
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 用 LightGBM 预测 volatility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 特征提取
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 特征提取">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311-book-features" class="md-nav__link">
+    3.1.1 book features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-trade-features" class="md-nav__link">
+    3.1.2 trade features
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-lightgbm" class="md-nav__link">
+    3.2 应用 LightGBM
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 应用 LightGBM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-lightgbm" class="md-nav__link">
+    3.2.1 LightGBM 步骤
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    3.2.2 特征重要性
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2.2 特征重要性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3221" class="md-nav__link">
+    3.2.2.1 特征重要性的计算
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#323" class="md-nav__link">
+    3.2.3 预测结果
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-lightgbm" class="md-nav__link">
+    4. LightGBM 参数调整及特征优化
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-appendix" class="md-nav__link">
+    5. Appendix
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-reference" class="md-nav__link">
+    6. Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LgbmVol2/" class="md-nav__link">
+        LightGBM 实战：波动率预测(2)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LightGBM/" class="md-nav__link">
+        Light GBM 原理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Memory
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Memory" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Memory
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../memory/CPU_Caches/" class="md-nav__link">
+        Memory3: CPU Caches
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Mathematics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mathematics" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Mathematics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          CFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CFR" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          CFR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/CfrAndKuhnPoker/" class="md-nav__link">
+        Counterfactual Regret Minimization and Kuhn Poker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/MonteCarloCfr/" class="md-nav__link">
+        Monte Carlo CFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
+        Regret Matching and Blotto Game
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          ESL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ESL" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          ESL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL3_LinearMethodsForRegression/" class="md-nav__link">
+        ESL 3: Linear Methods for Regression
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL4_LinearMethodsForClassification/" class="md-nav__link">
+        ESL 4: Linear Methods for Classification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/ESL/ESL6_KernelSmoothingMethods/" class="md-nav__link">
+        ESL6: Kernel Smoothing Methods
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Matrix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Matrix" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Matrix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/matrix/MatrixCalculus/" class="md-nav__link">
+        向量和矩阵求导
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          Probability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Probability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Probability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/RigidBalls/" class="md-nav__link">
+        小球碰撞问题中的统计学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mathematics/probability/martingale/" class="md-nav__link">
+        Martingale
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Trading
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Trading" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Trading
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Option
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Option" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Option
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/BSM/" class="md-nav__link">
+        The Black-Scholes-Merton model
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/BinomialTree/" class="md-nav__link">
+        Binomial Trees
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/Greeks/" class="md-nav__link">
+        The Greek letters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/Ito/" class="md-nav__link">
+        Wiener processes and Ito’s lemma
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/Risk/" class="md-nav__link">
+        Option Volatility and Pricing - Risks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/VolatilitySmile/" class="md-nav__link">
+        Volatility Smile
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          Portfolio
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Portfolio" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Portfolio
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/portfolio/MarkowitzPO/" class="md-nav__link">
+        Portfolio Optimization with Known Parameters
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-data-overview" class="md-nav__link">
+    1. Data overview
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Data overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-order-book" class="md-nav__link">
+    1.1 Order book
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-trade" class="md-nav__link">
+    1.2 Trade
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-benchmark" class="md-nav__link">
+    2. Benchmark
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Benchmark">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-benchmark-code" class="md-nav__link">
+    2.1 Benchmark code
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Benchmark code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-volatility-calculation" class="md-nav__link">
+    2.1.1 Volatility calculation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-rmspe-calculation" class="md-nav__link">
+    2.1.2 RMSPE calculation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-lightgbm-volatility" class="md-nav__link">
+    3. 用 LightGBM 预测 volatility
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 用 LightGBM 预测 volatility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 特征提取
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 特征提取">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311-book-features" class="md-nav__link">
+    3.1.1 book features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-trade-features" class="md-nav__link">
+    3.1.2 trade features
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-lightgbm" class="md-nav__link">
+    3.2 应用 LightGBM
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 应用 LightGBM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-lightgbm" class="md-nav__link">
+    3.2.1 LightGBM 步骤
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    3.2.2 特征重要性
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2.2 特征重要性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3221" class="md-nav__link">
+    3.2.2.1 特征重要性的计算
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#323" class="md-nav__link">
+    3.2.3 预测结果
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-lightgbm" class="md-nav__link">
+    4. LightGBM 参数调整及特征优化
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-appendix" class="md-nav__link">
+    5. Appendix
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-reference" class="md-nav__link">
+    6. Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="lightgbm-1">LightGBM 实战：波动率预测(1)</h1>
+<p>这是 Kaggle 上的一个比赛：<a href="https://www.kaggle.com/c/optiver-realized-volatility-prediction">Optiver Realized Volatility Prediction</a>。
+目的是通过股票的历史 order book 和 trade 来预测它接下来十分钟的volatility。基本金融概念就不赘述了。</p>
+<h2 id="1-data-overview">1. Data overview</h2>
+<p>该比赛给出的训练数据包含 112 支股票。每支股票以 10 分钟为采样时间（time_id），记录了 order book 和 trade 的详细数据。</p>
+<h3 id="11-order-book">1.1 Order book</h3>
+<p><img alt="order book" src="../images/orderbook.png" /></p>
+<ul>
+<li>time_id: 每十分钟为一个 bucket，time_id 也是 bucket 的 id</li>
+<li>seconds_in_bucket: 10分钟=600秒，每个 bucket 重置</li>
+<li>price: 归一化后的价格，也称为回报率。以第一条记录为基准值 1.00</li>
+<li>size: 在这个价格上面报价的订单数量</li>
+</ul>
+<h3 id="12-trade">1.2 Trade</h3>
+<p><img alt="trade" src="../images/trade.png" /></p>
+<h2 id="2-benchmark">2. Benchmark</h2>
+<p>为了衡量我们预测的效果，需要一个简单的预测作为 benchmark，低于这个 benchmark 说明模型是无效的。</p>
+<p>最简单的预测就是直接用过去 10 分钟的 volatility 来预测未来 10 分钟
+的。如果我们选取均方根百分比误差（RMSPE）作为评分标准，则其误差为 0.341，即34.10%。</p>
+<p>RMSPE 计算方式为：
+<span class="arithmatex">\(<span class="arithmatex">\(\text{RMSPE} = \sqrt{ \frac{ 1 }{ N } \sum_{i=1}^N (\frac{y_i - \hat{y}_i}{y_i})^2 }\)</span>\)</span></p>
+<h3 id="21-benchmark-code">2.1 Benchmark code</h3>
+<p>可以用以下代码计算 benchmark，计算 volatility 和 RMSPE 的方法与之后 LightGBM 中是一致的。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">vol</span> <span class="o">=</span> <span class="n">get_histocal_volatility</span><span class="p">(</span><span class="s1">&#39;data/book_train.parquet/&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">print_score</span><span class="p">(</span><span class="n">vol</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="211-volatility-calculation">2.1.1 Volatility calculation</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>import pandas as pd
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>import numpy as np
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>import glob
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>import multiprocessing as mp
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>def vwap(row):
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    return (row.bid_price1 * row.ask_size1 + row.ask_price1 * row.bid_size1) / (row.ask_size1 + row.bid_size1)
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>def calculate_realized_volatility(frame):
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    # theo_price = frame.apply(vwap, axis=1)
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    theo_price = vwap(frame)
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    log_return = np.log(theo_price).diff().dropna()
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    return np.sqrt(np.sum(log_return**2))
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>def get_stock_volatility(path):
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    book = pd.read_parquet(path)
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    vol = book.groupby(&#39;time_id&#39;).apply(calculate_realized_volatility).reset_index(name=&#39;volatility&#39;)
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    vol[&#39;stock_id&#39;] = int(path.split(&#39;=&#39;)[1])
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    return vol.reindex([&#39;stock_id&#39;, &#39;time_id&#39;, &#39;volatility&#39;], axis=1)
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>def get_histocal_volatility(train_dir):
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    paths = glob.glob(f&#39;{train_dir}/*&#39;)
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    with mp.Pool(4) as p:
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>        results = p.map(get_stock_volatility, paths)
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>        return pd.concat(results)
+</code></pre></div>
+<h4 id="212-rmspe-calculation">2.1.2 RMSPE calculation</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>def convert_to_submit_format(vol):
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    row_id = pd.Series(vol.stock_id.astype(str) + &#39;-&#39; + vol.time_id.astype(str), name=&#39;row_id&#39;)
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    return pd.concat([row_id, vol.iloc[:,2]], axis=1)
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>def print_score(vol):
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    train = convert_to_submit_format(pd.read_csv(&#39;data/train.csv&#39;))
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    pred = convert_to_submit_format(vol)
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    from sklearn.metrics import r2_score
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    def rmspe(y_true, y_pred):
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        return  (np.sqrt(np.mean(np.square((y_true - y_pred) / y_true))))
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    joined = pd.merge(pred, train, on=&#39;row_id&#39;)
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    R2 = round(r2_score(y_true = joined.target, y_pred = joined.volatility),3)
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    RMSPE = round(rmspe(y_true = joined.target, y_pred = joined.volatility),3)
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    print(f&#39;Performance of the naive prediction: R2 score: {R2}, RMSPE: {RMSPE}&#39;)
+</code></pre></div>
+<h2 id="3-lightgbm-volatility">3. 用 LightGBM 预测 volatility</h2>
+<p>本节将简单应用 LightGBM 预测 volatility，暂时不涉及任何调参以及特征工程的优化。仅仅验证 LightGBM 在默认参数下、利用简单的特征即可获得超过 benchmark 的预测效果，重点阐述如何调包 :)。</p>
+<h3 id="31">3.1 特征提取</h3>
+<p>对于 book 和 trade，我们都需要做一些简单的计算来将原始数据稍作加工。</p>
+<p>归根到底，波动率反应的是价格变化剧烈程度。理论上，当某个股票流动性不佳（即买卖价差大、挂单数量少）时，它的波动率会显著上升。此外，如果某个股票交易量相对其挂单量较大，也会有较大的波动率。</p>
+<p>另外，由于每个 time_id 有 10 分钟的数据，直觉上，这些数据对未来交易的影响应该是会 decay 的，因此有必要根据时间将其分为多个 batch。</p>
+<h4 id="311-book-features">3.1.1 book features</h4>
+<p>book 方面，由于 volatility 是基于 vwap 的，我计算了多种 vwap，用于表现某一个 level 被全部 take 的情况。此外，买卖价差、买 1 和买 2 价差、卖 1 和 卖 2 的价差都可以纳入考虑。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>def vwap(row, bid_idx, ask_idx):
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    # TODO: multi-level
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    return (row[f&#39;bid_price{bid_idx}&#39;] * row[f&#39;ask_size{ask_idx}&#39;]
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>            + row[f&#39;ask_price{ask_idx}&#39;] * row[f&#39;bid_size{bid_idx}&#39;]) / (
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>                row[f&#39;ask_size{ask_idx}&#39;] + row[f&#39;bid_size{bid_idx}&#39;])
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>def get_book(stock_id):
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    book = pd.read_parquet(f&quot;data/book_train.parquet/stock_id={stock_id}&quot;)
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    # VWAPs
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    # level 0 price does not change
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    book[&#39;vwap11&#39;] = vwap(book, 1, 1)
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    # ask level 0 is fully traded
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    book[&#39;vwap12&#39;] = vwap(book, 1, 2)
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    # bid level 0 is fully traded
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    book[&#39;vwap21&#39;] = vwap(book, 2, 1)
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>    # bid and ask level 0 is fully traded
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    book[&#39;vwap22&#39;] = vwap(book, 2, 2)
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>    book[&#39;bid_ask_spread&#39;] = book.ask_price1 - book.bid_price1
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>    book[&#39;bid_gap&#39;] = book.bid_price1 - book.bid_price2
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    book[&#39;ask_gap&#39;] = book.ask_price2 - book.ask_price1
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    book[&#39;bid_imbalance&#39;] = book.bid_size1 / book.bid_size2
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>    book[&#39;ask_imbalance&#39;] = book.ask_size1 / book.ask_size2
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>    return book
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>def get_book_features(book, window):
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>    book[&#39;batch_id&#39;] = cut_by_time(book, window)
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>    feature_dict = {
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>        &#39;vwap11&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;, calculate_realized_volatility],
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>        &#39;vwap12&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;, calculate_realized_volatility],
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>        &#39;vwap21&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;, calculate_realized_volatility],
+<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>        &#39;vwap22&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;, calculate_realized_volatility],
+<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>        &#39;bid_gap&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;],
+<a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a>        &#39;ask_gap&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;],
+<a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a>        &#39;bid_ask_spread&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;],
+<a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a>        &#39;bid_size1&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;, &#39;sum&#39;],
+<a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a>        &#39;ask_size1&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;, &#39;sum&#39;],
+<a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a>        &#39;bid_imbalance&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;],
+<a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>        &#39;ask_imbalance&#39;: [&#39;mean&#39;, &#39;std&#39;, &#39;max&#39;],
+<a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a>    }
+<a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a>
+<a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>    return get_features(book, feature_dict)
+</code></pre></div>
+<h4 id="312-trade-features">3.1.2 trade features</h4>
+<p>随便提取了几个 trade 的特征，例如交易数量、交易金额等等。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span> <span class="nf">get_trade</span><span class="p">(</span><span class="n">stock_id</span><span class="p">):</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">trade</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data/trade_train.parquet/stock_id=</span><span class="si">{</span><span class="n">stock_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">&#39;size&#39;</span><span class="p">:</span><span class="s1">&#39;trade_volume&#39;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;trade_amount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trade</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">trade</span><span class="o">.</span><span class="n">trade_volume</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;per_trade_quantity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trade</span><span class="o">.</span><span class="n">trade_volume</span> <span class="o">/</span> <span class="n">trade</span><span class="o">.</span><span class="n">order_count</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">return</span> <span class="n">trade</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">def</span> <span class="nf">get_trade_features</span><span class="p">(</span><span class="n">trade</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="n">trade</span><span class="p">[</span><span class="s1">&#39;batch_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cut_by_time</span><span class="p">(</span><span class="n">trade</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="n">feature_dict</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="s1">&#39;trade_volume&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">],</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="s1">&#39;trade_amount&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">],</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="s1">&#39;per_trade_quantity&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">]</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="p">}</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="k">return</span> <span class="n">get_features</span><span class="p">(</span><span class="n">trade</span><span class="p">,</span> <span class="n">feature_dict</span><span class="p">)</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="k">def</span> <span class="nf">get_all_features</span><span class="p">(</span><span class="n">stock_id</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    <span class="n">book</span> <span class="o">=</span> <span class="n">get_book</span><span class="p">(</span><span class="n">stock_id</span><span class="p">)</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="n">book_features</span> <span class="o">=</span> <span class="n">get_book_features</span><span class="p">(</span><span class="n">book</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="n">trade</span> <span class="o">=</span> <span class="n">get_trade</span><span class="p">(</span><span class="n">stock_id</span><span class="p">)</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>    <span class="n">trade_features</span> <span class="o">=</span> <span class="n">get_trade_features</span><span class="p">(</span><span class="n">trade</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>    <span class="n">merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">book_features</span><span class="p">,</span> <span class="n">trade_features</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;time_id_&#39;</span><span class="p">])</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>    <span class="k">return</span> <span class="n">merged</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="k">def</span> <span class="nf">get_train_data</span><span class="p">(</span><span class="n">stocks</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>    <span class="n">df</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>    <span class="k">for</span> <span class="n">stock</span> <span class="ow">in</span> <span class="n">stocks</span><span class="p">:</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>        <span class="n">features</span> <span class="o">=</span> <span class="n">get_all_features</span><span class="p">(</span><span class="n">stock</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;stock_id_&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stock</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>        <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="32-lightgbm">3.2 应用 LightGBM</h3>
+<p>我们已经在 3.1 中得到了一堆特征了（294维），现在可以将它们 feed 到 LightGBM 中进行训练了。原始数据集中提供了 <code>train.csv</code> 用于训练。在这里，我们使用经典的交叉验证来训练模型。将原始数据随机分为 5 份，其中 4 份用于训练，1 份用于验证。</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>from sklearn.model_selection import KFold
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>import lightgbm
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a># root mean squared percentage error
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>def rmspe(y_true, y_pred):
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    return np.sqrt(np.mean(np.square((y_true - y_pred)/y_true)))
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>def feval_rmspe(y_pred, lgb_train):
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    y_true = lgb_train.get_label()
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    return &#39;RMSPE&#39;, rmspe(y_true, y_pred), False
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>result = pd.read_csv(&#39;data/train.csv&#39;)
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>selected_y = result[result.stock_id.isin([stock_id])].target.reset_index(drop=True)
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>kf = KFold(n_splits = 5, random_state = 2021, shuffle = True)
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>train_features = train_data.drop(&#39;time_id_&#39;, axis=1)
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>for train_index, test_index in kf.split(train_features):
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    # print(&quot;TRAIN:&quot;, train_index, &quot;TEST:&quot;, test_index)
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    X_train, X_test = train_features.loc[train_index], train_features.loc[test_index]
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>    y_train, y_test = selected_y.loc[train_index], selected_y.loc[test_index]
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    train_dataset = lightgbm.Dataset(X_train,
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>                                     y_train,
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>                                     weight=1/np.square(y_train))
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>    validation_dataset = lightgbm.Dataset(X_test, y_test, weight=1/np.square(y_test))
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>    model = lightgbm.train(params={},
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>                           train_set = train_dataset,
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>                           valid_sets = [train_dataset, validation_dataset],
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>                           early_stopping_rounds=50,
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>                           feval = feval_rmspe,
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>                           verbose_eval = 20,
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>                           num_boost_round=1000)
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>    # get prediction score
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>    y_pred = model.predict(X_test)
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>    print(&quot;RMSPE = &quot;, rmspe(y_test, y_pred))
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>    lightgbm.plot_importance(model, max_num_features=20)
+</code></pre></div>
+注意，<code>time_id</code> 并不属于特征，在这里需要去掉以免对训练造成负面影响。</p>
+<h4 id="321-lightgbm">3.2.1 LightGBM 步骤</h4>
+<p>分为 3 步：</p>
+<ol>
+<li>建立数据集（<code>train_dataset  = lightgbm.Dataset(...)</code>）</li>
+<li>训练模型 (<code>model = lightgbm.train(...)</code>)</li>
+<li>预测 (<code>model.predict(X_test)</code>)</li>
+</ol>
+<p>着重讲下第 2 步的参数，它最为复杂。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">lightgbm</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">{},</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>                           <span class="n">train_set</span> <span class="o">=</span> <span class="n">train_dataset</span><span class="p">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>                           <span class="n">valid_sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">validation_dataset</span><span class="p">],</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>                           <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>                           <span class="n">feval</span> <span class="o">=</span> <span class="n">feval_rmspe</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>                           <span class="n">verbose_eval</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>                           <span class="n">num_boost_round</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+- <code>params={}</code> 说明我们使用默认参数。由于篇幅所限，参数含义和调优放在下一篇文章。</p>
+<ul>
+<li>
+<p><code>valid_set</code>, <code>early_stopping_rounds</code>, <code>feval</code>：这三个参数是可选参数，他们是有关联的。目的是避免过拟合。利用 <code>feval</code> 来评价验证集在这个模型下的准确度，如果超过 <code>early_stopping_rounds</code> 都没有提高，就提前终止训练，返回局部最优的模型</p>
+</li>
+<li>
+<p><code>num_boost_round</code> 用于控制 boost 过程的最大循环次数，每一次循环会生成一棵树来拟合残差，如果 <code>early_stopping_rounds</code> 生效，就不必运行到最后。</p>
+</li>
+</ul>
+<h4 id="322">3.2.2 特征重要性</h4>
+<p>这也是一个有趣的概念，在我们的模型中，特征重要性如下所示：</p>
+<p><img alt="feature importance" src="../images/feature_importance.png" /></p>
+<h5 id="3221">3.2.2.1 特征重要性的计算</h5>
+<p>对于树方法来说（LightGBM，XGBoost，GBDT），他们的计算方法都是类似的，即在某个节点分裂前后，比较其”不纯度“，不纯度下降越多，说明效果越好。</p>
+<div class="arithmatex">\[ \text{importance} = \frac{ n }{ N } ( \rho - \frac{n_l}{n} \rho_l - \frac{n_r}{n} \rho_r ) \]</div>
+<p>其中:
+<span class="arithmatex">\(n\)</span> - 某节点样本数
+<span class="arithmatex">\(N\)</span> - 总样本数
+<span class="arithmatex">\(\rho\)</span> - 不纯度
+下标 l, r 分别表示分裂后的左右子节点。</p>
+<p>因此，其含义也是明显的。首先以该节点样本数占总样本数为权重，乘以分裂后降低的不纯度，得到该节点分裂的“贡献”，即重要性。</p>
+<h4 id="323">3.2.3 预测结果</h4>
+<p>我们非常轻松地将预测误差 RMSPE 从 0.34 降低到了 0.22~0.25 。由于本人电脑渣，只随机选用了几个股票的数据，但是从统计意义上讲应该和训练所有数据误差类似。因此虽不严谨也足够说明 LightGBM 确实是非常有效的。</p>
+<p>当然，这是一个很菜的成绩，在这个比赛中，前几名已经将误差降低到了 0.18 以内。这是因为我们还没有进行任何参数调优，特征也是随手选的。我们将在下一篇中详细介绍如何优化参数，以及提高特征的质量。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="go">[LightGBM] [Warning] Auto-choosing col-wise multi-threading, the overhead of testing was 0.007232 seconds.</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="go">You can set `force_col_wise=true` to remove the overhead.</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="go">[LightGBM] [Info] Total Bins 74970</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="go">[LightGBM] [Info] Number of data points in the train set: 3064, number of used features: 294</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="go">[LightGBM] [Info] Start training from score 0.003745</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="go">Training until validation scores don&#39;t improve for 50 rounds</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="go">[20]    training&#39;s RMSPE: 0.185026  valid_1&#39;s RMSPE: 0.249763</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="go">[40]    training&#39;s RMSPE: 0.141187  valid_1&#39;s RMSPE: 0.238492</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="go">[60]    training&#39;s RMSPE: 0.117718  valid_1&#39;s RMSPE: 0.240709</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="go">[80]    training&#39;s RMSPE: 0.100988  valid_1&#39;s RMSPE: 0.244922</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="go">Early stopping, best iteration is:</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="go">[34]    training&#39;s RMSPE: 0.150671  valid_1&#39;s RMSPE: 0.237703</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="go">RMSPE =  0.2377028864491903</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="go">[LightGBM] [Warning] Auto-choosing col-wise multi-threading, the overhead of testing was 0.009398 seconds.</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="go">You can set `force_col_wise=true` to remove the overhead.</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="go">[LightGBM] [Info] Total Bins 74970</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="go">[LightGBM] [Info] Number of data points in the train set: 3064, number of used features: 294</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="go">[LightGBM] [Info] Start training from score 0.003736</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="go">Training until validation scores don&#39;t improve for 50 rounds</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="go">[20]    training&#39;s RMSPE: 0.182278  valid_1&#39;s RMSPE: 0.244471</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="go">[40]    training&#39;s RMSPE: 0.139054  valid_1&#39;s RMSPE: 0.242755</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="go">[60]    training&#39;s RMSPE: 0.116214  valid_1&#39;s RMSPE: 0.249089</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="go">Early stopping, best iteration is:</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="go">[26]    training&#39;s RMSPE: 0.164368  valid_1&#39;s RMSPE: 0.240414</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="go">RMSPE =  0.24041392797196037</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="go">[LightGBM] [Warning] Auto-choosing col-wise multi-threading, the overhead of testing was 0.007414 seconds.</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="go">You can set `force_col_wise=true` to remove the overhead.</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="go">[LightGBM] [Info] Total Bins 74968</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="go">[LightGBM] [Info] Number of data points in the train set: 3064, number of used features: 294</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="go">[LightGBM] [Info] Start training from score 0.003772</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="go">Training until validation scores don&#39;t improve for 50 rounds</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="go">[20]    training&#39;s RMSPE: 0.183314  valid_1&#39;s RMSPE: 0.263333</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="go">[40]    training&#39;s RMSPE: 0.140241  valid_1&#39;s RMSPE: 0.254926</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a><span class="go">[60]    training&#39;s RMSPE: 0.116984  valid_1&#39;s RMSPE: 0.256409</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a><span class="go">[80]    training&#39;s RMSPE: 0.0994774 valid_1&#39;s RMSPE: 0.261615</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a><span class="go">Early stopping, best iteration is:</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a><span class="go">[38]    training&#39;s RMSPE: 0.143255  valid_1&#39;s RMSPE: 0.253827</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a><span class="go">RMSPE =  0.2538268499911712</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a><span class="go">[LightGBM] [Warning] Auto-choosing col-wise multi-threading, the overhead of testing was 0.007743 seconds.</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a><span class="go">You can set `force_col_wise=true` to remove the overhead.</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a><span class="go">[LightGBM] [Info] Total Bins 74970</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a><span class="go">[LightGBM] [Info] Number of data points in the train set: 3064, number of used features: 294</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a><span class="go">[LightGBM] [Info] Start training from score 0.003678</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a><span class="go">Training until validation scores don&#39;t improve for 50 rounds</span>
+<a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a><span class="go">[20]    training&#39;s RMSPE: 0.185122  valid_1&#39;s RMSPE: 0.224511</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a><span class="go">[40]    training&#39;s RMSPE: 0.141241  valid_1&#39;s RMSPE: 0.220552</span>
+<a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a><span class="go">[60]    training&#39;s RMSPE: 0.11815   valid_1&#39;s RMSPE: 0.22418</span>
+<a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a><span class="go">[80]    training&#39;s RMSPE: 0.101414  valid_1&#39;s RMSPE: 0.227895</span>
+<a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a><span class="go">Early stopping, best iteration is:</span>
+<a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a><span class="go">[32]    training&#39;s RMSPE: 0.154159  valid_1&#39;s RMSPE: 0.219429</span>
+<a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a><span class="go">RMSPE =  0.2194288855505451</span>
+<a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a><span class="go">[LightGBM] [Warning] Auto-choosing col-wise multi-threading, the overhead of testing was 0.004243 seconds.</span>
+<a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a><span class="go">You can set `force_col_wise=true` to remove the overhead.</span>
+<a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a><span class="go">[LightGBM] [Info] Total Bins 74969</span>
+<a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a><span class="go">[LightGBM] [Info] Number of data points in the train set: 3064, number of used features: 294</span>
+<a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a><span class="go">[LightGBM] [Info] Start training from score 0.003703</span>
+<a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a><span class="go">Training until validation scores don&#39;t improve for 50 rounds</span>
+<a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a><span class="go">[20]    training&#39;s RMSPE: 0.184329  valid_1&#39;s RMSPE: 0.238253</span>
+<a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a><span class="go">[40]    training&#39;s RMSPE: 0.141179  valid_1&#39;s RMSPE: 0.232793</span>
+<a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a><span class="go">[60]    training&#39;s RMSPE: 0.118668  valid_1&#39;s RMSPE: 0.235608</span>
+<a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a><span class="go">Early stopping, best iteration is:</span>
+<a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a><span class="go">[28]    training&#39;s RMSPE: 0.161778  valid_1&#39;s RMSPE: 0.232168</span>
+<a id="__codelineno-7-63" name="__codelineno-7-63" href="#__codelineno-7-63"></a><span class="go">RMSPE =  0.23216812618489302</span>
+</code></pre></div>
+<h2 id="4-lightgbm">4. LightGBM 参数调整及特征优化</h2>
+<p>见下一篇
+<a href="https://www.jianshu.com/p/80ef7f71950e">LightGBM 实战：波动率预测(2)</a>。</p>
+<h2 id="5-appendix">5. Appendix</h2>
+<p>Useful tool functions, especially the <code>get_features</code>. It uses <code>pandas.pivot</code> to create "flatten" features based on trunks separated by time.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>def calculate_realized_volatility(price):
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    log_return = np.log(price).diff().dropna()
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    return np.sqrt(np.sum(log_return**2))
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>def cut_by_time(df, window_seconds):    
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    batch_id = df.groupby(&#39;time_id&#39;, group_keys=False).apply(
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>        lambda g: (g.seconds_in_bucket / window_seconds).astype(int))
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    return batch_id
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>def get_features(df, feature_dict):
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    features = df.groupby([&#39;time_id&#39;, &#39;batch_id&#39;], group_keys=False
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>                         ).agg(feature_dict).reset_index()
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    # concat multi-level column
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>    features.columns = [&#39;_&#39;.join(col) for col in features.columns]
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    # now each time id has several rows of features for different time window
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    # use pandas.pivot to flat these rows
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>    flat_features = features.pivot(index=&#39;time_id_&#39;, columns=&#39;batch_id_&#39;)
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>    flat_features.columns = [f&#39;{col[0]}_{col[1]}&#39; for col in flat_features.columns]
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>    return flat_features.reset_index()
+</code></pre></div>
+<h2 id="6-reference">6. Reference</h2>
+<ol>
+<li><a href="https://www.kaggle.com/c/optiver-realized-volatility-prediction">Optiver Realized Volatility Prediction</a></li>
+<li><a href="https://www.kaggle.com/alexioslyon/lgbm-baseline">lightGBM Baseline for "Optiver Realized Volatility Prediction"</a></li>
+</ol>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../LgbmL1AndL2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: LightGBM 参数中的 lambda_l1 和 lambda_l2" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              LightGBM 参数中的 lambda_l1 和 lambda_l2
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../LgbmVol2/" class="md-footer__link md-footer__link--next" aria-label="Next: LightGBM 实战：波动率预测(2)" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              LightGBM 实战：波动率预测(2)
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
