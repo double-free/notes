@@ -69,3 +69,34 @@ K_\lambda(x_0, x_1) & & &\\
 其效果如下图所示，可以看出在定义域边缘位置，使用局部线性回归（右图）拟合效果更好。
 
 ![Local Linear Regression](images/6/local_lr.png)
+
+## 6.2 Selecting the Width of the Kernel
+
+几种常用的 kernel:
+
+![Kernels](images/6/kernels.png)
+
+对于 Epanechnikov 和 tri-cube kernel，$\lambda$ 是“周围”的半径。对于 Gaussian kernel，$\lambda$ 是其标准差 $\sigma$。
+
+选取 $\lambda$ 实际上是 bias-variance 的 tradeoff。当选取窗口很小时，由于采用的样本点较少，得到的目标点的估计值 variance 会很大。但是同时，由于选取的点都是离目标点最近的点，它的 bias 很小。
+
+## 6.3 Multiple Dimensional Local Regression
+
+我们可以自然地将局部线性回归扩展到多维，用于拟合一个超平面。
+
+当维度 $p = 2$，阶次 $d = 1$ 时，我们有：
+
+$$ b(X) = (1, X_1, X_2) $$
+
+当维度 $p = 2$，阶次 $d = 2$ 时，我们有：
+
+$$ b(X) = (1, X_1, X_2, X_1^2, X_2^2, X_1X_2) $$
+
+需要求解的优化问题变为：
+
+$$ \mathop{\arg \min}_{\beta(x_0)} \sum_{i=1}^{N} K_\lambda(x_0, x_i)[y_i - b(x_i)^T \beta(x_0)]^2 $$
+
+拟合的函数为 $\hat{f}(x_0) = b(x_0)^T \hat{\beta}(x_0)$。
+
+
+维度变大时，由于边界上的点占总体样本的比例更大（越来越趋近于 100%），在边界上很难保持一个好的 bias-variance tradeoff。因此，局部线性回归在 3 维以上的情形时对边界 bias 的修正作用不佳。
