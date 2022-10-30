@@ -4,7 +4,7 @@
 
 它平滑曲线的原理是利用一个核函数 $K_\lambda (x_0, x_i)$ 根据目标点 $x_0$ 和周围点 $x_i$ 的距离赋予权重。
 
-这一类方法几乎不需要训练，参数也很简单，只有一个超参数 $\lambda$，用来设置“周围”的具体范围。
+这一类方法几乎不需要训练，参数也很简单，只有一个超参数 $\lambda$，用来设置“周围”的具体范围。他们也被称为 "memory-based" 方法，其模型就是所有训练样本本身，拟合实时进行。因此，对于某些要求运算速度，或者存储有限的场合，这类方法并不适用。
 
 
 值得注意的是，__核平滑方法__ 和 __核方法__ 是不同的概念。__核方法__ 会在高维特征空间计算内积，用于正则化的非线性建模。
@@ -12,7 +12,7 @@
 
 ## 6.1 One-Dimensional Kernel Smoothers
 
-相对于最近邻法，核平滑法对目标点附近选取的样本点设置了 __根据距离衰减的权重__，再进行加权平均。这样做的最大好处是使曲线更加平滑了（但是不一定可导？）
+相对于最近邻法，核平滑法对目标点附近选取的样本点设置了 __根据距离衰减的权重__，再进行加权平均。这样做的最大好处是使曲线更加平滑了（但是不一定可导，见文末 exercise）
 
 $$ \hat{f}(x_0) = \dfrac{\sum_{i=1}^N K_\lambda(x_0, x_i)y_i}{\sum_{i=1}^N K_\lambda(x_0, x_i) } $$
 
@@ -80,7 +80,7 @@ K_\lambda(x_0, x_1) & & &\\
 
 选取 $\lambda$ 实际上是 bias-variance 的 tradeoff。当选取窗口很小时，由于采用的样本点较少，得到的目标点的估计值 variance 会很大。但是同时，由于选取的点都是离目标点最近的点，它的 bias 很小。
 
-## 6.3 Multiple Dimensional Local Regression
+## 6.3 Multi-dimensional Local Regression
 
 我们可以自然地将局部线性回归扩展到多维，用于拟合一个超平面。
 
@@ -100,3 +100,26 @@ $$ \mathop{\arg \min}_{\beta(x_0)} \sum_{i=1}^{N} K_\lambda(x_0, x_i)[y_i - b(x_
 
 
 维度变大时，由于边界上的点占总体样本的比例更大（越来越趋近于 100%），在边界上很难保持一个好的 bias-variance tradeoff。因此，局部线性回归在 3 维以上的情形时对边界 bias 的修正作用不佳。
+
+## Exercises
+
+> Show that the Nadaraya-Watson kernel smooth with fixed metric bandwidth $\lambda$ and a Gaussian kernel is differentiable. What can be said for the Epanechnikov kernel? What can be said for the Epanechnikov kernel with adaptive nearest-neighbor bandwidth $\lambda(x_0)$?
+
+Nadaraya-Watson 定义的估计值为：
+
+$$ \hat{f}(x_0) = \dfrac{\sum_{i=1}^N K_\lambda(x_0, x_i)y_i}{\sum_{i=1}^N K_\lambda(x_0, x_i) } $$
+
+当我们选择高斯核时：
+
+$$ K_\lambda(x_0, x) = \dfrac{1}{\sqrt{2 \pi} \lambda} e^{- \dfrac{(x-x_0)^2}{2\lambda^2}} $$
+
+无论 $x_0$ 如何选取，高斯核函数始终可导。因此 $\hat{f}(x_0)$ 也始终可导。
+
+而对于 Epanechnikov 核：
+
+$$ K_\lambda(x_0, x) = \begin{cases}
+\dfrac{3}{4} (1 - \dfrac{(x-x_0)^2}{\lambda^2}), & \text{if } |x - x_0| \leq \lambda \\
+0, & \text{otherwise}
+\end{cases} $$
+
+由于 Epanechnikov 核函数是一个分段函数，虽然连续但是不可导，因此 $\hat{f}(x_0)$ 也不可导。
