@@ -580,9 +580,74 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ESL6: Kernel Smoothing Methods
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         ESL6: Kernel Smoothing Methods
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61-one-dimensional-kernel-smoothers" class="md-nav__link">
+    6.1 One-Dimensional Kernel Smoothers
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 One-Dimensional Kernel Smoothers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-local-linear-regression" class="md-nav__link">
+    6.1.1 Local Linear Regression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-selecting-the-width-of-the-kernel" class="md-nav__link">
+    6.2 Selecting the Width of the Kernel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-multi-dimensional-local-regression" class="md-nav__link">
+    6.3 Multi-dimensional Local Regression
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    Exercises
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -928,6 +993,55 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61-one-dimensional-kernel-smoothers" class="md-nav__link">
+    6.1 One-Dimensional Kernel Smoothers
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 One-Dimensional Kernel Smoothers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-local-linear-regression" class="md-nav__link">
+    6.1.1 Local Linear Regression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-selecting-the-width-of-the-kernel" class="md-nav__link">
+    6.2 Selecting the Width of the Kernel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-multi-dimensional-local-regression" class="md-nav__link">
+    6.3 Multi-dimensional Local Regression
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    Exercises
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -941,8 +1055,75 @@
 
 
 <h1 id="esl6-kernel-smoothing-methods">ESL6: Kernel Smoothing Methods</h1>
-<p><strong>核平滑方法</strong> 仅利用目标点 <span class="arithmatex">\(x_0\)</span> 周围的观测点来拟合模型 <span class="arithmatex">\(f(X)\)</span>，得到的 <span class="arithmatex">\(\hat{f}(X)\)</span> 是平滑 (smooth) 后的结果。</p>
-<p>权重函数（或称为核）<span class="arithmatex">\(<span class="arithmatex">\(K_\lambda (x_0, x_i)\)</span>\)</span> 根据 <span class="arithmatex">\(x_i\)</span> 和 <span class="arithmatex">\(x_0\)</span> 的距离赋予权重。<span class="arithmatex">\(\lambda\)</span> 是一个超参数，用来设置“周围”的具体范围。</p>
+<p>本章我们介绍 <strong>核平滑方法</strong>。它仅利用目标点 <span class="arithmatex">\(x_0\)</span> 周围的观测点来拟合模型 <span class="arithmatex">\(f(X)\)</span>，得到 <span class="arithmatex">\(\hat{f}(X)\)</span>。相较于最近邻法，它所得到的  <span class="arithmatex">\(\hat{f}(X)\)</span> 是平滑 (smooth) 后的。</p>
+<p>它平滑曲线的原理是利用一个核函数 <span class="arithmatex">\(K_\lambda (x_0, x_i)\)</span> 根据目标点 <span class="arithmatex">\(x_0\)</span> 和周围点 <span class="arithmatex">\(x_i\)</span> 的距离赋予权重。</p>
+<p>这一类方法几乎不需要训练，参数也很简单，只有一个超参数 <span class="arithmatex">\(\lambda\)</span>，用来设置“周围”的具体范围。他们也被称为 "memory-based" 方法，其模型就是所有训练样本本身，拟合实时进行。因此，对于某些要求运算速度，或者存储有限的场合，这类方法并不适用。</p>
+<p>值得注意的是，<strong>核平滑方法</strong> 和 <strong>核方法</strong> 是不同的概念。<strong>核方法</strong> 会在高维特征空间计算内积，用于正则化的非线性建模。</p>
+<h2 id="61-one-dimensional-kernel-smoothers">6.1 One-Dimensional Kernel Smoothers</h2>
+<p>相对于最近邻法，核平滑法对目标点附近选取的样本点设置了 <strong>根据距离衰减的权重</strong>，再进行加权平均。这样做的最大好处是使曲线更加平滑了（但是不一定可导，见文末 exercise）</p>
+<div class="arithmatex">\[ \hat{f}(x_0) = \dfrac{\sum_{i=1}^N K_\lambda(x_0, x_i)y_i}{\sum_{i=1}^N K_\lambda(x_0, x_i) } \]</div>
+<p>样本点 <span class="arithmatex">\(x\)</span> 的权重函数（也称为核函数）定义为其与目标点 <span class="arithmatex">\(x_0\)</span> 距离相关的函数：</p>
+<div class="arithmatex">\[ K_\lambda(x_0, x) = D( \dfrac{|x - x_0|}{h_\lambda(x_0)} ) \]</div>
+<p>其中 <span class="arithmatex">\(h_\lambda(x_0)\)</span> 表示选取窗口的大小可以根据目标点的取值变化。</p>
+<p><img alt="Kernel Smoothing" src="../images/6/kernel_smoothing.png" /></p>
+<p>可以看出，右图使用核函数平滑后，相比左图的最近邻法获得的估计值更为平滑。</p>
+<h3 id="611-local-linear-regression">6.1.1 Local Linear Regression</h3>
+<p>我们通过引入核函数解决了平滑性问题，但是，我们发现在临近边界的地方，曲线出现了较大的 bias，这是由于边界区域样本点分布不均匀。</p>
+<p>我们可以通过 <strong>局部线性回归</strong> 解决这个问题。它在 <strong>每个</strong> 目标点 <span class="arithmatex">\(x_0\)</span> 求解一个 <strong>最小二乘</strong> 问题：</p>
+<div class="arithmatex">\[ \mathop{\arg \min}_{\alpha(x_0), \beta(x_0)} \sum_{i=1}^{N} K_\lambda(x_0, x_i)[y_i - \alpha(x_0) -\beta(x_0)x_i]^2 \]</div>
+<p>即，对于每个目标点周围选取的样本点，用线性函数去拟合，得到线性方程：</p>
+<div class="arithmatex">\[ \hat{f}(x) = \alpha(x_0) + \beta(x_0)x \]</div>
+<p>再代入 <span class="arithmatex">\(x_0\)</span> 得到估计值。该方法可以 <strong>除去 1 阶的 bias，只保留 2 阶及更高阶的 bias</strong>。</p>
+<p>对于某一个目标点 <span class="arithmatex">\(x_0\)</span>，假设其周围选取了 <span class="arithmatex">\(N\)</span> 个样本点，其估计结果可以写成矩阵形式：</p>
+<div class="arithmatex">\[\begin{align}
+\hat{f}(x_0) &amp;= b(x_0)^T (\mathbf{B}^T \mathbf{W}(x_0) \mathbf{B})^{-1} \mathbf{B}^T \mathbf{W}(x_0) \mathbf{y} \\
+&amp;= \sum_{i=1}^{N} l_i(x_0)y_i
+\end{align}\]</div>
+<p>其中 <span class="arithmatex">\(b(x_0)^T = (1, x_0)\)</span>，矩阵：</p>
+<div class="arithmatex">\[ \mathbf{B} = \left[ \begin{array}{cc}
+1 &amp; x_1 \\
+1 &amp; x_2 \\
+\vdots &amp; \vdots \\
+1 &amp; x_N
+\end{array} \right]_{N \times 2}\]</div>
+<div class="arithmatex">\[ \mathbf{W}(x_0) = \left[ \begin{array}{cccc}
+K_\lambda(x_0, x_1) &amp; &amp; &amp;\\
+&amp; K_\lambda(x_0, x_2) &amp; &amp;\\
+&amp; &amp; &amp; \ddots &amp; \\
+&amp; &amp; &amp; &amp; K_\lambda(x_0, x_N) \\
+\end{array} \right]_{N \times N}\]</div>
+<p>其效果如下图所示，可以看出在定义域边缘位置，使用局部线性回归（右图）拟合效果更好。</p>
+<p><img alt="Local Linear Regression" src="../images/6/local_lr.png" /></p>
+<h2 id="62-selecting-the-width-of-the-kernel">6.2 Selecting the Width of the Kernel</h2>
+<p>几种常用的 kernel:</p>
+<p><img alt="Kernels" src="../images/6/kernels.png" /></p>
+<p>对于 Epanechnikov 和 tri-cube kernel，<span class="arithmatex">\(\lambda\)</span> 是“周围”的半径。对于 Gaussian kernel，<span class="arithmatex">\(\lambda\)</span> 是其标准差 <span class="arithmatex">\(\sigma\)</span>。</p>
+<p>选取 <span class="arithmatex">\(\lambda\)</span> 实际上是 bias-variance 的 tradeoff。当选取窗口很小时，由于采用的样本点较少，得到的目标点的估计值 variance 会很大。但是同时，由于选取的点都是离目标点最近的点，它的 bias 很小。</p>
+<h2 id="63-multi-dimensional-local-regression">6.3 Multi-dimensional Local Regression</h2>
+<p>我们可以自然地将局部线性回归扩展到多维，用于拟合一个超平面。</p>
+<p>当维度 <span class="arithmatex">\(p = 2\)</span>，阶次 <span class="arithmatex">\(d = 1\)</span> 时，我们有：</p>
+<div class="arithmatex">\[ b(X) = (1, X_1, X_2) \]</div>
+<p>当维度 <span class="arithmatex">\(p = 2\)</span>，阶次 <span class="arithmatex">\(d = 2\)</span> 时，我们有：</p>
+<div class="arithmatex">\[ b(X) = (1, X_1, X_2, X_1^2, X_2^2, X_1X_2) \]</div>
+<p>需要求解的优化问题变为：</p>
+<div class="arithmatex">\[ \mathop{\arg \min}_{\beta(x_0)} \sum_{i=1}^{N} K_\lambda(x_0, x_i)[y_i - b(x_i)^T \beta(x_0)]^2 \]</div>
+<p>拟合的函数为 <span class="arithmatex">\(\hat{f}(x_0) = b(x_0)^T \hat{\beta}(x_0)\)</span>。</p>
+<p>维度变大时，由于边界上的点占总体样本的比例更大（越来越趋近于 100%），在边界上很难保持一个好的 bias-variance tradeoff。因此，局部线性回归在 3 维以上的情形时对边界 bias 的修正作用不佳。</p>
+<h2 id="exercises">Exercises</h2>
+<blockquote>
+<p>Show that the Nadaraya-Watson kernel smooth with fixed metric bandwidth <span class="arithmatex">\(\lambda\)</span> and a Gaussian kernel is differentiable. What can be said for the Epanechnikov kernel? What can be said for the Epanechnikov kernel with adaptive nearest-neighbor bandwidth <span class="arithmatex">\(\lambda(x_0)\)</span>?</p>
+</blockquote>
+<p>Nadaraya-Watson 定义的估计值为：</p>
+<div class="arithmatex">\[ \hat{f}(x_0) = \dfrac{\sum_{i=1}^N K_\lambda(x_0, x_i)y_i}{\sum_{i=1}^N K_\lambda(x_0, x_i) } \]</div>
+<p>当我们选择高斯核时：</p>
+<div class="arithmatex">\[ K_\lambda(x_0, x) = \dfrac{1}{\sqrt{2 \pi} \lambda} e^{- \dfrac{(x-x_0)^2}{2\lambda^2}} \]</div>
+<p>无论 <span class="arithmatex">\(x_0\)</span> 如何选取，高斯核函数始终可导。因此 <span class="arithmatex">\(\hat{f}(x_0)\)</span> 也始终可导。</p>
+<p>而对于 Epanechnikov 核：</p>
+<div class="arithmatex">\[ K_\lambda(x_0, x) = \begin{cases}
+\dfrac{3}{4} (1 - \dfrac{(x-x_0)^2}{\lambda^2}), &amp; \text{if } |x - x_0| \leq \lambda \\
+0, &amp; \text{otherwise}
+\end{cases} \]</div>
+<p>由于 Epanechnikov 核函数是一个分段函数，虽然连续但是不可导，因此 <span class="arithmatex">\(\hat{f}(x_0)\)</span> 也不可导。</p>
 
               
             </article>
