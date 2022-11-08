@@ -1,8 +1,4 @@
-# ESL9: Additive Models, Trees, and Related Methods
-
-本章介绍 5 种模型，他们通过假设待拟合模型的结构来降低维度诅咒的影响，当然，代价就是假设错误造成的模型偏差。
-
-## 9.1 Generalized Additive Models
+# ESL9.1: Generalized Additive Models
 
 实际中的很多模型并非线性，传统线性模型效果并不好。本节介绍了一种更加灵活的统计模型，可以建模非线性的影响。它将模型定义为：
 
@@ -20,7 +16,7 @@ $$ \ln(\dfrac{\mu(X)}{1-\mu(X)}) = \alpha + f_1(X_1) + \cdots + f_p(X_p) $$
 
 上式的每个估计函数 $f_i$ 是基于 scatterplot smoother 的，因此可以体现 $X_i$ 的非线性特征。
 
-### 9.1.1 Fitting Additive Models
+## 9.1.1 Fitting Additive Models
 
 本节我们用 cubic spline 作为 scatterplot smoother 来拟合一个 additive model。这个 additive model 形式为：
 
@@ -31,7 +27,7 @@ $$ Y = \alpha + \sum_{j=1}^p f_j(X_j) + \varepsilon $$
 
 我们的目标是确定 $\alpha$ 以及 $f_j$，为了描述非线性，我们假设 $f_j$ 是 __以每个样本点为节点的 cubic spline__。
 
-#### Unique Solution
+### Unique Solution
 
 如果我们不附加限制条件，常数项 $\alpha$ 不是唯一的。因为我们可以在函数 $f_j$ 的常熟项中任意进行加减。因此，我们增加了一条限制条件以获得 __唯一解__:
 
@@ -49,7 +45,7 @@ $$ \sum_i^N f_j(x_{ij}) = 0 $$
 
 
 
-### 9.1.2 Example: Additive Logistic Regression
+## 9.1.2 Example: Additive Logistic Regression
 
 Additive model 可以应用到分类问题中。通用的 additive logistic model 的形式为：
 
@@ -57,7 +53,7 @@ $$ \ln \frac{\text{Pr}(Y=1 | X)}{\text{Pr}(Y=0 | X)} = \alpha + f_1(X_1) + \cdot
 
 其中, $f_1, f_2, \dots, f_p$ 用 Newton-Raphson 法估计。
 
-#### Example: Predicting Email Spam
+### Example: Predicting Email Spam
 
 我们分别用 logistic regression 和 additive logistic model 对垃圾邮件进行分类，以此来分析 additive model 的特点。
 
@@ -72,17 +68,17 @@ for train_index, test_index in KFold(n_splits=5,shuffle=True,random_state=1).spl
     trainX, testX = X.loc[train_index], X.loc[test_index]
     trainY, testY = y.loc[train_index], y.loc[test_index]
     model = LogisticRegression(random_state=0).fit(trainX, trainY)
-    print(f"LR accurracy: {model.score(testX, testY)}")
+    print(f"LR accuracy: {model.score(testX, testY)}")
 ```
 
 logistic regression 的结果为：
 
 ```text
-LR accurracy: 0.9283387622149837
-LR accurracy: 0.9271739130434783
-LR accurracy: 0.9119565217391304
-LR accurracy: 0.9206521739130434
-LR accurracy: 0.925
+LR accuracy: 0.9283387622149837
+LR accuracy: 0.9271739130434783
+LR accuracy: 0.9119565217391304
+LR accuracy: 0.9206521739130434
+LR accuracy: 0.925
 ```
 
 下面是 additive logistic model 的代码：
@@ -136,6 +132,6 @@ def plot_features(gam_model, feature_names):
     show(layouts.gridplot(figs, ncols=2, width=400, height=200))
 ```
 
-# Reference
+## Reference
 
 1. [GAM: The Predictive Modeling Silver Bullet](https://multithreaded.stitchfix.com/blog/2015/07/30/gam/)
