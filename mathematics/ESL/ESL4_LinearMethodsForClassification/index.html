@@ -722,6 +722,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ESL9_AdditiveModels/" class="md-nav__link">
+        ESL9.1: Generalized Additive Models
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -1509,6 +1523,7 @@
  \dfrac{e^{\beta_{k0} + \beta_{k1}^Tx}}{1 + \sum_{l=1}^{K-1} e^{\beta_{l0} + \beta_{l1}^Tx}}, &amp; k = 1, 2, ..., K-1 \\
 \dfrac{1}{1 + \sum_{l=1}^{K-1} e^{\beta_{l0} + \beta_{l1}^Tx}}, &amp; k = K
 \end{cases}\]</div>
+<p>为什么不直接对概率进行建模，而要对 logit 函数建模呢？这是因为概率的取值范围是 <span class="arithmatex">\([0, 1]\)</span> 而等式右边的线性回归模型的取值范围是 <span class="arithmatex">\((-\inf, +\inf)\)</span>。而由于 logit 的一个重要特性就是没有上下限，因此我们可以尝试用线性回归模型拟合 logit。</p>
 <h3 id="441-fitting-logistic-regression-models">4.4.1 Fitting Logistic Regression Models</h3>
 <p>对于第 k 类的某个样本 i，我们希望找到一组模型参数 <span class="arithmatex">\(\theta\)</span>，使模型认为该样本属于 k 的概率（即 <strong>正确分类概率</strong>）尽量大。我们将这个概率计作：</p>
 <div class="arithmatex">\[\text{Pr} (G = k | X = x) = p_{k} (x; \theta)\]</div>
