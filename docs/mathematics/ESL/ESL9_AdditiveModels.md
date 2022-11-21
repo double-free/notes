@@ -1,4 +1,4 @@
-# ESL9.1: Generalized Additive Models
+# ESL 9.1: Generalized Additive Models
 
 实际中的很多模型并非线性，传统线性模型效果并不好。本节介绍了一种更加灵活的统计模型，可以建模非线性的影响。它将模型定义为：
 

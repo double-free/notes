@@ -1,4 +1,4 @@
-# ESL6: Kernel Smoothing Methods
+# ESL 6: Kernel Smoothing Methods
 
 本章我们介绍 __核平滑方法__。它仅利用目标点 $x_0$ 周围的观测点来拟合模型 $f(X)$，得到 $\hat{f}(X)$。相较于最近邻法，它所得到的  $\hat{f}(X)$ 是平滑 (smooth) 后的。
 
