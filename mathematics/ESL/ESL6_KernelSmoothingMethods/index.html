@@ -15,7 +15,7 @@
     
     
       
-        <title>ESL6: Kernel Smoothing Methods - My Notes</title>
+        <title>ESL 6: Kernel Smoothing Methods - My Notes</title>
       
     
     
@@ -61,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#esl6-kernel-smoothing-methods" class="md-skip">
+        <a href="#esl-6-kernel-smoothing-methods" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ESL6: Kernel Smoothing Methods
+              ESL 6: Kernel Smoothing Methods
             
           </span>
         </div>
@@ -543,6 +543,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../ESL10_BoostingMethods/" class="md-nav__link">
+        ESL 10.1: Boosting Methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ESL3_LinearMethodsForRegression/" class="md-nav__link">
         ESL 3: Linear Methods for Regression
       </a>
@@ -581,12 +595,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          ESL6: Kernel Smoothing Methods
+          ESL 6: Kernel Smoothing Methods
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        ESL6: Kernel Smoothing Methods
+        ESL 6: Kernel Smoothing Methods
       </a>
       
         
@@ -661,7 +675,7 @@
   
     <li class="md-nav__item">
       <a href="../ESL9_AdditiveModels/" class="md-nav__link">
-        ESL9.1: Generalized Additive Models
+        ESL 9.1: Generalized Additive Models
       </a>
     </li>
   
@@ -1082,7 +1096,7 @@
                 
 
 
-<h1 id="esl6-kernel-smoothing-methods">ESL6: Kernel Smoothing Methods</h1>
+<h1 id="esl-6-kernel-smoothing-methods">ESL 6: Kernel Smoothing Methods</h1>
 <p>本章我们介绍 <strong>核平滑方法</strong>。它仅利用目标点 <span class="arithmatex">\(x_0\)</span> 周围的观测点来拟合模型 <span class="arithmatex">\(f(X)\)</span>，得到 <span class="arithmatex">\(\hat{f}(X)\)</span>。相较于最近邻法，它所得到的  <span class="arithmatex">\(\hat{f}(X)\)</span> 是平滑 (smooth) 后的。</p>
 <p>它平滑曲线的原理是利用一个核函数 <span class="arithmatex">\(K_\lambda (x_0, x_i)\)</span> 根据目标点 <span class="arithmatex">\(x_0\)</span> 和周围点 <span class="arithmatex">\(x_i\)</span> 的距离赋予权重。</p>
 <p>这一类方法几乎不需要训练，参数也很简单，只有一个超参数 <span class="arithmatex">\(\lambda\)</span>，用来设置“周围”的具体范围。他们也被称为 "memory-based" 方法，其模型就是所有训练样本本身，拟合实时进行。因此，对于某些要求运算速度，或者存储有限的场合，这类方法并不适用。</p>
@@ -1181,13 +1195,13 @@ K_\lambda(x_0, x_1) &amp; &amp; &amp;\\
       
       
         
-        <a href="../ESL9_AdditiveModels/" class="md-footer__link md-footer__link--next" aria-label="Next: ESL9.1: Generalized Additive Models" rel="next">
+        <a href="../ESL9_AdditiveModels/" class="md-footer__link md-footer__link--next" aria-label="Next: ESL 9.1: Generalized Additive Models" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              ESL9.1: Generalized Additive Models
+              ESL 9.1: Generalized Additive Models
             </div>
           </div>
           <div class="md-footer__button md-icon">
