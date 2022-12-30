@@ -111,3 +111,108 @@ $$ s_{mi} = \sigma'(\alpha_m^T x_i) \sum_{k=1}^K \beta_{km} \delta_{ki} $$
 2. 反向传播，首先计算出隐藏层 $Z$ 到输出层 $Y$ 的 $\delta_{ki}$，再利用上面的等式计算 $s_{mi}$，得出两个梯度的值，再更新 weights
 
 这个算法的优势在于简单并且易于并行，劣势在于计算量大。
+
+## 11.5 Some Issues in Training Neural Networks
+
+训练神经网络并不是像算法原理那么简单。神经网络是一个参数很多的模型，它从原理上倾向于 overfit。
+
+### 11.5.1 Starting Values
+
+sigmoid 函数在 0 附近近似于线性，我们可以将 __weights 的初始值选在 0 附近__，这样我们从一个近似线性的模型开始训练，然后非线性逐步增强。注意，初始权重不能为 0，我们由公式可以看出其梯度为 0，无法收敛。
+
+### 11.5.2 Overfitting
+
+由于神经网络参数很多，一般我们通过 early stopping 来避免 overfitting。我们也可以通过施加惩罚项来进行 regularization。
+
+### 11.5.3 Scaling of the Inputs
+
+初始时，我们需要把所有输入都映射为 __标准正态分布__，同时，初始的 weights 设置为 `[-0.7, +0.7]` 之间的均匀分布。
+
+
+### 11.5.4 Number of Hidden Units and Layers
+
+通常隐藏层节点的数量在 `[5, 100]` 之间选择，输入数量越多，隐藏层节点越多。
+
+隐藏层层数一般通过经验和背景知识选择。
+
+
+
+## 11.6 Example
+
+我们采用手写数字识别来检验神经网络的分类性能。
+
+```python
+import pandas as pd
+from sklearn import datasets
+from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import KFold
+
+digits = datasets.load_digits()
+X = pd.DataFrame(digits.data, columns = digits.feature_names)
+y = pd.Series(digits.target)
+
+for train_index, test_index in KFold(n_splits=5,shuffle=True,random_state=1).split(X):
+    # print("TRAIN:", train_index, "TEST:", test_index)
+    trainX, testX = X.loc[train_index], X.loc[test_index]
+    trainY, testY = y.loc[train_index], y.loc[test_index]
+
+    model = MLPClassifier(solver='lbfgs',
+                hidden_layer_sizes=(12,), random_state=1).fit(trainX, trainY)
+    print(f"MLP accurracy: {model.score(testX, testY)}")
+```
+
+注意，`hidden_layer_sizes=(12,)` 表明我们选择了 1 层隐藏层，该隐藏层包含 12 个节点。
+
+其分类结果为：
+
+```text
+MLP accurracy: 0.8833333333333333
+MLP accurracy: 0.9111111111111111
+MLP accurracy: 0.8885793871866295
+MLP accurracy: 0.9303621169916435
+MLP accurracy: 0.8997214484679665
+```
+
+可以看出其准确率在 90% 左右。
+
+### 11.6.1 Improvement
+
+我们可以通过 __增加隐藏层__ 来提高分类精确度，例如，我们简单增加一层 `hidden_layer_sizes=(12,12)`，分类结果为：
+
+```text
+MLP accurracy: 0.9111111111111111
+MLP accurracy: 0.9388888888888889
+MLP accurracy: 0.9387186629526463
+MLP accurracy: 0.9415041782729805
+MLP accurracy: 0.9220055710306406
+```
+
+此外，我们还有更精妙的方法，例如改变网络结构。
+
+- 局部连接（local connectivity）：我们可以限定每个隐藏层节点只连接到下一层的某一部分节点。例如 3x3 的小方块。局部连接可以提取下一层的局部特征，并大大降低需要训练的 weights 总数。
+
+- 共享权重（shared weights）：在局部连接的基础上，我们还可以让每个局部区域使用相同的 weights。这么做的结果是对图像不同的区域采用同样的操作。这也被称作 __卷积网络__(convolutional networks)。
+
+
+以下面几种网络为例，我们计算其权重数量：
+
+![LeNet](images/11/weights.png)
+
+1. 只有输入和输出层，输入层节点 16x16，输出层节点 10，一共 16x16x10 = 2560。再加上 10 个 bias，共 2570 个参数。
+
+2. 有一层隐藏层，12个隐藏节点。 16x16x12 + 12x10 = 3192，再加上 12 个隐藏节点和 10 个输出节点的 bias，共 3214 个参数。
+
+3. 有两层局部连接的隐藏层。由于是局部连接，计算方式为 patch 大小乘以上一层节点数：(3x3)x8x8 + (5x5)x4x4 + 4x4x10 = 1136，再加上 64 + 16 + 10 个 bias，共 1226 个参数。
+
+4. 两层局部连接隐藏层，第一层共享权重。由于是共享权重，每层参数个数固定。3x3x2 + (5x5)x4x4x2 + 4x4x10 = 978。再加上 64x2 + 16 + 10 个 bias，共 1132 个参数。
+由于存在共享权重，连接数和参数个数不同。从输入层到第一层隐藏层，连接数是 (3x3)x8x8x2 = 1152，但是只有 18 个权重。因此总连接数是 1152 - 18 + 1132 = 2266。
+
+5. 两层都是局部连接 + 共享权重。3x3x2 + 5x5x4x2 + 4x4x4x10 = 858，再加上 64x2 + 4x4x4 + 10 个 bias，共 1060 个参数。其两个隐藏层总连接数为 (3x3)x8x8x2 + (5x5)x4x4x4x2 = 4352 个，但是仅有 218 个参数。因此总连接数是 4352 - 218 + 1060 = 5194。
+
+| Network Name | Network Architecture | Links | Weights | %Correct |
+| :-: | :-: | :-: | :-: | :-: |
+| LeNet-1 | No hidden layer, equivalent to multinomial logistic regression | 2570 | 2570 | 80.0% |
+| LeNet-2 | One hidden layer, 12 hidden units fully connected | 3214 | 3214 | 87.0% |
+| LeNet-3 | Two hidden layers locally connected | 1226 | 1226 | 88.5% |
+| LeNet-4 | Two hidden layers, locally connected with weight sharing | 2266 | 1132 | 94.0% |
+| LeNet-5 | Two hidden layers, locally connected, two levels of weight sharing | 5194 | 1060 | 98.4% |
