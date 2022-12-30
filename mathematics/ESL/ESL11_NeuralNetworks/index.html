@@ -1,0 +1,1508 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ye">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>ESL 11: Neural Networks - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#esl-11-neural-networks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ESL 11: Neural Networks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Ye's Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Computer science
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Computer science" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Computer science
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          Algorithm
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Algorithm" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Algorithm
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computer-science/algorithm/swiss_map/" class="md-nav__link">
+        Hash Table in Rust: SwissTable
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Lgbm
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Lgbm" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Lgbm
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computer-science/lgbm/LgbmL1AndL2/" class="md-nav__link">
+        LightGBM 参数中的 lambda_l1 和 lambda_l2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computer-science/lgbm/LgbmVol1/" class="md-nav__link">
+        LightGBM 实战：波动率预测(1)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computer-science/lgbm/LgbmVol2/" class="md-nav__link">
+        LightGBM 实战：波动率预测(2)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computer-science/lgbm/LightGBM/" class="md-nav__link">
+        Light GBM 原理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Memory
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Memory" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Memory
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computer-science/memory/CPU_Caches/" class="md-nav__link">
+        Memory3: CPU Caches
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Mathematics
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mathematics" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Mathematics
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          CFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="CFR" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          CFR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CFR/CfrAndKuhnPoker/" class="md-nav__link">
+        Counterfactual Regret Minimization and Kuhn Poker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CFR/MonteCarloCfr/" class="md-nav__link">
+        Monte Carlo CFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CFR/RegretMatchingAndBlottoGame/" class="md-nav__link">
+        Regret Matching and Blotto Game
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          ESL
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ESL" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          ESL
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ESL10_BoostingMethods/" class="md-nav__link">
+        ESL 10.1: Boosting Methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ESL10_BoostingTrees/" class="md-nav__link">
+        ESL 10.9: Boosting Trees
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ESL 11: Neural Networks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        ESL 11: Neural Networks
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#112-projection-pursuit-regression" class="md-nav__link">
+    11.2 Projection Pursuit Regression
+  </a>
+  
+    <nav class="md-nav" aria-label="11.2 Projection Pursuit Regression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ppr" class="md-nav__link">
+    PPR 拟合
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-neural-networks" class="md-nav__link">
+    11.3 Neural Networks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-fitting-neural-networks" class="md-nav__link">
+    11.4 Fitting Neural Networks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-some-issues-in-training-neural-networks" class="md-nav__link">
+    11.5 Some Issues in Training Neural Networks
+  </a>
+  
+    <nav class="md-nav" aria-label="11.5 Some Issues in Training Neural Networks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1151-starting-values" class="md-nav__link">
+    11.5.1 Starting Values
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1152-overfitting" class="md-nav__link">
+    11.5.2 Overfitting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1153-scaling-of-the-inputs" class="md-nav__link">
+    11.5.3 Scaling of the Inputs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1154-number-of-hidden-units-and-layers" class="md-nav__link">
+    11.5.4 Number of Hidden Units and Layers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-example" class="md-nav__link">
+    11.6 Example
+  </a>
+  
+    <nav class="md-nav" aria-label="11.6 Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1161-improvement" class="md-nav__link">
+    11.6.1 Improvement
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ESL3_LinearMethodsForRegression/" class="md-nav__link">
+        ESL 3: Linear Methods for Regression
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ESL4_LinearMethodsForClassification/" class="md-nav__link">
+        ESL 4: Linear Methods for Classification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ESL6_KernelSmoothingMethods/" class="md-nav__link">
+        ESL 6: Kernel Smoothing Methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ESL9_AdditiveModels/" class="md-nav__link">
+        ESL 9.1: Generalized Additive Models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ESL9_TreeBasedMethods/" class="md-nav__link">
+        ESL 9.2: Tree-Based Methods
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Matrix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Matrix" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Matrix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../matrix/MatrixCalculus/" class="md-nav__link">
+        向量和矩阵求导
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          Probability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Probability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Probability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/RigidBalls/" class="md-nav__link">
+        小球碰撞问题中的统计学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/martingale/" class="md-nav__link">
+        Martingale
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Trading
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Trading" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Trading
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Option
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Option" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Option
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/BSM/" class="md-nav__link">
+        The Black-Scholes-Merton model
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/BinomialTree/" class="md-nav__link">
+        Binomial Trees
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/Greeks/" class="md-nav__link">
+        The Greek letters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/Ito/" class="md-nav__link">
+        Wiener processes and Ito’s lemma
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/Risk/" class="md-nav__link">
+        Option Volatility and Pricing - Risks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/option/VolatilitySmile/" class="md-nav__link">
+        Volatility Smile
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          Portfolio
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Portfolio" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Portfolio
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../trading/portfolio/MarkowitzPO/" class="md-nav__link">
+        Portfolio Optimization with Known Parameters
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#112-projection-pursuit-regression" class="md-nav__link">
+    11.2 Projection Pursuit Regression
+  </a>
+  
+    <nav class="md-nav" aria-label="11.2 Projection Pursuit Regression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ppr" class="md-nav__link">
+    PPR 拟合
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-neural-networks" class="md-nav__link">
+    11.3 Neural Networks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-fitting-neural-networks" class="md-nav__link">
+    11.4 Fitting Neural Networks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-some-issues-in-training-neural-networks" class="md-nav__link">
+    11.5 Some Issues in Training Neural Networks
+  </a>
+  
+    <nav class="md-nav" aria-label="11.5 Some Issues in Training Neural Networks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1151-starting-values" class="md-nav__link">
+    11.5.1 Starting Values
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1152-overfitting" class="md-nav__link">
+    11.5.2 Overfitting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1153-scaling-of-the-inputs" class="md-nav__link">
+    11.5.3 Scaling of the Inputs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1154-number-of-hidden-units-and-layers" class="md-nav__link">
+    11.5.4 Number of Hidden Units and Layers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-example" class="md-nav__link">
+    11.6 Example
+  </a>
+  
+    <nav class="md-nav" aria-label="11.6 Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1161-improvement" class="md-nav__link">
+    11.6.1 Improvement
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="esl-11-neural-networks">ESL 11: Neural Networks</h1>
+<p>神经网络的中心思想是将输入 <strong>线性组合</strong> 为一些衍生的特征，再建立输出与这些特征之间的 <strong>非线性</strong> 模型。</p>
+<h2 id="112-projection-pursuit-regression">11.2 Projection Pursuit Regression</h2>
+<p>以一个通用的监督学习问题为例，假设我们有 <span class="arithmatex">\(p\)</span> 维输入 <span class="arithmatex">\(X\)</span>，输出是 <span class="arithmatex">\(Y\)</span>。<span class="arithmatex">\(w_m\)</span> 是 <span class="arithmatex">\(p\)</span> 维单位向量，我们可以把 projection pursuit regression 模型表示为：</p>
+<div class="arithmatex">\[f(X) = \sum_{m=1}^M g_m (w_m^T X) \]</div>
+<p>可以看出，这也是一个加性模型。但是区别在于，它的自变量不是直接输入 <span class="arithmatex">\(X\)</span>，而是输入的线性组合 <span class="arithmatex">\(w_m^T X\)</span>。</p>
+<p><span class="arithmatex">\(g_m(w_m^T X)\)</span> 被称为“岭函数” (Ridge Function)。它只沿着 <span class="arithmatex">\(w_m\)</span> 的方向变化，而标量 <span class="arithmatex">\(V_m = w_m^T X\)</span> 就是输入 <span class="arithmatex">\(X\)</span> 在 <span class="arithmatex">\(w_m\)</span> 方向上的投影 (projection)。</p>
+<p>我们的目标是寻找 <span class="arithmatex">\(w_m\)</span> （即投影方向）使得模型估计误差最小。因此，这个方法叫做 projection pursuit。它的 <strong>优点</strong> 是如果子模型数量 M 足够大，它能够完美拟合任何连续函数。<strong>缺点</strong> 是可解释性差。因此适用于只需要做预测，不需要归因的场景。</p>
+<h3 id="ppr">PPR 拟合</h3>
+<p>给定训练数据 <span class="arithmatex">\((x_i, y_i), i=1,2,\dots,N\)</span>，我们的目标是确定函数 <span class="arithmatex">\(g\)</span> 和方向 <span class="arithmatex">\(w\)</span> ，使预测结果的 squared error 最小：</p>
+<div class="arithmatex">\[ g, w = \mathop{\arg \min}_{g, w} \sum_{i=1}^N [y_i - \sum_{m=1}^M g_m(w_m^T x_i)]^2 \]</div>
+<p>假设仅有一个子模型，即 <strong>M = 1</strong>，确定 <span class="arithmatex">\(g\)</span> 的过程其实就是一个一维 smoothing 问题。因此，<span class="arithmatex">\(g\)</span> 可以选择使用 spline。</p>
+<p>已知函数 <span class="arithmatex">\(g\)</span> 的形式，我们需要确定使估计误差最小的方向 <span class="arithmatex">\(w\)</span>。这是一个 <strong>无约束的优化问题</strong>，且 <span class="arithmatex">\(g\)</span> 可导，因此可以使用牛顿法来解决。</p>
+<p>假设当前对 <span class="arithmatex">\(w\)</span> 的估计为 <span class="arithmatex">\(w_{\text{old}}\)</span>，我们对 <span class="arithmatex">\(g\)</span> 进行泰勒展开，忽略 2 阶以上有：</p>
+<div class="arithmatex">\[ g(w^T x_i) \approx g(w_{\text{old}}^T x_i) + g'(w_{\text{old}}^T x_i)(w - w_{\text{old}})^T x_i \]</div>
+<p>由于 M = 1，squared error 可以简化为：</p>
+<div class="arithmatex">\[\begin{align}
+\sum_{i=1}^N [y_i - g(w^T x_i)]^2 &amp;= \sum_{i=1}^N [y_i - g(w_{\text{old}}^T x_i) - g'(w_{\text{old}}^T x_i)(w - w_{\text{old}})^T x_i]^2 \\
+&amp;= \sum_{i=1}^N g'(w_{\text{old}}^T x_i)^2 [w^T x_i - (w_{\text{old}}^T x_i + \dfrac{y_i - g(w_{\text{old}}^T x_i)}{g'(w_{\text{old}}^T x_i)})]^2
+\end{align}\]</div>
+<p>等式右边可以看作一个 least squares regression 问题。有 N 个样本点，对于第 i 个样本，其平方误差的权重为 <span class="arithmatex">\(g'(w_{\text{old}}^T x_i)^2\)</span> ，目标是 <span class="arithmatex">\(w_{\text{new}}^T x_i\)</span> 尽量靠近 <span class="arithmatex">\(w_{\text{old}}^T x_i + \frac{y_i - g(w_{\text{old}}^T x_i)}{g'(w_{\text{old}}^T x_i)}\)</span> 。</p>
+<p>求解这个 least squares regression 我们得到一组新的系数 <span class="arithmatex">\(w_{\text{new}}\)</span>，更新 <span class="arithmatex">\(w_{\text{old}} = w_{\text{new}}\)</span> 并进行下一轮迭代，直到 <span class="arithmatex">\(g'(w_{\text{old}}^T x_i)\)</span> 小于某个阈值。</p>
+<p>由于其计算量过大，PPR 的应用并不很广泛。但是，它是后来获得广泛应用的 <strong>神经网络技术的前身</strong>。我们将在下面的章节介绍神经网络。</p>
+<h2 id="113-neural-networks">11.3 Neural Networks</h2>
+<p>“神经网络”这个名字源于该方法最早被应用于人脑的建模。每个节点是一个神经元，他们之间的连接代表突触。单“隐藏层”的神经网络与刚才介绍的 Projection Pursuit Regression 模型非常相似，我们以它为例讲解。</p>
+<p><img alt="Neural Network" src="../images/11/neural_network.png" /></p>
+<p>我们可以看到该神经网络分为 3 层。其中 <span class="arithmatex">\(X\)</span> 是输入，<span class="arithmatex">\(Y\)</span> 是输出，<span class="arithmatex">\(Z\)</span> 是所谓的“隐藏层”，它被称为隐藏层是因为它不直接可见。</p>
+<p>类似于 PPR，隐藏层 <span class="arithmatex">\(Z\)</span> 由输入 <span class="arithmatex">\(X\)</span> 线性组合，再附加一个“激活函数” <span class="arithmatex">\(\sigma\)</span> 得出。</p>
+<div class="arithmatex">\[ Z_m = \sigma(\alpha_0 + \alpha_m^T X), \quad m = 1,\dots,M \]</div>
+<p>常见的激活函数如 sigmoid：</p>
+<div class="arithmatex">\[ \sigma(v) = \dfrac{1}{1 + e^{-v}} \]</div>
+<p>而输出 <span class="arithmatex">\(Y\)</span> 由隐藏层 <span class="arithmatex">\(Z\)</span> 线性组合，再附加一个“输出函数” <span class="arithmatex">\(g\)</span> 得出。</p>
+<div class="arithmatex">\[ Y_k = g_k(T) = g_k(\beta_0 + \beta_k^T Z) \]</div>
+<p>对于回归问题，<span class="arithmatex">\(g\)</span> 可以省略，对于分类问题，为确保输出都是整数且和为 1.0，通常选用 softmax 函数，属于第 k 类的概率为:</p>
+<div class="arithmatex">\[ g_k(T) = \dfrac{e^{T_k}}{\sum_{l=1}^K e^{T_l}} \]</div>
+<p>我们看出，其实 PPR 与 NN 的差异就在于 NN 使用的激活函数相比 PPR 使用的 spline 简单很多，这就使得 NN 的计算量小很多，获得了更广泛的应用。</p>
+<h2 id="114-fitting-neural-networks">11.4 Fitting Neural Networks</h2>
+<p>拟合神经网络实际上就是找到刚才提到的两组参数：</p>
+<ol>
+<li>
+<p>由输入 <span class="arithmatex">\(X\)</span> 到隐藏层 <span class="arithmatex">\(Z\)</span> 的线性组合系数 <span class="arithmatex">\(\bf{\alpha}\)</span>。由于有 M 个隐藏层节点，而每个节点对应的系数都是 <span class="arithmatex">\(p + 1\)</span> 维（+1 for bias）。因此是一个 <span class="arithmatex">\(M \times (p+1)\)</span> 矩阵。</p>
+</li>
+<li>
+<p>由隐藏层 <span class="arithmatex">\(Z\)</span> 到输出 <span class="arithmatex">\(Y\)</span> 的线性组合系数 <span class="arithmatex">\(\bf{\beta}\)</span>。由于有 K 个输出节点，而每个节点对应的系数都是 <span class="arithmatex">\(M + 1\)</span> 维（+1 for bias）。因此是一个 <span class="arithmatex">\(K \times (M+1)\)</span> 矩阵。</p>
+</li>
+</ol>
+<p>我们首先以损失函数 sum-of-squared-errors 为例:</p>
+<div class="arithmatex">\[ R(\theta) = \sum_{i=1}^N R_i = \sum_{i=1}^N \sum_{k=1}^K (y_{ik} - f_k(x_i))^2 \]</div>
+<p>记 <span class="arithmatex">\(l, m, k\)</span> 分别为输入 <span class="arithmatex">\(X\)</span>，隐藏层 <span class="arithmatex">\(Z\)</span> 和输出 <span class="arithmatex">\(Y\)</span> 的序号，对 <span class="arithmatex">\(\alpha_{ml}\)</span> 和 <span class="arithmatex">\(\beta_{km}\)</span> 求导，根据链式法则有：</p>
+<div class="arithmatex">\[ \dfrac{\partial R_i}{\partial \beta_{km}} = - 2(y_{ik} - f_k(x_i)) g_k'(\beta_k^T z_i) z_{mi} \]</div>
+<div class="arithmatex">\[ \dfrac{\partial R_i}{\partial \alpha_{ml}} = -  \sum_{k=1}^K 2(y_{ik} - f_k(x_i)) g_k'(\beta_k^T z_i) \beta_{km} \sigma'(\alpha_m^T x_i) x_{il} \]</div>
+<p>注意，对 <span class="arithmatex">\(\beta_{km}\)</span> 求导结果中不含 <span class="arithmatex">\(\sum_{k=1}^K\)</span>。我们假设现在用第 <span class="arithmatex">\(j(j \neq k)\)</span> 个输出对 <span class="arithmatex">\(\beta_{km}\)</span> 求导，由于 <span class="arithmatex">\(\beta_{km}\)</span> 意义是第 k 个输出与第 m 个隐藏节点的系数，与第 j 个输出无关，结果必然为 0。而对于 <span class="arithmatex">\(\alpha_{ml}\)</span> 求导时，由于第 m 个隐藏节点会作用给第 k 个和第 j 个输出，所以存在 <span class="arithmatex">\(\sum_{k=1}^K\)</span>。</p>
+<p>得到这些导数，我们可以设定 learning rate <span class="arithmatex">\(\gamma_r\)</span>，使用梯度下降迭代更新：</p>
+<div class="arithmatex">\[ \beta_{km}^{(r+1)} = \beta_{km}^{(r)} - \gamma_r \sum_{i=1}^N \dfrac{\partial R_i}{\partial \beta_{km}^{(r)}} \]</div>
+<div class="arithmatex">\[ \alpha_{ml}^{(r+1)} = \alpha_{ml}^{(r)} - \gamma_r \sum_{i=1}^N \dfrac{\partial R_i}{\partial \beta_{ml}^{(r)}} \]</div>
+<p>现在令：</p>
+<div class="arithmatex">\[ \dfrac{\partial R_i}{\partial \beta_{km}} = \delta_{ki} z_{mi} \]</div>
+<div class="arithmatex">\[ \dfrac{\partial R_i}{\partial \alpha_{ml}} = s_{mi} x_{il} \]</div>
+<p>我们可以得出关系：</p>
+<div class="arithmatex">\[ s_{mi} = \sigma'(\alpha_m^T x_i) \sum_{k=1}^K \beta_{km} \delta_{ki} \]</div>
+<p>这个等式被称为 back-propagation equation。利用这个等式，更新时可以简化 <span class="arithmatex">\(s_{mi}\)</span> 的计算。back-propagation 的过程可以描述为一个 <strong>双向传播</strong> 的过程：</p>
+<ol>
+<li>
+<p>正向传播，利用输入 <span class="arithmatex">\(X\)</span> 和当前的 weights 来计算预测值 <span class="arithmatex">\(\hat{f}_k(x_i)\)</span></p>
+</li>
+<li>
+<p>反向传播，首先计算出隐藏层 <span class="arithmatex">\(Z\)</span> 到输出层 <span class="arithmatex">\(Y\)</span> 的 <span class="arithmatex">\(\delta_{ki}\)</span>，再利用上面的等式计算 <span class="arithmatex">\(s_{mi}\)</span>，得出两个梯度的值，再更新 weights</p>
+</li>
+</ol>
+<p>这个算法的优势在于简单并且易于并行，劣势在于计算量大。</p>
+<h2 id="115-some-issues-in-training-neural-networks">11.5 Some Issues in Training Neural Networks</h2>
+<p>训练神经网络并不是像算法原理那么简单。神经网络是一个参数很多的模型，它从原理上倾向于 overfit。</p>
+<h3 id="1151-starting-values">11.5.1 Starting Values</h3>
+<p>sigmoid 函数在 0 附近近似于线性，我们可以将 <strong>weights 的初始值选在 0 附近</strong>，这样我们从一个近似线性的模型开始训练，然后非线性逐步增强。注意，初始权重不能为 0，我们由公式可以看出其梯度为 0，无法收敛。</p>
+<h3 id="1152-overfitting">11.5.2 Overfitting</h3>
+<p>由于神经网络参数很多，一般我们通过 early stopping 来避免 overfitting。我们也可以通过施加惩罚项来进行 regularization。</p>
+<h3 id="1153-scaling-of-the-inputs">11.5.3 Scaling of the Inputs</h3>
+<p>初始时，我们需要把所有输入都映射为 <strong>标准正态分布</strong>，同时，初始的 weights 设置为 <code>[-0.7, +0.7]</code> 之间的均匀分布。</p>
+<h3 id="1154-number-of-hidden-units-and-layers">11.5.4 Number of Hidden Units and Layers</h3>
+<p>通常隐藏层节点的数量在 <code>[5, 100]</code> 之间选择，输入数量越多，隐藏层节点越多。</p>
+<p>隐藏层层数一般通过经验和背景知识选择。</p>
+<h2 id="116-example">11.6 Example</h2>
+<p>我们采用手写数字识别来检验神经网络的分类性能。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPClassifier</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">digits</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_digits</span><span class="p">()</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">digits</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="c1"># print(&quot;TRAIN:&quot;, train_index, &quot;TEST:&quot;, test_index)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">trainX</span><span class="p">,</span> <span class="n">testX</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">trainY</span><span class="p">,</span> <span class="n">testY</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">y</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">MLPClassifier</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                <span class="n">hidden_layer_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,),</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MLP accurracy: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">testX</span><span class="p">,</span> <span class="n">testY</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>注意，<code>hidden_layer_sizes=(12,)</code> 表明我们选择了 1 层隐藏层，该隐藏层包含 12 个节点。</p>
+<p>其分类结果为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>MLP accurracy: 0.8833333333333333
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>MLP accurracy: 0.9111111111111111
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>MLP accurracy: 0.8885793871866295
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>MLP accurracy: 0.9303621169916435
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>MLP accurracy: 0.8997214484679665
+</code></pre></div>
+<p>可以看出其准确率在 90% 左右。</p>
+<h3 id="1161-improvement">11.6.1 Improvement</h3>
+<p>我们可以通过 <strong>增加隐藏层</strong> 来提高分类精确度，例如，我们简单增加一层 <code>hidden_layer_sizes=(12,12)</code>，分类结果为：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>MLP accurracy: 0.9111111111111111
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>MLP accurracy: 0.9388888888888889
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>MLP accurracy: 0.9387186629526463
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>MLP accurracy: 0.9415041782729805
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>MLP accurracy: 0.9220055710306406
+</code></pre></div>
+<p>此外，我们还有更精妙的方法，例如改变网络结构。</p>
+<ul>
+<li>
+<p>局部连接（local connectivity）：我们可以限定每个隐藏层节点只连接到下一层的某一部分节点。例如 3x3 的小方块。局部连接可以提取下一层的局部特征，并大大降低需要训练的 weights 总数。</p>
+</li>
+<li>
+<p>共享权重（shared weights）：在局部连接的基础上，我们还可以让每个局部区域使用相同的 weights。这么做的结果是对图像不同的区域采用同样的操作。这也被称作 <strong>卷积网络</strong>(convolutional networks)。</p>
+</li>
+</ul>
+<p>以下面几种网络为例，我们计算其权重数量：</p>
+<p><img alt="LeNet" src="../images/11/weights.png" /></p>
+<ol>
+<li>
+<p>只有输入和输出层，输入层节点 16x16，输出层节点 10，一共 16x16x10 = 2560。再加上 10 个 bias，共 2570 个参数。</p>
+</li>
+<li>
+<p>有一层隐藏层，12个隐藏节点。 16x16x12 + 12x10 = 3192，再加上 12 个隐藏节点和 10 个输出节点的 bias，共 3214 个参数。</p>
+</li>
+<li>
+<p>有两层局部连接的隐藏层。由于是局部连接，计算方式为 patch 大小乘以上一层节点数：(3x3)x8x8 + (5x5)x4x4 + 4x4x10 = 1136，再加上 64 + 16 + 10 个 bias，共 1226 个参数。</p>
+</li>
+<li>
+<p>两层局部连接隐藏层，第一层共享权重。由于是共享权重，每层参数个数固定。3x3x2 + (5x5)x4x4x2 + 4x4x10 = 978。再加上 64x2 + 16 + 10 个 bias，共 1132 个参数。
+由于存在共享权重，连接数和参数个数不同。从输入层到第一层隐藏层，连接数是 (3x3)x8x8x2 = 1152，但是只有 18 个权重。因此总连接数是 1152 - 18 + 1132 = 2266。</p>
+</li>
+<li>
+<p>两层都是局部连接 + 共享权重。3x3x2 + 5x5x4x2 + 4x4x4x10 = 858，再加上 64x2 + 4x4x4 + 10 个 bias，共 1060 个参数。其两个隐藏层总连接数为 (3x3)x8x8x2 + (5x5)x4x4x4x2 = 4352 个，但是仅有 218 个参数。因此总连接数是 4352 - 218 + 1060 = 5194。</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">Network Name</th>
+<th align="center">Network Architecture</th>
+<th align="center">Links</th>
+<th align="center">Weights</th>
+<th align="center">%Correct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">LeNet-1</td>
+<td align="center">No hidden layer, equivalent to multinomial logistic regression</td>
+<td align="center">2570</td>
+<td align="center">2570</td>
+<td align="center">80.0%</td>
+</tr>
+<tr>
+<td align="center">LeNet-2</td>
+<td align="center">One hidden layer, 12 hidden units fully connected</td>
+<td align="center">3214</td>
+<td align="center">3214</td>
+<td align="center">87.0%</td>
+</tr>
+<tr>
+<td align="center">LeNet-3</td>
+<td align="center">Two hidden layers locally connected</td>
+<td align="center">1226</td>
+<td align="center">1226</td>
+<td align="center">88.5%</td>
+</tr>
+<tr>
+<td align="center">LeNet-4</td>
+<td align="center">Two hidden layers, locally connected with weight sharing</td>
+<td align="center">2266</td>
+<td align="center">1132</td>
+<td align="center">94.0%</td>
+</tr>
+<tr>
+<td align="center">LeNet-5</td>
+<td align="center">Two hidden layers, locally connected, two levels of weight sharing</td>
+<td align="center">5194</td>
+<td align="center">1060</td>
+<td align="center">98.4%</td>
+</tr>
+</tbody>
+</table>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../ESL10_BoostingTrees/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ESL 10.9: Boosting Trees" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              ESL 10.9: Boosting Trees
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../ESL3_LinearMethodsForRegression/" class="md-footer__link md-footer__link--next" aria-label="Next: ESL 3: Linear Methods for Regression" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              ESL 3: Linear Methods for Regression
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
