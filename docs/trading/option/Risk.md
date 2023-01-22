@@ -6,9 +6,9 @@
 This book helps readers to understand option from a trader's perspective. Other relevant reading materials:
 
 - Option, Future and other Derivatives (John Hull)
-  - Best book to start with
+    - Best book to start with
 - Stochastic Volatility Modeling (Lorenzo Bergomi)
-  - Advanced book if you are a developer or quant.
+    - Advanced book if you are a developer or quant.
 
 
 
@@ -158,6 +158,7 @@ In option trading, assuming the theoretical price is correct, the immediate rewa
 - Rho risk (usually ignored)
 
 So basically, in option trading, we only need to worry about two things:
+
 - **realized volatility (underlying price) change: gamma risk**
 - **implied volatility change: vega risk**
 
