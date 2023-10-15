@@ -139,7 +139,7 @@ $$\mathbf{w}_{\text{SR}} = \dfrac{\mathbf{\Sigma}^{-1}(\mathbf{\mu} - r_f \mathb
 
 CVaR 是 VaR 的 __条件期望值__，即加权平均值。如下图所示：
 
-![VaR and CVaR](images/VaR_and_CVaR.png)
+![VaR and CVaR](images/CVaR.png)
 
 VaR 并不是一个 coherent risk measure，但是 CVaR 是，并且还能转化为凸优化问题。因此，得益于其良好的数学特性，CVaR 得到了广泛的实际应用。
 
