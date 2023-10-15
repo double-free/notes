@@ -91,10 +91,10 @@ $$ z_t \geq [-\mathbf{w}^T \mathbf{r}_t - \zeta]^{+} $$
 优化问题转化为：
 
 $$\begin{align}
-\mathop{\arg \min}_{\mathbf{w}, z_t, \zeta } & & \zeta + \frac{1}{T(1-\alpha)} \sum_{t=1}^T z_t \\
-\text{s.t.} & & \mathbf{1}^T \mathbf{w} = 1 \\
- & & z_t \geq 0 \\
- & & z_t \geq -\mathbf{w}^T \mathbf{r}_t - \zeta
+\mathop{\arg \min}_{\mathbf{w}, \mathbf{z}, \zeta } & & \zeta + \frac{1}{T(1-\alpha)} \sum_{t=1}^T z_t & \\
+\text{s.t.} & & \mathbf{1}^T \mathbf{w} = 1 & \\
+ & & z_t \geq 0 & \\
+ & & z_t \geq -\mathbf{w}^T \mathbf{r}_t - \zeta, & ~~ \text{for} ~~~~ t = 1,2,\dots,T
 \end{align}$$
 
 这是一个典型的线性优化问题，可以通过工具包求解。肉眼可以看出，这个优化问题的 __约束条件与采样个数成正比__。因此，计算量可能是一个不可忽略的隐患，在实际生产中值得注意。
