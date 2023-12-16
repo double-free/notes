@@ -835,6 +835,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#martingale" class="md-nav__link">
+    Martingale
+  </a>
+  
+    <nav class="md-nav" aria-label="Martingale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    例题
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1132,6 +1152,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#martingale" class="md-nav__link">
+    Martingale
+  </a>
+  
+    <nav class="md-nav" aria-label="Martingale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    例题
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1198,6 +1238,38 @@ P &amp;= 1.0 - \sum_{k=1}^N (-1)^{k+1} a_k \\
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  <span class="k">return</span> <span class="n">p</span>
 </code></pre></div>
 <p>将 <span class="arithmatex">\(N=10\)</span> 输入上面程序得到 0.3395，与书本答案相同。</p>
+<h2 id="martingale">Martingale</h2>
+<p>简单来讲，martingale (鞅) 定义了一类“公平的”随机游戏，即，参与者的期望收益是 0。</p>
+<h3 id="_3">例题</h3>
+<blockquote>
+<p>例1: 赌徒破产问题。两个赌徒连续抛一枚硬币，该硬币正面朝上概率为 p，如果正面朝上，B 付给 A 一元，若反面朝上，A 付给 B 一元，直到某一方输完所有钱。假设游戏开始时，A 有 i 元，B 有 n - i 元，那么 A 最后获胜的概率是多大？</p>
+</blockquote>
+<p>假设 A 有 i 元时的胜率为 <span class="arithmatex">\(P_i\)</span>，首先我们写出其初始条件：</p>
+<div class="arithmatex">\[\begin{align}
+P_0 &amp;= 0.0 \\
+P_n &amp;= 1.0
+\end{align}\]</div>
+<p>当 <span class="arithmatex">\(0 &lt; i \leq n\)</span> 时，上一把 A 要么有 i-1 元并且赢了 1 块，要么有 i+1 元并且输了 1 块。因此得到递推公式：</p>
+<div class="arithmatex">\[ P_i = p P_{i-1} + (1-p) P_{i+1} \]</div>
+<p>因此可以得出(若 <span class="arithmatex">\(p \neq 1\)</span>)：</p>
+<div class="arithmatex">\[ P_{i+1} - P_i = \frac{p}{1-p} (P_i - P_{i-1})\]</div>
+<p>代入初始条件，可以得到：</p>
+<div class="arithmatex">\[\begin{align}
+P_2 - P_1 = \frac{p}{1-p} (P_1 - P_0) &amp;= \frac{p}{1-p} P_1 \\
+P_3 - P_2 = \frac{p}{1-p} (P_2 - P_1) &amp;= (\frac{p}{1-p})^2 P_1 \\
+ &amp; \vdots \\
+P_{i} - P_{i-1} &amp;= (\frac{p}{1-p})^{i-1} P_1 \\
+\end{align}\]</div>
+<p>令 <span class="arithmatex">\(\alpha = p/(1-p)\)</span>，上式左右相加得到(若 <span class="arithmatex">\(\alpha \neq 1\)</span>)：</p>
+<div class="arithmatex">\[ P_i - P_1 = \frac{1 - \alpha^{i-1}}{1 - \alpha} \alpha P_1 \]</div>
+<p>即</p>
+<div class="arithmatex">\[P_i = \frac{1 - \alpha^i}{1-\alpha}P_1\]</div>
+<p>代入 <span class="arithmatex">\(P_n = 1.0\)</span>， 有：</p>
+<div class="arithmatex">\[ P_1 = \frac{1-\alpha}{1-\alpha^n} \]</div>
+<div class="arithmatex">\[ P_i = \frac{1 - \alpha^i}{1 - \alpha^n} \]</div>
+<p>特殊情况，当 <span class="arithmatex">\(p = 0.5\)</span>，即 <span class="arithmatex">\(\alpha = 1.0\)</span> 时：</p>
+<div class="arithmatex">\[ P_i = \frac{i}{n} \]</div>
+<p>其中，<span class="arithmatex">\(i\)</span> 为 A 的资金，<span class="arithmatex">\(n\)</span> 为 A 和 B 总资金， <span class="arithmatex">\(\alpha\)</span> 为 A 和 B 胜率的比值。</p>
 
 
 
