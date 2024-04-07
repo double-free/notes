@@ -26,7 +26,7 @@ res.summary()
 
 我们将逐个表格讲解。
 
-## Table 1: Model
+## Table 1: Model Overview
 
 跳过简单的字段。
 
@@ -104,7 +104,9 @@ $$ X = \frac{S_1 / df_1}{S_2 / df_2} $$
 
 其中 $S_1$ 服从自由度为 $df_1$ 的 chi-squared 分布，$S_2$ 服从自由度为 $df_2$ 的 chi-squared 分布。
 
-F-value 越大，说明模型比噪声越显著。即：
+![F distribution](images/F_distribution.png)
+
+F-value 越大，说明模型相比噪声越显著。即：
 
 $$ \text{F-value} = \frac{\text{variance of y explained by model}}{\text{variance of y explained by error}} $$
 
@@ -119,9 +121,54 @@ F-distribution 由两个自由度的值确定，代入 F-statistic 可以得出�
 
 ### AIC and BIC
 
+> It stands for Akaike’s Information Criteria and is used for model selection. It penalizes the errors mode in case a new variable is added to the regression equation. It is calculated as number of parameters minus the likelihood of the overall model. A lower AIC implies a better model. Whereas, BIC stands for Bayesian information criteria and is a variant of AIC where penalties are made more severe.
+
+
+## Table 2: Model Parameter
+
+这个表格主要是逐个参数的分析。
+
+### Coef & std err
+
+`Coef` 一列即模型参数的估计值。对于 OLS 这样的线性模型，这个值表明其对应变量 X_i 的每个单位贡献多少的 y。
+
+`std err`表示该参数估计的不确定性。
+
+### t
+
+`t` 列表示 t-statistic 的值。这里的 t 是指“学生分布”。引入它是为了在不知道 __总体均值__，也不知道 __总体方差__ 的情况下，检查 __两个总体是否有显著不同__。
+
+学生分布是用于描述 __样本均值__ 的分布。假设总体 x 符合正态分布 $N(\mu, \sigma^2)$ （均值方差都是未知）。我们采 n 个样本：
+
+$$\begin{aligned}
+\bar{x} &= \frac{x_1 + x_2 + \cdots + x_n}{n} \\
+s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2
+\end{aligned}$$
+
+其中 $\bar{x}$ 是对 $\mu$ 的无偏估计，$s^2$ 是对 $\sigma^2$ 的无偏估计。我们 __将样本均值标准化__，它应该符合 __自由度为 n-1__ 的 t 分布：
+
+$$ t = \frac{\bar{x} - \mu_0}{\sqrt{s^2 / n}} \sim t_{n-1} $$
+
+注意，我们并不知道真实的 $\mu$，此处的 $\mu_0$ 正是我们的 __原假设__：该总体的均值为 $\mu_0$。这个计算出来的 t-value 代入 t 分布中就能知道 p-value：
+
+![Student's t distribution](images/Student_t.png)
+
+回到我们的表格中，因为我们检验的 __原假设是参数无效__，因此 $\mu_0 = 0$。`coef` 即参数的均值，`std err` 是 coef 的标准差，即 __均值的标准差__，他们直接相除就是 t-statistic：
+
+```py
+res.params / res.bse
+```
+
+执行这个命令即可以算出表格中的 t-values。
+
+#### P > |t|
+
+这是上面算出来的 t-values 对应的 p-values。将以上 t-values 代入自由度为 n-1 的 t 分布上即可获得 p-values。与 `Prob (F-statistic)` 类似，p-value 越小说明对应的参数越显著。
 
 ## Reference
 
 1. [Interpreting OLS results](https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-statistics-toolbox/interpreting-ols-results.htm)
 
 2. [Regression analysis basics](https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-statistics-toolbox/regression-analysis-basics.htm)
+
+3. [Understanding t-test for linear regression](https://stats.stackexchange.com/questions/344006/understanding-t-test-for-linear-regression)
