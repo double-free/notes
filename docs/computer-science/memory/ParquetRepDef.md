@@ -1,14 +1,16 @@
 # Definition and Repetition Level in Parquet
 
-在处理 parquet 格式的文件时，有两个抽象的定义：definition level 和 repetition level。本文主要介绍这两个定义的意义，以及在写入和读取 parquet 文件的时候使用方法。
+在处理 parquet 格式的文件时，有两个抽象的定义：definition level 和 repetition level。对于刚接触这两个概念的人来讲，最需要理解的是，definition 和 repetition 到底是指谁的“定义”和“重复”？它对于 parquet 解析到底有什么作用？
+
+本文通过查阅相关论文以及阅读 arrow-rs 的源码来解释这两个定义。
 
 ## Introduction
 
-对于刚接触这两个概念的人来讲，最需要理解的是，definition 和 repetition 到底是指谁的“定义”和“重复”？在文献 1 中有解释：
+关于 definition level 和 repetition level 的作用，在文献 1 中有解释：
 
 > A (repetition level, definition level) pair represents the **delta** between two **consecutive paths**.
 
-即，如果我们把一个 field 用一个路径来描述，那这两个 levels 就表达了连续两个的路径变化。其中：
+即，如果我们把一个 field 用相对于 struct 的一个路径来描述，那这两个 levels 就是用于描述该 field 的路径。其中：
 
 1. **repetition level 指定了连续两个 value 的 path 之间的共同前缀中 repeated field 的数量。注意，第一层级（即record 这个层级）也算是 repeated。**
 
@@ -170,9 +172,42 @@ Name
 | "gb" | 1 | 3 | `r1.Name3.Language1.Country` |
 | NULL | 0 | 1 | `r2.Name1` |
 
-## Usage in `parquet_derive` lib
+## Usage in `parquet` lib
 
-# Reference
+Parquet 的 [read_records](https://docs.rs/parquet/latest/parquet/column/reader/struct.GenericColumnReader.html#method.read_records) 接口可以看出这两个 levels 的具体意义。
+
+```rust
+pub fn read_records(
+    &mut self,
+    max_records: usize,
+    def_levels: Option<&mut D::Buffer>,
+    rep_levels: Option<&mut R::Buffer>,
+    values: &mut V::Buffer
+) -> Result<(usize, usize, usize)>
+```
+
+这个函数会读取至多 `max_records` 条记录，每条记录都会 __完整__ 读取，这里的完整即下一个 repetition level 是 0。
+
+这个函数的返回值是三个整数组成的 tuple，分别为：
+
+1. 实际读取的总 records 数量 `n_records`
+2. 非空的 value 数量 `n_valid_values`
+3. 总共解析的 value 数量 `n_values`
+
+注意，由于 record 可以存储数组等嵌套结构，record 的数量总是小于或等于 value 数量的。
+
+接下来，根据注释：
+
+> If the max definition level is 0, def_levels will be ignored and the number of records, non-null values and levels decoded will all be equal, otherwise def_levels will be populated with the number of levels read, with an error returned if it is None.
+
+max definition level 如果是 0，则该 field 不允许有空值，必然有 `n_valid_values == n_values`。这里的参数 `def_levels` 是一个 `Option`，即如果已知这个列不允许为空，则可以不创建 `Vec<i16>` 来存储解析后的  definition level，否则需要提供一个 `Vec<i16>` 的引用，该函数会填充读到的 definition levels。取决于用户对需要读取的 parquet column 的先验知识：该列是否允许空值。
+
+
+> If the max repetition level is 0, rep_levels will be ignored and the number of records and levels decoded will both be equal, otherwise rep_levels will be populated with the number of levels read, with an error returned if it is None.
+
+max repetition level 如果是 0，则不存在嵌套类型的 field。必然有 `n_records == n_values`，即 records 数量等于 values 数量，但是并不保证这些 values 都非空值。跟 `def_levels` 类似， `rep_levels` 也是一个可选的参数，取决于用户对需要读取的 parquet column 的先验知识：该列是否是嵌套结构。
+
+## Reference
 
 1. [Dremel: Interactive Analysis of Web-Scale Datasets](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/37217.pdf)
 2. [Arrow and Parquet Part 2: Nested and Hierarchical Data using Structs and Lists](https://arrow.apache.org/blog/2022/10/08/arrow-parquet-encoding-part-2/)
