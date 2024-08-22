@@ -816,6 +816,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#sum-of-squares-in-regression" class="md-nav__link">
+    Sum of Squares in Regression
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#table-1-model-overview" class="md-nav__link">
     Table 1: Model Overview
   </a>
@@ -1235,6 +1242,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#sum-of-squares-in-regression" class="md-nav__link">
+    Sum of Squares in Regression
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#table-1-model-overview" class="md-nav__link">
     Table 1: Model Overview
   </a>
@@ -1382,7 +1396,44 @@
 <li>评估单个模型参数显著性</li>
 <li>评估模型偏差</li>
 </ol>
-<p>我们将逐个表格讲解。</p>
+<p>我们将逐个表格讲解。但是，在此之前，我们需要了解计算这些统计量涉及到的一些非常容易混淆的概念，即各种 "Sum of Squares"</p>
+<h2 id="sum-of-squares-in-regression">Sum of Squares in Regression</h2>
+<table>
+<thead>
+<tr>
+<th align="center">Name</th>
+<th align="center">Variable Name</th>
+<th align="center">Formula</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Explained Sum of Squares, ESS</td>
+<td align="center"><code>ess</code></td>
+<td align="center"><span class="arithmatex">\(\sum_{i=1}^{n} (\hat{y_i} - \bar{y})^2\)</span></td>
+<td align="center">预测值偏离均值的距离平方和，越高模型越好</td>
+</tr>
+<tr>
+<td align="center">Residual Sum of Squares, RSS</td>
+<td align="center"><code>ssr</code></td>
+<td align="center"><span class="arithmatex">\(\sum_{i=1}^{n} (\hat{y_i} - y_i)^2\)</span></td>
+<td align="center">模型不能解释的残差平方和，越低模型越好</td>
+</tr>
+<tr>
+<td align="center">Total Sum of Squares, TSS</td>
+<td align="center"><code>centered_tss</code></td>
+<td align="center"><span class="arithmatex">\(\sum_{i=1}^{n} (y_i - \bar{y} )^2\)</span></td>
+<td align="center">样本值偏离均值的距离平方和，与模型无关</td>
+</tr>
+</tbody>
+</table>
+<p>他们三者满足关系：</p>
+<blockquote>
+<p>TSS = ESS + RSS</p>
+</blockquote>
+<p>其意义是，样本的 variance 可以被分成两部分， ESS 是用模型解释的 variance，RSS 是用噪声解释的 variance。本质上，一个好模型我们希望模型能解释的 variance 越多越好。</p>
+<p>Proof can be found here: <a href="https://en.wikipedia.org/wiki/Partition_of_sums_of_squares">Partition of sums of squares</a>.</p>
 <h2 id="table-1-model-overview">Table 1: Model Overview</h2>
 <p>跳过简单的字段。</p>
 <h3 id="df-degree-of-freedom">Df (Degree of freedom)</h3>
@@ -1428,18 +1479,18 @@
 </ol>
 <h3 id="f-statistic">F-statistic</h3>
 <p>F-statistic 衡量模型整体的显著性（后面要讲到的 t-statistic 是衡量单个模型参数的显著性）。</p>
-<p>我们的原假设是：<strong>模型所有参数为 0</strong>。即，该模型是无效的，无论因子如何变化，都对结果不产生影响。</p>
 <p>F-distribution 定义为两个 variance 的比值的分布：</p>
 <div class="arithmatex">\[ X = \frac{S_1 / df_1}{S_2 / df_2} \]</div>
 <p>其中 <span class="arithmatex">\(S_1\)</span> 服从自由度为 <span class="arithmatex">\(df_1\)</span> 的 chi-squared 分布，<span class="arithmatex">\(S_2\)</span> 服从自由度为 <span class="arithmatex">\(df_2\)</span> 的 chi-squared 分布。</p>
 <p><img alt="F distribution" src="../images/F_distribution.png" /></p>
-<p>F-value 越大，说明模型相比噪声越显著。即：</p>
+<p>我们的原假设是：<strong>模型所有参数为 0</strong>。即，该模型是无效的，模型可以解释的 variance，即 ESS 是 0。我们分别用 ESS 和 RSS 代入分子和分母，得到：</p>
 <div class="arithmatex">\[ \text{F-value} = \frac{\text{variance of y explained by model}}{\text{variance of y explained by error}} \]</div>
+<p>即，F-value 越大，模型对比噪声越显著。</p>
 <p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">ess</span> <span class="o">/</span> <span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">ssr</span> <span class="o">/</span> <span class="n">res</span><span class="o">.</span><span class="n">df_resid</span><span class="p">)</span>
 </code></pre></div>
 可以通过这个代码检查，算出来 F-value 是 <code>5.393721570932906</code>，与表格相同。</p>
 <h4 id="probf-statistic">Prob(F-statistic)</h4>
-<p>F-distribution 由两个自由度的值确定，代入 F-statistic 可以得出其 p-value，就是这里的 Prob(F-statistic)。这个 p-value 的含义是原假设（<strong>模型所有参数为 0</strong> ）成立情况下，出现当前结果的概率。它的 <strong>值越小，说明这个模型越显著</strong>。</p>
+<p>F-distribution 由两个自由度的值确定，代入 F-statistic 可以得出其 p-value，就是这里的 Prob(F-statistic)。这个 p-value 的含义是原假设（<strong>模型所有参数为 0</strong> ）成立情况下，出现当前结果的概率。它的 <strong>值越小，越容易拒绝原假设，即说明这个模型越显著</strong>。</p>
 <h3 id="aic-and-bic">AIC and BIC</h3>
 <blockquote>
 <p>It stands for Akaike’s Information Criteria and is used for model selection. It penalizes the errors mode in case a new variable is added to the regression equation. It is calculated as number of parameters minus the likelihood of the overall model. A lower AIC implies a better model. Whereas, BIC stands for Bayesian information criteria and is a variant of AIC where penalties are made more severe.</p>
@@ -1454,7 +1505,7 @@
 <p>学生分布是用于描述 <strong>样本均值</strong> 的分布。假设总体 x 符合正态分布 <span class="arithmatex">\(N(\mu, \sigma^2)\)</span> （均值方差都是未知）。我们采 n 个样本：</p>
 <div class="arithmatex">\[\begin{aligned}
 \bar{x} &amp;= \frac{x_1 + x_2 + \cdots + x_n}{n} \\
-s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2
+s^2 &amp;= \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2
 \end{aligned}\]</div>
 <p>其中 <span class="arithmatex">\(\bar{x}\)</span> 是对 <span class="arithmatex">\(\mu\)</span> 的无偏估计，<span class="arithmatex">\(s^2\)</span> 是对 <span class="arithmatex">\(\sigma^2\)</span> 的无偏估计。我们 <strong>将样本均值标准化</strong>，它应该符合 <strong>自由度为 n-1</strong> 的 t 分布：</p>
 <div class="arithmatex">\[ t = \frac{\bar{x} - \mu_0}{\sqrt{s^2 / n}} \sim t_{n-1} \]</div>
