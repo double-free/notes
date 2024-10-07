@@ -231,3 +231,19 @@ $$L(x, \alpha, \beta) = f(x) + \sum_{i=1}^m \alpha_i g_i(x) + \sum_{j=1}^n \beta
     最优解无非有两种情况，一种在不等式约束条件内部，即 $g_i(x^*) < 0$，此时约束条件不起作用，可以将对应的松弛变量设为 $\alpha_i = 0$。另一种是在边界上，即 $g_i(x^*) = 0$，此时约束条件有效。无论是以上哪种情况，都有：
 
     $$ \alpha_i g_i(x^*) = 0 $$
+
+
+## 12.3 Support Vector Machine and Kernels
+
+上文讲述了支持向量分类器如何在 __输入特征空间__ 寻找 __线性__ 分界面。就像其他线性方法一样，我们可以通过引入基扩展（basis expansions）来扩展特征空间让分界面更灵活。
+
+事实上，SVM 本质上是用一种特定的正则化形式来解决 __函数拟合__ 问题。
+
+### 12.3.1 Computing the SVM for Classification
+
+在 12.2 中我们已经推导出 SVM 对偶问题的优化目标，最大化 $L_D$：
+
+$$\begin{align}
+L_D = \sum_{i=1}^N \alpha_i - \frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i
+\alpha_j y_i y_j x_i^T x_j
+\end{align}$$
