@@ -11,17 +11,17 @@
       
       
       
-        <link rel="prev" href="../exercises/">
+        <link rel="prev" href="../../matrix/MatrixCalculus/">
       
       
-        <link rel="next" href="../../../trading/option/BSM/">
+        <link rel="next" href="../RigidBalls/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>Martingale - My Notes</title>
+        <title>Interpret OLS Regression Result - My Notes</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#martingale" class="md-skip">
+        <a href="#interpret-ols-regression-result" class="md-skip">
           Skip to content
         </a>
       
@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Martingale
+              Interpret OLS Regression Result
             
           </span>
         </div>
@@ -765,14 +765,14 @@
       
       
         <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
-          Probability
+          Statistics
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_3_4">
           <span class="md-nav__icon md-icon"></span>
-          Probability
+          Statistics
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -780,11 +780,166 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../OLS_result/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Interpret OLS Regression Result
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Interpret OLS Regression Result
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sum-of-squares-in-regression" class="md-nav__link">
+    Sum of Squares in Regression
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-1-model-overview" class="md-nav__link">
+    Table 1: Model Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="Table 1: Model Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#df-degree-of-freedom" class="md-nav__link">
+    Df (Degree of freedom)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-squared" class="md-nav__link">
+    R-squared
+  </a>
+  
+    <nav class="md-nav" aria-label="R-squared">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adj-r-squared" class="md-nav__link">
+    Adj. R-squared
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-statistic" class="md-nav__link">
+    F-statistic
+  </a>
+  
+    <nav class="md-nav" aria-label="F-statistic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probf-statistic" class="md-nav__link">
+    Prob(F-statistic)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aic-and-bic" class="md-nav__link">
+    AIC and BIC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-2-model-parameter" class="md-nav__link">
+    Table 2: Model Parameter
+  </a>
+  
+    <nav class="md-nav" aria-label="Table 2: Model Parameter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coef-std-err" class="md-nav__link">
+    Coef &amp; std err
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t" class="md-nav__link">
+    t
+  </a>
+  
+    <nav class="md-nav" aria-label="t">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p-t" class="md-nav__link">
+    P &gt; |t|
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -822,99 +977,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Martingale
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../martingale/" class="md-nav__link">
         Martingale
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#definition" class="md-nav__link">
-    Definition
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
-  </a>
-  
-    <nav class="md-nav" aria-label="Example">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#partial-sum-process" class="md-nav__link">
-    Partial sum process
-  </a>
-  
-    <nav class="md-nav" aria-label="Partial sum process">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#proof" class="md-nav__link">
-    Proof
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gamblers-ruin-problem" class="md-nav__link">
-    Gambler's Ruin Problem
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    Reference
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1051,6 +1118,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../trading/option/OptionPnL/" class="md-nav__link">
+        Reading Note: Option Profit and Loss Attribution and Pricing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../trading/option/Risk/" class="md-nav__link">
         Option Volatility and Pricing - Risks
       </a>
@@ -1175,31 +1256,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#definition" class="md-nav__link">
-    Definition
+  <a href="#sum-of-squares-in-regression" class="md-nav__link">
+    Sum of Squares in Regression
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#table-1-model-overview" class="md-nav__link">
+    Table 1: Model Overview
   </a>
   
-    <nav class="md-nav" aria-label="Example">
+    <nav class="md-nav" aria-label="Table 1: Model Overview">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#partial-sum-process" class="md-nav__link">
-    Partial sum process
+  <a href="#df-degree-of-freedom" class="md-nav__link">
+    Df (Degree of freedom)
   </a>
   
-    <nav class="md-nav" aria-label="Partial sum process">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-squared" class="md-nav__link">
+    R-squared
+  </a>
+  
+    <nav class="md-nav" aria-label="R-squared">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#proof" class="md-nav__link">
-    Proof
+  <a href="#adj-r-squared" class="md-nav__link">
+    Adj. R-squared
   </a>
   
 </li>
@@ -1210,9 +1298,69 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gamblers-ruin-problem" class="md-nav__link">
-    Gambler's Ruin Problem
+  <a href="#f-statistic" class="md-nav__link">
+    F-statistic
   </a>
+  
+    <nav class="md-nav" aria-label="F-statistic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probf-statistic" class="md-nav__link">
+    Prob(F-statistic)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aic-and-bic" class="md-nav__link">
+    AIC and BIC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-2-model-parameter" class="md-nav__link">
+    Table 2: Model Parameter
+  </a>
+  
+    <nav class="md-nav" aria-label="Table 2: Model Parameter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coef-std-err" class="md-nav__link">
+    Coef &amp; std err
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#t" class="md-nav__link">
+    t
+  </a>
+  
+    <nav class="md-nav" aria-label="t">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p-t" class="md-nav__link">
+    P &gt; |t|
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1243,65 +1391,157 @@
                   
 
 
-<h1 id="martingale">Martingale</h1>
-<h2 id="definition">Definition</h2>
-<p>Process X is a martingale if for all n:</p>
-<div class="arithmatex">\[ E[X_{n+1}|F_n] = X_n \]</div>
-<p>Where</p>
-<ul>
-<li>Fn is the history of Xn (called filtration)</li>
-</ul>
-<p>Which means, on the n+1 step, the expectation of X shall be the same as any step before.</p>
-<p>A martingale may be thought of as a “fair game”, because given the information in current and previous plays (Fn), you don't expect to change your total winning (X).</p>
-<h2 id="example">Example</h2>
-<p>Here are two practical example to help you understand it.</p>
-<h3 id="partial-sum-process">Partial sum process</h3>
-<p>A simple coin game, in <span class="arithmatex">\(i\)</span> turn we bet <span class="arithmatex">\(X_i\)</span>, and <span class="arithmatex">\(S_n\)</span> is our winning money after n turn.</p>
-<p>Let Xi be independent, define the partial sum process:</p>
-<div class="arithmatex">\[\begin{aligned}
-S_0 &amp;= 0, \\
-S_n &amp;= \sum_{ i=1 }^n X_i, n=1, 2,... \end{aligned}\]</div>
-<p>Sn is a martingale iff:</p>
-<div class="arithmatex">\[E(X_i) = 0\]</div>
-<h4 id="proof">Proof</h4>
-<p>With Xi being independent, and E(Xi) = 0, we have:</p>
-<div class="arithmatex">\[\begin{aligned}
-E[S_{n+1}|X_1,...X_n] &amp;= E[S_n + X_{n+1} | X_1,...X_n] \\
-&amp;= S_n + E[X_{n+1} | X_1,...X_n] \\
-&amp;= S_n + E[X_{n+1}] \\
-&amp;= S_n
-\end{aligned}\]</div>
-<h3 id="gamblers-ruin-problem">Gambler's Ruin Problem</h3>
-<p>A classic problem on martingale.</p>
+<h1 id="interpret-ols-regression-result">Interpret OLS Regression Result</h1>
+<p>OLS (ordinary least square) 是一种基础的线性回归方法。本文的 “OLS result” 特指使用 <code>statsmodels.api.OLS</code> 得到的结果。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">data</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">ccard</span><span class="o">.</span><span class="n">load_pandas</span><span class="p">()</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">exog</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">endog</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">X</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">res</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div>
+<p>运行以上代码可以得到一个表格：</p>
+<p><img alt="Inclusion-Exclusion Principle" src="../images/OLS_summary.jpeg" /></p>
+<p>表格里是评估模型有效性的指标，但是解读起来需要一定的统计基础。本文将逐个解读其含义以及背后的统计学基础知识。</p>
+<p>该表格分为了三个子表格，分别表达：</p>
+<ol>
+<li>评估模型显著性</li>
+<li>评估单个模型参数显著性</li>
+<li>评估模型偏差</li>
+</ol>
+<p>我们将逐个表格讲解。但是，在此之前，我们需要了解计算这些统计量涉及到的一些非常容易混淆的概念，即各种 "Sum of Squares"</p>
+<h2 id="sum-of-squares-in-regression">Sum of Squares in Regression</h2>
+<table>
+<thead>
+<tr>
+<th align="center">Name</th>
+<th align="center">Variable Name</th>
+<th align="center">Formula</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Explained Sum of Squares, ESS</td>
+<td align="center"><code>ess</code></td>
+<td align="center"><span class="arithmatex">\(\sum_{i=1}^{n} (\hat{y_i} - \bar{y})^2\)</span></td>
+<td align="center">预测值偏离均值的距离平方和，越高模型越好</td>
+</tr>
+<tr>
+<td align="center">Residual Sum of Squares, RSS</td>
+<td align="center"><code>ssr</code></td>
+<td align="center"><span class="arithmatex">\(\sum_{i=1}^{n} (\hat{y_i} - y_i)^2\)</span></td>
+<td align="center">模型不能解释的残差平方和，越低模型越好</td>
+</tr>
+<tr>
+<td align="center">Total Sum of Squares, TSS</td>
+<td align="center"><code>centered_tss</code></td>
+<td align="center"><span class="arithmatex">\(\sum_{i=1}^{n} (y_i - \bar{y} )^2\)</span></td>
+<td align="center">样本值偏离均值的距离平方和，与模型无关</td>
+</tr>
+</tbody>
+</table>
+<p>他们三者满足关系：</p>
 <blockquote>
-<p>Consider a gambler who starts with an initial fortune of $1 and then on each successive gamble either wins $1 or loses $1 independent of the past with probabilities p and q = 1−p respectively. Let Rn denote the total fortune after the n th gamble. The gambler’s objective is to reach a total fortune of $N, without first getting ruined (running out of money). If the gambler succeeds, then the gambler is said to win the game.</p>
+<p>TSS = ESS + RSS</p>
 </blockquote>
-<p>Let <span class="arithmatex">\(P_i\)</span> denote the probability that the gambler wins when the initial money <span class="arithmatex">\(R_0 = i\)</span>, we have:</p>
-<div class="arithmatex">\[P_i = pP_{i+1} + qP_{i-1}\]</div>
-<p>This is because P_i can only lead to two states:</p>
-<ul>
-<li>Winning $1 with probability p to state <span class="arithmatex">\(P_{i+1}\)</span> </li>
-<li>Losing $1 with probability q to state <span class="arithmatex">\(P_{i-1}\)</span></li>
-</ul>
-<p>Subtract P_{i-1} from both sides of the equation, we get:</p>
-<div class="arithmatex">\[P_i = (p + q) P_i = pP_{i+1} + qP_{i-1}\]</div>
-<p>i.e.,</p>
-<div class="arithmatex">\[{P_{i+1} - P_i}= \frac{ q }{ p }(P_i - P_{i-1})\]</div>
-<p>Thus</p>
-<div class="arithmatex">\[\begin{aligned} P_{i+1} - P_1 &amp;= \sum_{k=1}^i (P_{k+1} - P_k) \\ &amp;= \sum_{k=1}^i (\frac{q}{p})^k P_1 \end{aligned}\]</div>
-<p>We have</p>
-<div class="arithmatex">\[P_{i+1}= \begin{cases} P_1 \frac{1-(q/p)^{i+1}}{1-(q/p)} &amp;, p \neq q\\ P_1 (i+1) &amp;, p=q \end{cases}\]</div>
-<p>To solve P_1, pick i = N-1 and use the fact that P_N = 1</p>
-<div class="arithmatex">\[P_1= \begin{cases} \frac{1-(q/p)}{1-(q/p)^N} &amp;, p \neq q\\ 1/N &amp;, p=q \end{cases}\]</div>
-<p>Substitute P_1 and we have:</p>
-<div class="arithmatex">\[P_i= \begin{cases}
-\frac{ 1-(q/p)^i}{ 1-(q/p)^N } &amp;, p \neq q \\
-i/N &amp;, p=q
-\end{cases}\]</div>
+<p>其意义是，样本的 variance 可以被分成两部分， ESS 是用模型解释的 variance，RSS 是用噪声解释的 variance。本质上，一个好模型我们希望模型能解释的 variance 越多越好。</p>
+<p>Proof can be found here: <a href="https://en.wikipedia.org/wiki/Partition_of_sums_of_squares">Partition of sums of squares</a>.</p>
+<h2 id="table-1-model-overview">Table 1: Model Overview</h2>
+<p>跳过简单的字段。</p>
+<h3 id="df-degree-of-freedom">Df (Degree of freedom)</h3>
+<p>自由度是一个基础概念，在回归问题中，如果模型自由度=样本数，那么该回归问题退化到一个解方程的问题。因此我们一般希望有较高的 Df Residuals。自由度满足：</p>
+<blockquote>
+<p>No. Observations  = Df Residuals + Df Model</p>
+</blockquote>
+<p>注意，当我们添加常数项，即：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">X</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</code></pre></div>
+<p>因为常数项同样需要估计（也可以看作模型的一部分），该公式变为：</p>
+<blockquote>
+<p>No. Observations  = Df Residuals + Df Model + 1</p>
+</blockquote>
+<h3 id="r-squared">R-squared</h3>
+<p>R-squared 描述该模型对样本输入的拟合度。在本例中，其值为 0.244，即 24.4% 的变化可以被该模型解释。
+它定义为：</p>
+<div class="arithmatex">\[ R^2 = 1 - \frac{\sum_{i=1}^n (y_i - \hat{y})^2}{\sum_{i=1}^n (y_i - \bar{y})^2} \]</div>
+<p>即，1 减去（模型误差平方和/以均值为预测值的误差平方和）。</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="mf">1.0</span> <span class="o">-</span> <span class="n">res</span><span class="o">.</span><span class="n">ssr</span> <span class="o">/</span> <span class="n">res</span><span class="o">.</span><span class="n">centered_tss</span>
+</code></pre></div>
+可以通过这个代码检查，算出来 R-squared 是 <code>0.24357791682194052</code>，与表格相同。</p>
+<p>直观来看，如果模型越准确，则 R-squared 值越接近 1.0。如果直接取样本输出的平均值为预测值，则 R-squared 为 0.0。如果模型甚至不如直接取样本的平均值准确，则 R-squared 可以为负值。</p>
+<p>似乎，R-squared 越大，拟合效果越好。但是我们忽略了一个重要的因素，即上面提到的“自由度”。
+只要我们往模型中增加参数，必然可以增加 R-squared，直到模型自由度与样本数相同，最终 R-squared = 1.0。但是这样得到的并不是一个有效的模型，而是存在明显的过拟合。</p>
+<p>因此，我们需要引入 Adjusted R-squared。</p>
+<h4 id="adj-r-squared">Adj. R-squared</h4>
+<p>Adjusted R-squared 只会在新加入的模型变量有助于提高模型拟合度时增加，加入一个与结果无关的变量会降低它的数值。</p>
+<p>它定义为：</p>
+<div class="arithmatex">\[\begin{aligned}
+\bar{R}^2 &amp;= 1 - \frac{SS_{res} / df_{res}}{SS_{tot} / df_{tot}} \\
+    &amp;= 1 - \frac{\sum_{i=1}^n (y_i - \hat{y})^2 / (n - p - 1)}{\sum_{i=1}^n (y_i - \bar{y})^2 / (n - 1)} \\
+    &amp;= 1 - (1 - R^2)\frac{n-1}{n - p - 1}
+\end{aligned}\]</div>
+<p>其中 p 是模型参数数量。</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">ssr</span> <span class="o">/</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nobs</span> <span class="o">-</span> <span class="n">res</span><span class="o">.</span><span class="n">df_model</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">centered_tss</span> <span class="o">/</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">nobs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+可以通过这个代码检查，算出来 Adj. R-squared 是 <code>0.1984183894680266</code>，与表格相同。</p>
+<p>根据公式，有两个推论：</p>
+<ol>
+<li>Adj. R-squared 可以为负</li>
+<li>Adj. R-squared &lt;= R-squared</li>
+</ol>
+<h3 id="f-statistic">F-statistic</h3>
+<p>F-statistic 衡量模型整体的显著性（后面要讲到的 t-statistic 是衡量单个模型参数的显著性）。</p>
+<p>F-distribution 定义为两个 variance 的比值的分布：</p>
+<div class="arithmatex">\[ X = \frac{S_1 / df_1}{S_2 / df_2} \]</div>
+<p>其中 <span class="arithmatex">\(S_1\)</span> 服从自由度为 <span class="arithmatex">\(df_1\)</span> 的 chi-squared 分布，<span class="arithmatex">\(S_2\)</span> 服从自由度为 <span class="arithmatex">\(df_2\)</span> 的 chi-squared 分布。</p>
+<p><img alt="F distribution" src="../images/F_distribution.png" /></p>
+<p>我们的原假设是：<strong>模型所有参数为 0</strong>。即，该模型是无效的，模型可以解释的 variance，即 ESS 是 0。我们分别用 ESS 和 RSS 代入分子和分母，得到：</p>
+<div class="arithmatex">\[ \text{F-value} = \frac{\text{variance of y explained by model}}{\text{variance of y explained by error}} \]</div>
+<p>即，F-value 越大，模型对比噪声越显著。</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">ess</span> <span class="o">/</span> <span class="n">res</span><span class="o">.</span><span class="n">df_model</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">ssr</span> <span class="o">/</span> <span class="n">res</span><span class="o">.</span><span class="n">df_resid</span><span class="p">)</span>
+</code></pre></div>
+可以通过这个代码检查，算出来 F-value 是 <code>5.393721570932906</code>，与表格相同。</p>
+<h4 id="probf-statistic">Prob(F-statistic)</h4>
+<p>F-distribution 由两个自由度的值确定，代入 F-statistic 可以得出其 p-value，就是这里的 Prob(F-statistic)。这个 p-value 的含义是原假设（<strong>模型所有参数为 0</strong> ）成立情况下，出现当前结果的概率。它的 <strong>值越小，越容易拒绝原假设，即说明这个模型越显著</strong>。</p>
+<h3 id="aic-and-bic">AIC and BIC</h3>
+<blockquote>
+<p>It stands for Akaike’s Information Criteria and is used for model selection. It penalizes the errors mode in case a new variable is added to the regression equation. It is calculated as number of parameters minus the likelihood of the overall model. A lower AIC implies a better model. Whereas, BIC stands for Bayesian information criteria and is a variant of AIC where penalties are made more severe.</p>
+</blockquote>
+<h2 id="table-2-model-parameter">Table 2: Model Parameter</h2>
+<p>这个表格主要是逐个参数的分析。</p>
+<h3 id="coef-std-err">Coef &amp; std err</h3>
+<p><code>Coef</code> 一列即模型参数的估计值。对于 OLS 这样的线性模型，这个值表明其对应变量 X_i 的每个单位贡献多少的 y。</p>
+<p><code>std err</code>表示该参数估计的不确定性。</p>
+<h3 id="t">t</h3>
+<p><code>t</code> 列表示 t-statistic 的值。这里的 t 是指“学生分布”。引入它是为了在不知道 <strong>总体均值</strong>，也不知道 <strong>总体方差</strong> 的情况下，检查 <strong>两个总体是否有显著不同</strong>。</p>
+<p>学生分布是用于描述 <strong>样本均值</strong> 的分布。假设总体 x 符合正态分布 <span class="arithmatex">\(N(\mu, \sigma^2)\)</span> （均值方差都是未知）。我们采 n 个样本：</p>
+<div class="arithmatex">\[\begin{aligned}
+\bar{x} &amp;= \frac{x_1 + x_2 + \cdots + x_n}{n} \\
+s^2 &amp;= \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2
+\end{aligned}\]</div>
+<p>其中 <span class="arithmatex">\(\bar{x}\)</span> 是对 <span class="arithmatex">\(\mu\)</span> 的无偏估计，<span class="arithmatex">\(s^2\)</span> 是对 <span class="arithmatex">\(\sigma^2\)</span> 的无偏估计。我们 <strong>将样本均值标准化</strong>，它应该符合 <strong>自由度为 n-1</strong> 的 t 分布：</p>
+<div class="arithmatex">\[ t = \frac{\bar{x} - \mu_0}{\sqrt{s^2 / n}} \sim t_{n-1} \]</div>
+<p>注意，我们并不知道真实的 <span class="arithmatex">\(\mu\)</span>，此处的 <span class="arithmatex">\(\mu_0\)</span> 正是我们的 <strong>原假设</strong>：该总体的均值为 <span class="arithmatex">\(\mu_0\)</span>。这个计算出来的 t-value 代入 t 分布中就能知道 p-value：</p>
+<p><img alt="Student's t distribution" src="../images/Student_t.png" /></p>
+<p>回到我们的表格中，因为我们检验的 <strong>原假设是参数无效</strong>，因此 <span class="arithmatex">\(\mu_0 = 0\)</span>。<code>coef</code> 即参数的均值，<code>std err</code> 是 coef 的标准差，即 <strong>均值的标准差</strong>，他们直接相除就是 t-statistic：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">res</span><span class="o">.</span><span class="n">params</span> <span class="o">/</span> <span class="n">res</span><span class="o">.</span><span class="n">bse</span>
+</code></pre></div>
+<p>执行这个命令即可以算出表格中的 t-values。</p>
+<h4 id="p-t">P &gt; |t|</h4>
+<p>这是上面算出来的 t-values 对应的 p-values。将以上 t-values 代入自由度为 n-1 的 t 分布上即可获得 p-values。与 <code>Prob (F-statistic)</code> 类似，p-value 越小说明对应的参数越显著。</p>
 <h2 id="reference">Reference</h2>
 <ol>
-<li><a href="http://www.stat.rice.edu/~dcox/Stat581/martingales.pdf">martingales.dvi (rice.edu)</a></li>
-<li><a href="http://www.columbia.edu/~ks20/FE-Notes/4700-07-Notes-GR.pdf">4700-07-Notes-GR.pdf (columbia.edu)</a></li>
+<li>
+<p><a href="https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-statistics-toolbox/interpreting-ols-results.htm">Interpreting OLS results</a></p>
+</li>
+<li>
+<p><a href="https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-statistics-toolbox/regression-analysis-basics.htm">Regression analysis basics</a></p>
+</li>
+<li>
+<p><a href="https://stats.stackexchange.com/questions/344006/understanding-t-test-for-linear-regression">Understanding t-test for linear regression</a></p>
+</li>
 </ol>
 
 
